@@ -1,0 +1,33 @@
+
+
+<mvc:View 
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:html="http://www.w3.org/1999/xhtml"
+    xmlns:unified="sap.ui.unified"
+    xmlns:uxap="sap.uxap"
+    xmlns:tnt="sap.tnt"
+    controllerName="peeranalysis.controller.ReportsView"
+>
+    <Page id="OnboardBank" title="{i18n>title}">
+        <content>
+            <VBox
+                height="100%"
+                width="100%"
+                class="sapUiSmallMargin"
+                fitContainer="true"
+            >
+                <html:iframe
+                    id="reports"
+                    width="100%"
+                    height="100%"
+                    style="border:none; min-height: 800px;"
+                />
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>
+
+
+

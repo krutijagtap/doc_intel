@@ -1,0 +1,39 @@
+specVersion: "3.1"
+metadata:
+  name: com.scb.uploadearnings
+type: application
+
+framework:
+  name: SAPUI5
+  version: 1.108.15
+  libraries:
+    - name: sap.m
+    - name: sap.ui.core
+    - name: sap.f
+    - name: sap.tnt
+    - name: sap.uxap
+    - name: sap.fe.core
+    - name: sap.fe.templates
+
+resources:
+  configuration:
+    paths:
+      webapp: webapp
+
+server:
+  customMiddleware:
+    - name: fiori-tools-proxy
+      afterMiddleware: compression
+      configuration:
+        ignoreCertError: false
+        ui5:
+          path:
+            - /resources
+            - /test-resources
+          url: https://sapui5.hana.ondemand.com
+    - name: fiori-tools-appreload
+      afterMiddleware: compression
+      configuration:
+        port: 35729
+        path: webapp
+        delay: 300

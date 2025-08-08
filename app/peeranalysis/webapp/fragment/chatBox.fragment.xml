@@ -1,0 +1,55 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:f="sap.f"
+    xmlns:core="sap.ui.core"
+    xmlns:u="sap.ui.unified"
+    xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+
+ 
+  <VBox class="ChatBox dasTextAreaInput"  >
+    <Title text="Which results should I analyze?" level="H4" class="gradientTitle sapUiSmallMarginTop sapUiTinyMarginBottom"/>
+      <FlexBox id="ChatBotresult" height="5rem" >
+
+        <TextArea id="chatFeedInput" width="96%" height="500px" class="chattextarea" liveChange="userlivechange"  value="{chatModel>/userMessage}" enabled="{= !${chatModel>/busyIndicator} }" rows="1" growingMaxLines="23" placeholder="{chatModel>/placeHolder}" growing="true">
+                <layoutData>
+                    <FlexItemData growFactor="1" />
+                </layoutData>
+            </TextArea>
+            <!-- <Button id="chatFeedSubmit" icon="sap-icon://paper-plane" type="Emphasized" press="onUserChat" class="dasChatInputSubmitButton sapUiTinyMargin"  enabled="{chatModel>/enableSubmit}" /> -->
+
+        </FlexBox>
+  
+              <FlexBox id="chatBusyIndicator1" visible="{chatModel>/busyIndicator}" justifyContent="Center" alignItems="Center" class="busyBox">
+                 
+            </FlexBox>
+
+                <FlexBox id="btncontrolls" justifyContent= "Start" alignItems="Start" class="busyBox">
+                <!-- <Button icon="sap-icon://upload" class="myMicrophoneIcon"  visible="{chatModel>/enableUpload}" ></Button> -->
+<!-- 
+                     <u:FileUploader id="fileUploader"
+                    
+                      buttonOnly = "true"
+                      iconOnly = "true"
+                      change="onFileUpload"
+                      uploadComplete="onUploadComplete"
+                      icon="sap-icon://upload"
+                      tooltip="Upload File"
+                      style="Emphasized"
+                       visible="{chatModel>/enableUpload}"/>  -->
+
+
+                
+                 <!-- <Button text="Ask FinSight"  enabled="{chatModel>/enableSubmit}" visible="{chatModel>/enableQuery}" press="onUserChat" /> -->
+                  <Button text="Ask FinSight"   press="onUserChat" />
+             
+
+
+            </FlexBox>
+  
+  </VBox>  
+
+
+
+
+
+
+</core:FragmentDefinition>

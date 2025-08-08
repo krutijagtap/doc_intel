@@ -1,0 +1,20 @@
+<core:FragmentDefinition
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    xmlns:u="sap.ui.unified"
+    xmlns:macros="sap.fe.macros"
+>
+    <VBox
+        id="idUploadEarningFileVBox"
+        core:require="{ handler: 'com/scb/uploadearnings/ext/fragment/UploadEarningDocument'}"
+    >
+        <u:FileUploader
+            id="idUploadEarningUploader"
+            name="earningFileUploader"
+            fileType="PDF"
+            tooltip="Upload your file to the local server"
+            uploadOnChange="true"
+            change="handler.onEarningFileUploadChange"
+        />
+    </VBox>
+</core:FragmentDefinition>

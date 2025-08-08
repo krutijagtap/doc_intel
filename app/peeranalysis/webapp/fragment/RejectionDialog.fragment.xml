@@ -1,0 +1,31 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+  <Dialog
+    id="rejectionDialog"
+    title="Rejection Comment"
+    draggable="true"
+    resizable="true"
+    contentWidth="30rem"
+    type="Message"
+    class="sapUiResponsivePadding--header sapUiResponsivePadding--content sapUiResponsivePadding--footer">
+
+    <TextArea
+      id="rejectionComment"
+      rows="5"
+      width="100%"
+      placeholder="Enter reason for rejection..."
+      liveChange=".onRejectionCommentChange" />
+
+    <beginButton>
+      <Button
+        id="submitRejectionButton"
+        text="Submit"
+        type="Reject"
+        enabled="false"
+        press=".onSubmitRejection" />
+    </beginButton>
+    
+    <endButton>
+      <Button text="Cancel" press=".onCancelRejection" />
+    </endButton>
+  </Dialog>
+</core:FragmentDefinition>

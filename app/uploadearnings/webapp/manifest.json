@@ -1,0 +1,234 @@
+{
+  "_version": "1.65.0",
+  "sap.app": {
+    "id": "com.scb.uploadearnings",
+    "type": "component",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:lrop",
+      "version": "1.17.1",
+      "toolsId": "2a25cbea-f3d7-4042-a2cb-a2473d38685c"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/odata/v4/earning-upload-srv/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "odataVersion": "4.0"
+        }
+      }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "Earnings-upload": {
+          "semanticObject": "Earnings",
+          "action": "upload",
+          "title": "{{Earnings-upload.flpTitle}}",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
+      }
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.134.1",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {},
+        "sap.fe.templates": {},
+        "sap.f": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "com.scb.uploadearnings.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "operationMode": "Server",
+          "autoExpandSelect": true,
+          "earlyRequests": true
+        }
+      },
+      "@i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "uri": "i18n/i18n.properties"
+      },
+      "visibility": {
+        "type": "sap.ui.model.odata.v4.ODataModel",
+        "dataSource": "mainService",
+        "settings": {
+             "synchronizationMode" : "None",
+             "operationMode" : "Server"
+        },
+        "preload": true
+      }
+    },
+    "resources": {
+      "css": []
+    },
+    "routing": {
+      "config": {
+        "flexibleColumnLayout": {
+          "defaultTwoColumnLayoutType": "TwoColumnsMidExpanded",
+          "defaultThreeColumnLayoutType": "ThreeColumnsMidExpanded"
+        },
+        "routerClass": "sap.f.routing.Router"
+      },
+      "routes": [
+        {
+          "pattern": ":?query:",
+          "name": "EarningFilesList",
+          "target": [
+            "EarningFilesList"
+          ]
+        },
+        {
+          "pattern": "EarningFiles({key}):?query:",
+          "name": "EarningFilesObjectPage",
+          "target": [
+            "EarningFilesList",
+            "EarningFilesObjectPage"
+          ]
+        }
+      ],
+      "targets": {
+        "EarningFilesList": {
+          "type": "Component",
+          "id": "EarningFilesList",
+          "name": "sap.fe.templates.ListReport",
+          "options": {
+            "settings": {
+              "contextPath": "/EarningFiles",
+              "variantManagement": "Control",
+              "navigation": {
+                "EarningFiles": {
+                  "detail": {
+                    "route": "EarningFilesObjectPage"
+                  }
+                }
+              },
+              "controlConfiguration": {
+                "@com.sap.vocabularies.UI.v1.LineItem": {
+                  "tableSettings": {
+                    "type": "ResponsiveTable"
+                  },
+                  "actions": {
+                    "Approve": {
+                      "press": "com.scb.uploadearnings.ext.controller.EarningListPageExtend.onApprove",
+                      "visible": "{/VisibilityConfig/isAdmin}",
+                      "icon": "sap-icon://accept",
+                      "enabled": true,
+                      "requiresSelection": true,
+                      "text": "Approve",
+                      "type": "Button"
+                    }
+                }
+              }
+              },
+              "initialLoad": "Enabled"
+            }
+          },
+          "controlAggregation": "beginColumnPages",
+          "contextPattern": ""
+        },
+        "EarningFilesObjectPage": {
+          "type": "Component",
+          "id": "EarningFilesObjectPage",
+          "name": "sap.fe.templates.ObjectPage",
+          "options": {
+            "settings": {
+              "editableHeaderContent": false,
+              "contextPath": "/EarningFiles",
+              "content": {
+                "body": {
+                  "sections": {
+                    "UploadEarningDocument": {
+                      "template": "com.scb.uploadearnings.ext.fragment.UploadEarningDocument",
+                      "position": {
+                        "placement": "After",
+                        "anchor": "Main"
+                      },
+                      "title": "Upload Earning Document",
+                      "visible": "{ui>/isEditable}"
+                    },
+                    "DisplayEarningDocument": {
+                      "template": "com.scb.uploadearnings.ext.fragment.DisplayEarningDocument",
+                      "position": {
+                        "placement": "After",
+                        "anchor": "UploadEarningDocument"
+                      },
+                      "title": "Standard Report",
+                      "visible": "{= %{url} !== null && %{IsActiveEntity}}"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "controlAggregation": "midColumnPages",
+          "contextPattern": "/EarningFiles({key})"
+        }
+      }
+    },
+    "extends": {
+      "extensions": {
+        "sap.ui.controllerExtensions": {
+          "sap.fe.templates.ObjectPage.ObjectPageController": {
+            "controllerName": "com.scb.uploadearnings.ext.controller.EarningObjectPageExtend"
+          }
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "sap.fe.templates.RootContainer.view.Fcl",
+      "type": "XML",
+      "async": true,
+      "id": "appRootView"
+    }
+  },
+  "sap.fiori": {
+    "registrationIds": [],
+    "archeType": "transactional"
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "earningupload"
+  }
+}

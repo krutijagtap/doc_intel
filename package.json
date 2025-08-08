@@ -1,0 +1,99 @@
+{
+  "name": "earning-upload",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "engines": {
+    "node": "18"
+  },
+  "dependencies": {
+    "@sap-cloud-sdk/http-client": "^3.26.4",
+    "@sap/cds": "^7.9.5",
+    "@sap/cds-compiler": "4.8.0",
+    "@sap/cds-dk": "^7.9.3",
+    "@sap/cds-hana": "2.0.0",
+    "@sap/cds-odata-v2-adapter-proxy": "^1.9.21",
+    "@sap/xsenv": "^3",
+    "@sap/xssec": "^3",
+    "ci": "^2.3.0",
+    "debug": "^4.3",
+    "express": "^4",
+    "fast-levenshtein": "^3.0.0",
+    "hdb": "^0.19",
+    "natural": "^8.0.1",
+    "nodemailer": "^6.9.10",
+    "passport": "^0.4.1",
+    "sqlite": "^5.0.1",
+    "sqlite3": "^5.1.6",
+    "string-similarity": "^4.0.4"
+  },
+  "devDependencies": {
+    "@sap/ux-specification": "^1.108.12",
+    "rimraf": "^3.0.2",
+    "@sap/cds-dk": "^7.9.5",
+    "mbt": "^1.2.29"
+  },
+  "scripts": {
+    "start": "cds-serve",
+    "start-local": "npm run generate-entry-point && npm run cds-watch",
+    "generate-entry-point": "dev-cap-tools gen-entrypoint",
+    "cds-watch": "cds watch --open",
+    "watch-uploadearnings": "cds watch --open uploadearnings/webapp/index.html?sap-ui-xx-viewCache=false",
+    "undeploy": "cf undeploy earning-upload --delete-services --delete-service-keys --delete-service-brokers",
+    "build": "rimraf resources mta_archives && mbt build --mtar archive",
+    "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
+    "watch-onboardbanks": "cds watch --open onboardbanks/webapp/index.html?sap-ui-xx-viewCache=false",
+    "watch-peeranalysis": "cds watch --open peeranalysis/webapp/index.html?sap-ui-xx-viewCache=false"
+  },
+  "cds": {
+    "requires": {
+      "auth": {
+        "[development]": {
+          "kind": "basic",
+          "users": {
+            "alice": {
+              "roles": [
+                "Workzone_EFDNA_GenAI_Earnings_Maker"
+              ],
+              "attr": {
+                "givenName": "Alice",
+                "familyName": "Doe",
+                "email": "alice@sap.com"
+              }
+            }
+          }
+        },
+        "[production]": {
+          "kind": "xsuaa"
+        }
+      },
+      "db": {
+        "[production]": {
+          "kind": "hana-cloud"
+        },
+        "[development]": {
+          "kind": "hana-cloud"
+        },
+        "model": [
+          "db",
+          "srv"
+        ]
+      }
+    },
+    "server": {
+      "body_parser": {
+        "limit": "50mb"
+      }
+    },
+    "sql": {
+      "native_hana_associations": false
+    }
+  },
+  "lcap": true,
+  "sapux": [
+    "app/uploadearnings",
+    "app/onboardbanks"
+  ]
+}

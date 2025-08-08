@@ -1,0 +1,30 @@
+{
+  "scopes": [
+    {
+      "name": "$XSAPPNAME.Earning_Admin",
+      "description": "Earning Upload Admin"
+    },
+    {
+      "name": "$XSAPPNAME.Earning_Viewer",
+      "description": "Earning Upload Viewer"
+    }
+  ],
+  "attributes": [],
+  "role-templates": [
+    {
+      "name": "Workzone_EFDNA_GenAI_Earnings_Checker",
+      "description": "Workzone_EFDNA_GenAI_Earnings_Checker",
+      "scope-references": [
+        "$XSAPPNAME.Earning_Admin"
+      ]
+    },
+    {
+      "name": "Workzone_EFDNA_GenAI_Earnings_Maker",
+      "description": "Workzone_EFDNA_GenAI_Earnings_Maker",
+      "scope-references": [
+        "$XSAPPNAME.Earning_Viewer"
+      ]
+    }
+  ],
+  "authorities-inheritance": false
+}

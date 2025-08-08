@@ -1,0 +1,13 @@
+{
+    "role": {
+      "name": "SCB_GENAI_EFDNA_PSS_HDI",
+      "schema_privileges": [{
+        "privileges": [
+          "SELECT",
+          "ALTER",
+          "UPDATE",
+          "DELETE"
+        ]
+      }]
+    }
+  }

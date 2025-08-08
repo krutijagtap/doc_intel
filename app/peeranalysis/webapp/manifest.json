@@ -1,0 +1,174 @@
+{
+  "_version": "1.65.0",
+  "sap.app": {
+    "id": "peeranalysis",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.17.1",
+      "toolsId": "70a2b2ef-2a2c-4c7e-bb7d-d9c265e13dbb"
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "Earnings-upload": {
+          "semanticObject": "content",
+          "action": "view",
+          "title": "{{peeranalysis.flpTitle}}",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
+      }
+    }
+  },
+
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.134.1",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {}
+      }
+    },   
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "peeranalysis.i18n.i18n"
+        }
+      },
+      "embeddings": {
+        "type": "sap.ui.model.odata.v2.ODataModel",
+        "uri": "./v2/odata/v4/earning-upload-srv/",
+        "settings": {
+          "odataVersion": "2.0",
+          "synchronizationMode": "None",
+          "defaultBindingMode": "TwoWay",
+          "operationMode": "Server",
+          "autoExpandSelect": true
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "transition": "slide",
+        "type": "View",
+        "viewType": "XML",
+        "path": "peeranalysis.view",
+        "async": true,
+        "viewPath": "peeranalysis.view"
+      },
+      "routes": [
+        {
+          "name": "RoutePeerAnaysisView",
+          "pattern": ":?query:",
+          "target": [
+            "TargetPeerAnaysisView"
+          ]
+        },
+        {
+          "pattern": "ContentIngestionView",
+          "name": "ContentIngestionView",
+          "target": "ContentIngestionView"
+        },
+        {
+          "pattern": "home",
+          "name": "home",
+          "target": "HomeView"
+        },
+        {
+          "pattern": "Approval",
+          "name": "Approval",
+          "target": "ApprovalView"
+        },
+        {
+          "pattern": "Reports",
+          "name": "Reports",
+          "target": "ReportsView"
+        },
+        {
+          "pattern": "Onboard",
+          "name": "Onboard",
+          "target": "OnboardView"
+        }
+      ],
+      "targets": {
+        "TargetPeerAnaysisView": {
+          "id": "PeerAnaysisView",
+          "name": "PeerAnaysisView"
+        },
+        "OnboardView": {
+          "id": "OnboardView",
+          "name": "OnboardView"
+        },
+        "ContentIngestionView": {
+          "id": "ContentIngestionView",
+          "name": "ContentIngestionView"
+        },
+        "HomeView": {
+          "id": "PeerAnaysisView",
+          "name": "PeerAnaysisView"
+        },
+        "ApprovalView": {
+          "id": "ApprovalView",
+          "name": "ApprovalView"
+        },
+        "ReportsView": {
+          "id": "ReportsView",
+          "name": "ReportsView"
+        }
+
+
+      }
+    },
+    "rootView": {
+      "viewName": "peeranalysis.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    }
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "peeranalysis"
+  }
+}

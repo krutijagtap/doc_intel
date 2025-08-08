@@ -1,0 +1,189 @@
+_schema-version: 3.3.0
+ID: earning-upload
+description: A simple CAP project.
+version: 1.0.0
+modules:
+- name: earning-upload-srv
+  type: nodejs
+  path: gen/srv
+  requires:
+  - name: earning-upload-db
+  - name: earning-upload-auth
+  - name: earning-upload-destination-service
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    buildpack: nodejs_buildpack
+    instances: 1
+  build-parameters:
+    builder: npm-ci
+- name: earning-upload-db-deployer
+  type: hdb
+  path: gen/db
+  requires:
+  - name: earning-upload-db
+    properties:
+      TARGET_CONTAINER: ~{hdi-container-name}
+  parameters:
+    buildpack: nodejs_buildpack
+- name: earning-upload-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: earning-upload-destination-service
+    parameters:
+      content-target: true
+  - name: earning-upload-repo-host
+    parameters:
+      service-key:
+        name: earning-upload-repo-host-key
+  - name: earning-upload-auth
+    parameters:
+      service-key:
+        name: earning-upload-auth-auth-key
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Name: earning-upload-earning-upload-repo-host
+          ServiceInstanceName: earning-upload-html5-service
+          ServiceKeyName: earning-upload-repo-host-key
+          sap.cloud.service: earningupload 
+        - Authentication: OAuth2UserTokenExchange
+          Name: earning-upload-earning-upload-auth
+          ServiceInstanceName: earning-upload-auth
+          ServiceKeyName: earning-upload-auth-key
+          sap.cloud.service: earningupload
+        existing_destinations_policy: update
+  build-parameters:
+    no-source: true
+- name: earning-upload-app-content
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: earning-upload-repo-host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - comscbuploadearnings.zip
+      name: comscbuploadearnings
+      target-path: resources/
+    - artifacts:
+      - onboardbanks.zip
+      name: onboardbanks
+      target-path: resources/
+    - artifacts:
+      - peeranalysis.zip
+      name: peeranalysis
+      target-path: resources/
+- name: comscbuploadearnings
+  type: html5
+  path: app/uploadearnings
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: onboardbanks
+  type: html5
+  path: app/onboardbanks
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+- name: peeranalysis
+  type: html5
+  path: app/peeranalysis
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
+resources:
+- name: earning-upload-db
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hana
+    service-plan: hdi-shared
+  properties:
+    hdi-container-name: ${service-name}
+- name: earning-upload-auth
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      tenant-mode: dedicated
+      xsappname: earning-upload
+    path: ./xs-security.json
+    service: xsuaa
+    service-plan: application
+- name: earning-upload-repo-host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: earning-upload-html5-service
+    service-plan: app-host
+- name: earning-upload-destination-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: true
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          - Authentication: NoAuthentication
+            HTML5.DynamicDestination: true
+            HTML5.ForwardAuthToken: true
+            Name: earning-upload-srv-api
+            ProxyType: Internet
+            Type: HTTP
+            URL: ~{srv-api/srv-url}
+          existing_destinations_policy: update
+      version: 1.0.0
+    service: destination
+    service-name: earning-upload-destination-service
+    service-plan: lite
+  requires:
+  - name: srv-api
+- name: cross-container-service-1
+  type: org.cloudfoundry.existing-service
+  parameters:
+    service-name: hdi_earningsai
+  properties:
+    the-service-name: ${service-name}
+- name: cross-container-service-2
+  type: org.cloudfoundry.existing-service
+  parameters:
+    service-name: earning-upload-db
+  properties:
+    the-service-name: ${service-name}
+- name: cross-container-service-3
+  type: org.cloudfoundry.existing-service
+  parameters:
+    service-name: earning-upload-db
+  properties:
+    the-service-name: ${service-name}
+parameters:
+  deploy_mode: html5-repo
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm ci
+    - npx cds build --production

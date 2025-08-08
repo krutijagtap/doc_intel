@@ -1,0 +1,54 @@
+{
+  "welcomeFile": "/index.html",
+  "authenticationMethod": "route",
+  "routes": [
+    {
+      "source": "^/v2/odata/v4/earning-upload-srv/(.*)$",
+      "target": "/v2/odata/v4/earning-upload-srv/$1",
+      "authenticationType": "xsuaa",
+      "destination": "peeranalysis"
+    },
+
+    {
+      "source": "^/odata/v4/earning-upload-srv/(.*)$",
+      "target": "/odata/v4/earning-upload-srv/$1",
+      "authenticationType": "xsuaa",
+      "destination": "peeranalysis"
+    },
+    {
+      "source": "^/uploadearnings/(.*)$",
+      "target": "/$1",
+      "authenticationType": "none",
+      "destination": "earning-upload-earning-upload-repo-host"
+    },
+    {
+      "source": "^/api/(.*)$",
+      "target": "/api/$1",
+      "authenticationType": "xsuaa",
+      "destination": "EARNINGS_CORE"
+    },
+    {
+      "source": "^/user-api/currentUser$",
+      "target": "/currentUser",
+      "service": "sap-approuter-userapi"
+    },
+    {
+      "source": "^/resources/(.*)$",
+      "target": "/resources/$1",
+      "authenticationType": "none",
+      "destination": "ui5"
+    },
+    {
+      "source": "^/test-resources/(.*)$",
+      "target": "/test-resources/$1",
+      "authenticationType": "none",
+      "destination": "ui5"
+    },
+    {
+      "source": "^(.*)$",
+      "target": "$1",
+      "service": "html5-apps-repo-rt",
+      "authenticationType": "xsuaa"
+    }
+  ]
+}

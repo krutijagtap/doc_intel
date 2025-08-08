@@ -1,0 +1,15 @@
+<core:FragmentDefinition
+    xmlns:core="sap.ui.core"
+    xmlns="sap.m"
+    xmlns:macros="sap.fe.macros"
+>
+    <VBox>
+        <PDFViewer
+            id="idDisplayEarningDocument"
+            source="{configs>/additionalUrl}{url}"
+            title="{fileName}"
+            height="50rem"
+            isTrustedSource="true"
+        />
+    </VBox>
+</core:FragmentDefinition>

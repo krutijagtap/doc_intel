@@ -1,0 +1,81 @@
+<mvc:View xmlns:mdc="sap.ui.mdc" xmlns:macros="sap.fe.macros" xmlns:filterbar="sap.ui.comp.filterbar" 
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:sfb="sap.ui.comp.smartfilterbar"
+    xmlns:smartTable="sap.ui.comp.smarttable"
+    xmlns:m="sap.m"
+    controllerName="peeranalysis.controller.ContentIngestionView">
+
+    <Page id="page1" title="Upload Content" showFooter="true">
+        <content>
+
+            <VBox id="attachmentBox" class="sapUiSmallMargin" visible="{=  ${authModel>/isViewer} }" />
+            
+            <HBox class="sapUiSmallMarginTop" visible="{= ${authModel>/isViewer} }">
+                <Button icon="sap-icon://add" text="Add Attachment" press="onAddAttachment"/>
+                <Button icon="sap-icon://upload" text="Upload All" press="onUploadFileContent"/>
+            </HBox>
+
+<HBox class="sapUiSmallMarginTop" justifyContent="Start" alignItems="Start" wrap="Wrap">
+    <VBox>
+   
+        <sfb:SmartFilterBar
+            id="smartFilterBar"
+            entitySet="EmbeddingFiles"
+            persistencyKey="SmartFilterBarFiles"
+            enableBasicSearch="true"
+            showClearOnFB="true"
+            showFilterConfiguration="true"
+            useToolbar="false"
+         >
+            <sfb:customData>
+                <core:CustomData key="preselectionDefaults" value='{"status": "Completed"}' />
+            </sfb:customData>
+        </sfb:SmartFilterBar>
+    </VBox>
+</HBox>
+            <smartTable:SmartTable
+                id="smartTable"
+                tableType="ResponsiveTable"
+                entitySet="EmbeddingFiles"
+                smartFilterId="smartFilterBar"
+                useVariantManagement="false"
+                useTablePersonalisation="true"
+                enableAutoBinding="true"
+                header="Uploaded Files"
+                showRowCount="true"
+                useExportToExcel="true"
+                persistencyKey="SmartTableFiles" >
+
+
+				<smartTable:layoutData>
+					<m:FlexItemData id="flex" growFactor="1" baseSize="0%"/>
+				</smartTable:layoutData>
+
+ 
+                  
+			</smartTable:SmartTable>
+        </content>
+
+        <footer>
+            <Bar visible="{= ${authModel>/isAdmin} }">
+                <contentRight>
+                    <Button 
+                        id="approveButton"
+                        text="Approve" 
+                        type="Accept" 
+                        icon="sap-icon://accept" 
+                        press="onApproveFiles" />
+                    
+                    <Button 
+                        id="rejectButton"
+                        text="Reject" 
+                        type="Reject" 
+                        icon="sap-icon://decline" 
+                        press="onRejectFiles" />
+                </contentRight>
+            </Bar>
+        </footer>
+    </Page>
+</mvc:View>
