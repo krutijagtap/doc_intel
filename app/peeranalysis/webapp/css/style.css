@@ -1,3 +1,81 @@
+@font-face {
+    font-display: block;
+    font-family: SCProsperSans;
+    font-style: normal;
+    font-weight: 400;
+    src: url(../fonts/SCProsperSans-Light.woff2) format("woff2"),url(../fonts/SCProsperSans-Light.ttf) format("truetype")
+}
+
+@font-face {
+    font-display: block;
+    font-family: SCProsperSansLight;
+    font-style: normal;
+    src: url(../fonts/SCProsperSans-Light.woff2) format("woff2"),url(../fonts/SCProsperSans-Light.ttf) format("truetype")
+}
+
+@font-face {
+    font-display: block;
+    font-family: SCProsperSans;
+    font-style: normal;
+    font-weight: 500;
+    src: url(../fonts/SCProsperSans-Regular.woff2) format("woff2"),url(../fonts/SCProsperSans-Regular.ttf) format("truetype")
+}
+
+@font-face {
+    font-display: block;
+    font-family: SCProsperSans;
+    font-style: normal;
+    font-weight: 600;
+    src: url(../fonts/SCProsperSans-Medium.woff2) format("woff2"),url(../fonts/SCProsperSans-Medium.ttf) format("truetype")
+}
+
+@font-face {
+    font-display: block;
+    font-family: SCProsperSansMedium;
+    font-style: normal;
+    src: url(../fonts/SCProsperSans-Medium.woff2) format("woff2"),url(../fonts/SCProsperSans-Medium.ttf) format("truetype")
+}
+
+@font-face {
+    font-display: block;
+    font-family: SCProsperSans;
+    font-style: normal;
+    font-weight: 700;
+    src: url(../fonts/SCProsperSans-Bold.woff2) format("woff2"),url(../fonts/SCProsperSans-Bold.ttf) format("truetype")
+}
+
+@font-face {
+    font-display: block;
+    font-family: SCProsperSansBold;
+    font-style: normal;
+    src: url(../fonts/SCProsperSans-Bold.woff2) format("woff2"),url(../fonts/SCProsperSans-Bold.ttf) format("truetype")
+}
+
+body{
+  font-family: SCProsperSans, Arial, Helvetica, sans-serif;
+  --sapButton_FontFamily:SCProsperSansMedium;
+  --sapButton_Emphasized_FontFamily:SCProsperSansBold;
+  --sapFontFamily:SCProsperSans;
+  --sapFontHeaderFamily:SCProsperSansBold;
+  --sapFontLightFamily:SCProsperSansLight;
+  --sapFontBoldFamily:SCProsperSansBold;
+  --sapFontSemiboldFamily:SCProsperSansMedium;
+  --sapFontSemiboldDuplexFamily:SCProsperSansMedium;
+  --sapFontBlackFamily:SCProsperSansBold;
+  --sapObjectHeader_Title_FontFamily:SCProsperSansBold;
+}
+.sapUiBody,
+.sapUiArea,
+.sapUiCoreDefaultFont,
+.sapUiHintText,
+.sapThemeFont,
+.sapThemeFontFamily,
+.sapUiCorePlaintext{
+  font-family: SCProsperSans !important;
+}
+.sapMH1Style,.sapMH2Style,.sapMH3Style,.sapMH4Style,.sapMH5Style,.sapMH6Style{
+  font-family: SCProsperSansBold !important;
+}
 .sideNavigationToggleButton {
     border-radius: 8px;
     background: rgba(0, 122, 255, 0.1);
@@ -21,6 +99,9 @@
     color: white !important;
     border-radius: 8px; /* Optional: Adds rounded corners */
     /* margin-left: 5px; */
+  }
+  .sapUiSizeCompact .sapMBtnInner.sapMBtnText .sapMBtnIcon{
+    color: #FFF;
   }
   
   .iconbtns {
@@ -556,9 +637,6 @@ button[id$="--smartFilterBar-btnFilters"] {
   letter-spacing: normal !important;
 }
 
-body, .sapMText, .sapMTitle {
-  font-family: "72", "Arial", sans-serif !important;
-}
 
 .exporting .summaryBox {
   box-shadow: none !important;
