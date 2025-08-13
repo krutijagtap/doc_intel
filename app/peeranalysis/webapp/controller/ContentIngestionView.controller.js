@@ -213,6 +213,8 @@ sap.ui.define([
         var appId = this.getOwnerComponent().getManifestEntry("/sap.app/id");
         var appPath = appId.replaceAll(".", "/");
         var appModulePath = jQuery.sap.getModulePath(appPath);
+        //dev change
+        return "";
         return appModulePath;
     },  
 
@@ -458,27 +460,12 @@ sap.ui.define([
     }
     const oModel = this.getView().getModel();
     const baseUrl = this.getBaseURL();
-    let serviceUrl = baseUrl + "/v2/odata/v4/earning-upload-srv/EmbeddingFiles/" ;
+    let serviceUrl = baseUrl + "/v2/odata/v4/earning-upload-srv/EmbeddingFiles/";
 
-    async function fetchCsrfToken(url) {
-      const response = await fetch(url, {
-          method: "HEAD",
-          credentials: "include",
-          headers: {
-              "X-CSRF-Token": "Fetch"
-          }
-      });
-      const token = response.headers.get("X-CSRF-Token");
-      if (!token) {
-          throw new Error("Failed to fetch CSRF token");
-      }
-      return token;
-  }
-  
     for (const oCtx of this._rejectionContexts) {
       const fileId = oCtx.getProperty("ID");
       serviceUrl = serviceUrl+fileId;
-      const csrfToken = await fetchCsrfToken(serviceUrl);
+      const csrfToken = await this.onfetchCSRF(serviceUrl);
       // Send rejection update to backend
       await fetch(serviceUrl, {
         method: "PATCH",
@@ -525,9 +512,10 @@ onfetchCSRF: async function(url){
     }
 });
 const token = response.headers.get("X-CSRF-Token");
-if (!token) {
-    throw new Error("Failed to fetch CSRF token");
-}
+//dev change
+// if (!token) {
+//     throw new Error("Failed to fetch CSRF token");
+// }
 return token;
 }, 
   
@@ -539,26 +527,10 @@ onUploadFileContent: async function () {
   const baseUrl = this.getBaseURL();
   const serviceUrl = baseUrl + "/v2/odata/v4/earning-upload-srv/";
 
-  // Helper to fetch CSRF token
-  async function fetchCsrfToken(url) {
-      const response = await fetch(url, {
-          method: "HEAD",
-          credentials: "include",
-          headers: {
-              "X-CSRF-Token": "Fetch"
-          }
-      });
-      const token = response.headers.get("X-CSRF-Token");
-      if (!token) {
-          throw new Error("Failed to fetch CSRF token");
-      }
-      return token;
-  }
-
   try {
       oPage.setBusy(true);
 
-      const csrfToken = await fetchCsrfToken(serviceUrl);
+      const csrfToken = await this.onfetchCSRF(serviceUrl);
 
       for (const uploader of this._uploaders) {
           const fileInput = uploader.getDomRef("fu");
