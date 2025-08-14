@@ -159,6 +159,7 @@ body{
     box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 10px 1px;
     max-width: 1200px;
     box-sizing: border-box;
+    margin: 1rem auto 0 auto;
   }
   .generateReportTitle{
     font-size: 24px;
