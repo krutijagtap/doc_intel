@@ -15,9 +15,23 @@ server:
             - /resources
             - /test-resources
           url: https://sapui5.hana.ondemand.com
+        backend:
+          - path: /v2/odata/v4
+            url: http://localhost:4004
     - name: fiori-tools-appreload
       afterMiddleware: compression
       configuration:
         port: 35729
         path: webapp
         delay: 300
+    - name: ui5-tooling-stringreplace-middleware
+      afterMiddleware: compression
+      configuration:
+        debug: true
+        prefix: UI5_ENV # default
+        path: ./ # default
+        separator: "." # default
+        files:
+          - "**/*.js"
+          - "**/*.xml"
+          - "**/*.json"
