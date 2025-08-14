@@ -53,6 +53,8 @@
 
 body{
   font-family: SCProsperSans, Arial, Helvetica, sans-serif;
+  --scbBrandColor:#0473EA;
+  --scbTextColor:#525355;
   --sapButton_FontFamily:SCProsperSansMedium;
   --sapButton_Emphasized_FontFamily:SCProsperSansBold;
   --sapFontFamily:SCProsperSans;
@@ -63,6 +65,17 @@ body{
   --sapFontSemiboldDuplexFamily:SCProsperSansMedium;
   --sapFontBlackFamily:SCProsperSansBold;
   --sapObjectHeader_Title_FontFamily:SCProsperSansBold;
+  --sapTextColor:var(--scbTextColor);
+  --sapPageHeader_TextColor:var(--scbTextColor);
+  --sapTab_TextColor:var(--scbTextColor);
+  --sapField_TextColor:var(--scbTextColor);
+  --sapTab_Selected_TextColor:var(--scbBrandColor);
+  --sapTab_IconColor:var(--scbBrandColor);
+  --sapLinkColor:var(--scbBrandColor);
+  --sapLink_Hover_Color:var(--scbBrandColor);
+  --sapButton_TextColor:var(--scbBrandColor);
+  --sapButton_IconColor:var(--scbBrandColor);
+  --sapButton_BorderColor:var(--scbBrandColor);
 }
 .sapUiBody,
 .sapUiArea,
@@ -72,6 +85,9 @@ body{
 .sapThemeFontFamily,
 .sapUiCorePlaintext{
   font-family: SCProsperSans !important;
+}
+.sapMBtnInner{
+  border-radius: 18px;
 }
 .sapMH1Style,.sapMH2Style,.sapMH3Style,.sapMH4Style,.sapMH5Style,.sapMH6Style{
   font-family: SCProsperSansBold !important;
@@ -93,13 +109,13 @@ body{
     display: block;
 
   }
-  
+/*   
   .sapUiSizeCompact .sapMBtnInner.sapMBtnText {
     background-color: #007aff !important;
     color: white !important;
-    border-radius: 8px; /* Optional: Adds rounded corners */
-    /* margin-left: 5px; */
-  }
+    border-radius: 8px;
+
+  } 
   .sapUiSizeCompact .sapMBtnInner.sapMBtnText .sapMBtnIcon{
     color: #FFF;
   }
@@ -107,12 +123,8 @@ body{
   .iconbtns {
     background-color: #007aff !important;
   
-  } 
-  
-  .sapMFlexItemAlignAuto {
-    margin-left: 10px;
-  
-  }
+  } */
+
   
   
   .logo {
@@ -142,22 +154,18 @@ body{
     width: 100%;
     box-sizing: border-box;
   }
-  .ChatFlexBox {
-    padding: 2rem;
-    max-width: 1200px;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  .ChatBox {
-    border: none;
+  .styleBox1{
     border-radius: 16px;
     box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 10px 1px;
-    background: hsl(0, 0%, 100%) !important;
-    width: 100% !important;
-    padding: 3rem;
     max-width: 1200px;
-    background-color: lightgray;
+    box-sizing: border-box;
   }
+  .generateReportTitle{
+    font-size: 24px;
+    font-family: SCProsperSansMedium;
+    font-weight: 500;
+  }
+
   
   .dynamicChatBox {
     padding: 0.3rem;

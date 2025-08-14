@@ -553,7 +553,7 @@ onUploadFileContent: async function () {
                       ID: fileHash,
                       fileName: file.name,
                       mediaType: file.type,
-                      url: "./v2/odata/v4/earning-upload-srv/EmbeddingFiles('" +fileHash + "')/content",
+                      url: `${baseUrl}/v2/odata/v4/earning-upload-srv/EmbeddingFiles('${fileHash}')/content`,
                       status: "Submitted"
                   })
               });
