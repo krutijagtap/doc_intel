@@ -5,7 +5,7 @@
     xmlns:uxap="sap.uxap"
     xmlns:tnt="sap.tnt">
     <Page id="page" title="{i18n>title}">
-        <IconTabBar id="idIconTabBarNoIcons" expanded="true" expandable="false" class="sapUiResponsiveContentPadding" backgroundDesign="Transparent">
+        <IconTabBar id="idIconTabBarNoIcons" expanded="true" expandable="false" class="sapUiContentPadding" backgroundDesign="Transparent">
             <items>
                 <IconTabFilter text="Ask Anything" key="chatbox">
                     <VBox class="styleBox1">
@@ -39,8 +39,11 @@
                 </IconTabFilter>
             </items>
         </IconTabBar>
-        <FlexBox id="resultFlexBox" class="ResultFlexBox" visible="{chatModel>/visibleResult}">
-            <core:Fragment fragmentName="peeranalysis.fragment.resultBox" type="XML"/>
-        </FlexBox>
+        <VBox class="resultBoxContainer">
+            <FlexBox id="resultFlexBox" visible="{chatModel>/visibleResult}">
+                <core:Fragment fragmentName="peeranalysis.fragment.resultBox" type="XML"/>
+            </FlexBox>
+        </VBox>
+        
     </Page>
 </mvc:View>
