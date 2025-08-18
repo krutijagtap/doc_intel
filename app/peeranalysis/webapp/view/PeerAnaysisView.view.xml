@@ -5,40 +5,11 @@
     xmlns:uxap="sap.uxap"
     xmlns:tnt="sap.tnt">
     <Page id="page" title="{i18n>title}">
-        <IconTabBar id="idIconTabBarNoIcons" expanded="true" expandable="false" class="sapUiContentPadding" backgroundDesign="Transparent">
-            <items>
-                <IconTabFilter text="Ask Anything" key="chatbox">
-                    <VBox class="styleBox1">
-                        <Panel class="sapMShellGlobalOuterBackground sapUiContentPadding">
-                            <core:Fragment fragmentName="peeranalysis.fragment.chatBox" type="XML"/>
-                        </Panel>
-                    </VBox>
-                    
-                </IconTabFilter>
-                <IconTabFilter text="Generate report" key="report">
-                 <VBox class="styleBox1">
-                        <Panel class="sapMShellGlobalOuterBackground sapUiContentPadding">
-                            <VBox>
-                                <Text text="Generate standard report" class="generateReportTitle sapUiSmallMarginBottom"></Text>
-                                <HBox>
-                                    <Text text="Step 1: If you don't have it, "></Text>
-                                    <Link text="download prompt template" href="https://example.com/download" class="sapUiTinyMarginBegin" target="_blank"></Link>
-                                </HBox>
-                                <Text text="Step 2: Edit fields in prompt template in Excel"></Text>
-                                <Text text="Step 3: Upload prompt template and generate report"></Text>
-                                <HBox justifyContent="SpaceBetween" class="sapUiSmallMarginTop">
-                                    <HBox>
-                                        <unified:FileUploader id="promptFileUploader" class="sapUiTinyMarginEnd" buttonOnly="true" iconFirst="false" buttonText="Add prompt template" change="onFileUpload" uploadComplete="onUploadComplete" icon="sap-icon://attachment" tooltip="Upload File" visible="{chatModel>/enableUpload}"/>
-                                        <unified:FileUploader id="mapperFileUploader" buttonOnly="true" iconFirst="false" buttonText="Add mapper" change="onFileUpload" uploadComplete="onUploadComplete" icon="sap-icon://attachment" tooltip="Upload File" visible="{chatModel>/enableUpload}"/>
-                                    </HBox>
-                                    <Button text="Generate Report" type="Emphasized" press="onGenerateReport" class="sapUiTinyMarginLeft" enabled="{chatModel>/enableSubmit}"/>
-                                </HBox>
-                            </VBox>
-                        </Panel>
-                  </VBox>
-                </IconTabFilter>
-            </items>
-        </IconTabBar>
+        <VBox class="styleBox1">
+            <Panel class="sapMShellGlobalOuterBackground sapUiContentPadding">
+                <core:Fragment fragmentName="peeranalysis.fragment.chatBox" type="XML"/>
+            </Panel>
+        </VBox>
         <VBox class="resultBoxContainer">
             <FlexBox id="resultFlexBox" visible="{chatModel>/visibleResult}">
                 <core:Fragment fragmentName="peeranalysis.fragment.resultBox" type="XML"/>
