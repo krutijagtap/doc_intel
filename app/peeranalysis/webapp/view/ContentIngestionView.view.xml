@@ -12,8 +12,8 @@
 
             <VBox id="attachmentBox" class="sapUiSmallMargin" visible="{=  ${authModel>/isViewer} }" />
             
-            <HBox class="sapUiSmallMarginTop" visible="{= ${authModel>/isViewer} }">
-                <Button icon="sap-icon://add" text="Add Attachment" press="onAddAttachment"/>
+            <HBox class="sapUiSmallMarginTop sapUiSmallMarginBegin" visible="{= ${authModel>/isViewer} }">
+                <Button icon="sap-icon://add" class="sapUiTinyMarginEnd" text="Add Attachment" press="onAddAttachment"/>
                 <Button icon="sap-icon://upload" text="Upload All" press="onUploadFileContent"/>
             </HBox>
 
