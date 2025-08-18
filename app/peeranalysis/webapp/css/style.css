@@ -149,8 +149,16 @@ body,
 
 
 
-.logo {
-  height: 40px !important;
+.logo,
+.logo-2 {
+  height: 35px !important;
+}
+.logo{
+  padding-right: 7px;
+}
+.logo-2{
+  padding-left: 20px;
+  border-left: 2px solid #ccc;
 }
 
 .navListIcon .sapTntNLIIcon,
