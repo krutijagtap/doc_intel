@@ -4,12 +4,15 @@
     xmlns:core="sap.ui.core"
     xmlns:uxap="sap.uxap"
     xmlns:tnt="sap.tnt">
-    <Page id="page" title="{i18n>title}">
-        <VBox class="styleBox1">
-            <Panel class="sapMShellGlobalOuterBackground sapUiContentPadding">
-                <core:Fragment fragmentName="peeranalysis.fragment.chatBox" type="XML"/>
-            </Panel>
+    <Page id="page" title="{i18n>title}" class="sapUiContentPadding">
+        <VBox class="padding-box">
+            <VBox class="styleBox1">
+                <Panel class="sapMShellGlobalOuterBackground sapUiContentPadding">
+                    <core:Fragment fragmentName="peeranalysis.fragment.chatBox" type="XML"/>
+                </Panel>
+            </VBox>
         </VBox>
+        
         <VBox class="resultBoxContainer">
             <FlexBox id="resultFlexBox" visible="{chatModel>/visibleResult}">
                 <core:Fragment fragmentName="peeranalysis.fragment.resultBox" type="XML"/>
