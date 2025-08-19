@@ -4,7 +4,7 @@
     xmlns:core="sap.ui.core"
     xmlns:uxap="sap.uxap"
     xmlns:tnt="sap.tnt">
-    <Page id="page" title="{i18n>title}" class="sapUiContentPadding">
+    <Page id="page" title="Peer Analysis" class="sapUiContentPadding">
         <VBox class="padding-box">
             <VBox class="styleBox1">
                 <Panel class="sapMShellGlobalOuterBackground sapUiContentPadding">
