@@ -15,12 +15,12 @@
 				</Button>
 				<ToolbarSpacer width="20px" />
               <Image
-                src="../images/Scb_logo.png"
+                src="{imageModel>/path}/../images/Scb_logo.png"
                 decorative="true"
                 class="logo"/>
                 <HBox class="logo-spacer"></HBox>
                 <Image
-                src="../images/FinSight.png"
+                src="{imageModel>/path}/../images/FinSight.png"
                 decorative="true"
                 class="logo-2"/>
         </tnt:ToolHeader>
