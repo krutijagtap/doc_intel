@@ -44,6 +44,49 @@ annotate service.Banks with @(
     
 );
 
+annotate service.Banks with @(UI.SelectionFields:[
+ code,
+ name,
+ descr
+]);
+
+annotate service.Banks with {
+  code @Common.ValueList: {
+    CollectionPath: 'Banks',
+    Parameters: [
+      {
+        $Type: 'Common.ValueListParameterInOut',
+        LocalDataProperty: 'code',
+        ValueListProperty: 'code'
+      }
+    ]
+  };
+
+  name @Common.ValueList: {
+    CollectionPath: 'Banks',
+    Parameters: [
+      {
+        $Type: 'Common.ValueListParameterInOut',
+        LocalDataProperty: 'name',
+        ValueListProperty: 'name'
+      },
+    ]  
+  };
+
+    descr @Common.ValueList: {
+    CollectionPath: 'Banks',
+    Parameters: [
+      {
+        $Type: 'Common.ValueListParameterInOut',
+        LocalDataProperty: 'descr',
+        ValueListProperty: 'descr'
+      },
+    ]  
+  };
+
+};
+
+
 
 annotate service.Banks with @(UI.HeaderInfo: {
     Title         : {

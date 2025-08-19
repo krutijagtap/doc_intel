@@ -2,12 +2,12 @@
   "_version": "1.65.0",
   "sap.app": {
     "id": "com.scb.uploadearnings",
-    "type": "component",
+    "type": "application",
     "i18n": "i18n/i18n.properties",
     "applicationVersion": {
       "version": "0.0.1"
     },
-    "title": "{{appTitle}}",
+    "title": "PeerAnalysis",
     "description": "{{appDescription}}",
     "resources": "resources.json",
     "sourceTemplate": {
@@ -94,18 +94,14 @@
         "type": "sap.ui.model.odata.v4.ODataModel",
         "dataSource": "mainService",
         "settings": {
-             "synchronizationMode" : "None",
-             "operationMode" : "Server"
+          "synchronizationMode": "None",
+          "operationMode": "Server"
         },
         "preload": true
       }
     },
     "resources": {
-      "css": [
-        {
-          "uri": "css/style.css"
-        }
-      ]
+      "css": []
     },
     "routing": {
       "config": {
@@ -119,17 +115,12 @@
         {
           "pattern": ":?query:",
           "name": "EarningFilesList",
-          "target": [
-            "EarningFilesList"
-          ]
+          "target": ["EarningFilesList"]
         },
         {
           "pattern": "EarningFiles({key}):?query:",
           "name": "EarningFilesObjectPage",
-          "target": [
-            "EarningFilesList",
-            "EarningFilesObjectPage"
-          ]
+          "target": ["EarningFilesList", "EarningFilesObjectPage"]
         }
       ],
       "targets": {
@@ -140,7 +131,7 @@
           "options": {
             "settings": {
               "contextPath": "/EarningFiles",
-              "variantManagement": "Control",
+              "variantManagement": "Page",
               "navigation": {
                 "EarningFiles": {
                   "detail": {
@@ -163,8 +154,8 @@
                       "text": "Approve",
                       "type": "Button"
                     }
+                  }
                 }
-              }
               },
               "initialLoad": "Enabled"
             }

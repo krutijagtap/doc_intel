@@ -1,51 +1,53 @@
 const cds = require("@sap/cds");
 const { Readable } = require("stream");
 const crypto = require("crypto");
-const {executeHttpRequest} = require('@sap-cloud-sdk/http-client');
-const { Roles, Messages, Status } = require('./utils/constants')
+const { executeHttpRequest } = require("@sap-cloud-sdk/http-client");
+const { Roles, Messages, Status } = require("./utils/constants");
 
 module.exports = cds.service.impl((srv) => {
-  
-  const {EarningFiles,VisibilityConfig} = srv.entities;
-  srv.on("READ",VisibilityConfig, async (req) => {
+  const { EarningFiles, VisibilityConfig } = srv.entities;
+  srv.on("READ", VisibilityConfig, async (req) => {
     let viewer;
-    if(!req.user.is(Roles.EarningsAdmin) && !req.user.is(Roles.EarningsViewer)){
-       viewer = true;
-    }else{
+    if (
+      !req.user.is(Roles.EarningsAdmin) &&
+      !req.user.is(Roles.EarningsViewer)
+    ) {
+      viewer = true;
+    } else {
       viewer = false;
-    }       
+    }
     req.reply({
       isAdmin: req.user.is(Roles.EarningsAdmin),
       isMaker: req.user.is(Roles.EarningsViewer),
       isViewer: viewer,
       hideCreate: !req.user.is(Roles.EarningsViewer),
-    })
+    });
   });
 
-  srv.on('approveFiles', async req=>{
-        const ids = req.data.ids;
-        if(!Array.isArray(ids) || ids.length ===0){
-          return req.error(400, "No Ids Provided");  
-        }
-        const result = await UPDATE(EarningFiles)
-              .set({status: 'Approved'})
-              .where({ID: {in:ids}})
-       return {updated: result}       
-  })
-
-  srv.on('rejectFiles', async req=>{
+  srv.on("approveFiles", async (req) => {
     const ids = req.data.ids;
-    if(!Array.isArray(ids) || ids.length ===0){
-      return req.error(400, "No Ids Provided");  
+    if (!Array.isArray(ids) || ids.length === 0) {
+      return req.error(400, "No Ids Provided");
     }
     const result = await UPDATE(EarningFiles)
-          .set({status: 'Rejected'})
-          .where({ID: {in:ids}})
-   return {updated: result}       
-})
+      .set({ status: "Approved" })
+      .where({ ID: { in: ids } });
+    return { updated: result };
+  });
 
-   // original read logic based on content
-   srv.on('READ', ['EarningFiles', 'EarningFiles.drafts'], async (req, next) => {
+  srv.on("rejectFiles", async (req) => {
+    const ids = req.data.ids;
+    if (!Array.isArray(ids) || ids.length === 0) {
+      return req.error(400, "No Ids Provided");
+    }
+    const result = await UPDATE(EarningFiles)
+      .set({ status: "Rejected" })
+      .where({ ID: { in: ids } });
+    return { updated: result };
+  });
+
+  // original read logic based on content
+  srv.on("READ", ["EarningFiles", "EarningFiles.drafts"], async (req, next) => {
     if (!req.data.ID) {
       return next();
     }
@@ -60,22 +62,28 @@ module.exports = cds.service.impl((srv) => {
       let tx = cds.transaction(req);
       // Fetch the media obj from database
       let mediaObj = await tx.run(
-        SELECT.one.from("com.scb.earningupload.EarningFiles", ["content", "mediaType","fileName"]).where(
-          "ID =",
-          req.data.ID
-        )
+        SELECT.one
+          .from("com.scb.earningupload.EarningFiles", [
+            "content",
+            "mediaType",
+            "fileName",
+          ])
+          .where("ID =", req.data.ID)
       );
       let decodedMedia = "";
-      decodedMedia = Buffer.from(
-        mediaObj.content,
-        "base64"
-      );
+      decodedMedia = Buffer.from(mediaObj.content, "base64");
       const res = req._.res;
-      res.setHeader("Content-Type", mediaObj.mediaType || "application/octet-stream");
-      console.log("filename" +mediaObj.fileName)
-    // Set content disposition with original filename
-    const safeFileName = encodeURIComponent(mediaObj.fileName || "download");
-    res.setHeader("Content-Disposition", `inline; filename="${safeFileName}"`);
+      res.setHeader(
+        "Content-Type",
+        mediaObj.mediaType || "application/octet-stream"
+      );
+      console.log("filename" + mediaObj.fileName);
+      // Set content disposition with original filename
+      const safeFileName = encodeURIComponent(mediaObj.fileName || "download");
+      res.setHeader(
+        "Content-Disposition",
+        `inline; filename="${safeFileName}"`
+      );
       console.log("Media content fetched successfully for ID:", req.data.ID);
       return _formatResult(decodedMedia, mediaObj.mediaType);
     } else return next();
@@ -92,45 +100,47 @@ module.exports = cds.service.impl((srv) => {
   //   }else return
   // });
 
-  srv.before('READ', EarningFiles, async (req) => {
+  srv.before("READ", EarningFiles, async (req) => {
     // Only restrict if user is a viewer
-    if(!req.user.is(Roles.EarningsAdmin) && !req.user.is(Roles.EarningsViewer)) {
+    if (
+      !req.user.is(Roles.EarningsAdmin) &&
+      !req.user.is(Roles.EarningsViewer)
+    ) {
       // Inject condition: only show Approved records
-      req.query.where('status =', 'Approved');
+      req.query.where("status =", "Approved");
     }
   });
 
-  srv.before('DELETE', EarningFiles, async (req) => {
-
+  srv.before("DELETE", EarningFiles, async (req) => {
     if (req.user.is(Roles.EarningsAdmin)) return;
     const db = srv.transaction(req);
 
     // Handle batch deletes (multi-selection)
-    const deleteIds = Array.isArray(req.data) ? req.data.map(d => d.ID) : [req.data.ID];
+    const deleteIds = Array.isArray(req.data)
+      ? req.data.map((d) => d.ID)
+      : [req.data.ID];
 
     const files = await db.run(
       SELECT.from(EarningFiles).where({ ID: { in: deleteIds } })
     );
-    
-    const othersFiles = files.filter(file => file.createby !== req.user.id );
-    const approvedFiles = files.filter(file => file.status === 'Approved');
+
+    const othersFiles = files.filter((file) => file.createdBy !== req.user.id);
+    const approvedFiles = files.filter((file) => file.status === "Approved");
 
     if (approvedFiles.length > 0) {
-      req.reject(400, 'You cannot delete files that are already Approved.');
-    }else if (othersFiles.length >0){
-      req.reject(400, 'You cannot delete files that are not created by you');
+      req.reject(400, "You cannot delete files that are already Approved.");
+    } else if (othersFiles.length > 0) {
+      req.reject(400, "You cannot delete files that are not created by you");
     }
-    
-
   });
 
   // Helper function to convert Readable stream to Buffer
   function streamToBuffer(stream) {
     return new Promise((resolve, reject) => {
       const chunks = [];
-      stream.on('data', chunk => chunks.push(chunk));
-      stream.on('end', () => resolve(Buffer.concat(chunks)));
-      stream.on('error', err => reject(err));
+      stream.on("data", (chunk) => chunks.push(chunk));
+      stream.on("end", () => resolve(Buffer.concat(chunks)));
+      stream.on("error", (err) => reject(err));
     });
   }
 
@@ -141,89 +151,100 @@ module.exports = cds.service.impl((srv) => {
     readable.push(null);
     return {
       value: readable,
-      '*@odata.mediaContentType': mediaType
-    }
+      "*@odata.mediaContentType": mediaType,
+    };
   }
- 
-  srv.on('generateEmbedding', async()=>{
-   // let triggerAPI = await cds.connect.to("EARNINGS_CORE",{timeout: 120000});
-   const response = await executeHttpRequest(
-     {destinationName: 'EARNINGS_CORE'},
-     {
-       method: 'POST',
-       url: '/api/generate-embeddings'
-     }
 
-   );
-  
-  //  srv.on('generateEmbedding', async()=>{
-  //   // let triggerAPI = await cds.connect.to("EARNINGS_CORE",{timeout: 120000});
-  //   const response = await executeHttpRequest(
-  //     {destinationName: 'DatasphereSrvWithSAMLAuth'},
-  //     {
-  //       method: 'GET',
-  //       url: '/analytical/4TP_ESG_SACX_01/4AM_SF_EIM_FinPerfPreAgg_Workzone/4AM_SF_EIM_FinPerfPreAgg_Workzone?top=3'
-  //     }
- 
-  //   );
+  srv.on("generateEmbedding", async () => {
+    // let triggerAPI = await cds.connect.to("EARNINGS_CORE",{timeout: 120000});
+    const response = await executeHttpRequest(
+      { destinationName: "EARNINGS_CORE" },
+      {
+        method: "POST",
+        url: "/api/generate-embeddings",
+      }
+    );
 
-   if (response.status === 200){
-    return ("Embeddings generated successfully");
-   }else{
-    throw new Error(`Embedding API failed with status ${response.status}`)
-   }
-    
+    //  srv.on('generateEmbedding', async()=>{
+    //   // let triggerAPI = await cds.connect.to("EARNINGS_CORE",{timeout: 120000});
+    //   const response = await executeHttpRequest(
+    //     {destinationName: 'DatasphereSrvWithSAMLAuth'},
+    //     {
+    //       method: 'GET',
+    //       url: '/analytical/4TP_ESG_SACX_01/4AM_SF_EIM_FinPerfPreAgg_Workzone/4AM_SF_EIM_FinPerfPreAgg_Workzone?top=3'
+    //     }
 
+    //   );
+
+    if (response.status === 200) {
+      return "Embeddings generated successfully";
+    } else {
+      throw new Error(`Embedding API failed with status ${response.status}`);
+    }
   });
 
-  srv.on('chatResponse', async(req)=>{
-   console.log("request obj" + req);
+  srv.on("chatResponse", async (req) => {
+    console.log("request obj" + req);
     const response = await executeHttpRequest(
-      {destinationName: 'EARNINGS_CORE'},
+      { destinationName: "EARNINGS_CORE" },
       {
-        method: 'POST',
-        url: '/api/chat',
-        headers: { 
-          "Content-Type": "application/json" },
-        data: { "message": req.data.prompt }
-
+        method: "POST",
+        url: "/api/chat",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        data: { message: req.data.prompt },
       }
- 
-    );   
-    if (response.status === 200 && response.data != null){
-     return response.data
-    }else{
-     throw new Error(`Error creating chat response ${response.status}`)
-    }     
-   });
-  srv.on('READ', ['EmbeddingFiles'], async (req, next) => {
+    );
+    if (response.status === 200 && response.data != null) {
+      return response.data;
+    } else {
+      throw new Error(`Error creating chat response ${response.status}`);
+    }
+  });
+  srv.on("READ", ["EmbeddingFiles"], async (req, next) => {
     if (!req.data.ID) {
       return next();
-    } 
+    }
     const url = req._.req.path;
     if (url.includes("content")) {
-      console.log("Fetching media content for ID:", req.data.ID);  
+      console.log("Fetching media content for ID:", req.data.ID);
       let tx = cds.transaction(req);
       let mediaObj = await tx.run(
-        SELECT.one.from("com.scb.earningupload.EmbeddingFiles", ["content", "mediaType","fileName"]).where({ ID: req.data.ID })
+        SELECT.one
+          .from("com.scb.earningupload.EmbeddingFiles", [
+            "content",
+            "mediaType",
+            "fileName",
+          ])
+          .where({ ID: req.data.ID })
       );
-  
+
       if (!mediaObj || !mediaObj.content) {
         console.error(`No content found for ID: ${req.data.ID}`);
         req.reject(404, `No media content found for ID: ${req.data.ID}`);
         return;
       }
       const res = req._.res;
-      res.setHeader("Content-Type", mediaObj.mediaType || "application/octet-stream");
-      console.log("filename" +mediaObj.fileName)
-    // Set content disposition with original filename
-    const safeFileName = encodeURIComponent(mediaObj.fileName || "download");
-    res.setHeader("Content-Disposition", `inline; filename="${safeFileName}"`);
-    console.log("Media content fetched and header set successfully for ID:", req.data.ID);
- 
+      res.setHeader(
+        "Content-Type",
+        mediaObj.mediaType || "application/octet-stream"
+      );
+      console.log("filename" + mediaObj.fileName);
+      // Set content disposition with original filename
+      const safeFileName = encodeURIComponent(mediaObj.fileName || "download");
+      res.setHeader(
+        "Content-Disposition",
+        `inline; filename="${safeFileName}"`
+      );
+      console.log(
+        "Media content fetched and header set successfully for ID:",
+        req.data.ID
+      );
+
       // No Buffer.from needed anymore!
-      let decodedMedia = mediaObj.content;  // already a Buffer
-  
+      let decodedMedia = mediaObj.content; // already a Buffer
+
       console.log("Media content fetched successfully for ID:", req.data.ID);
       return _formatResult(decodedMedia, mediaObj.mediaType);
     } else {
@@ -235,9 +256,9 @@ module.exports = cds.service.impl((srv) => {
   function streamToBuffer(stream) {
     return new Promise((resolve, reject) => {
       const chunks = [];
-      stream.on('data', chunk => chunks.push(chunk));
-      stream.on('end', () => resolve(Buffer.concat(chunks)));
-      stream.on('error', err => reject(err));
+      stream.on("data", (chunk) => chunks.push(chunk));
+      stream.on("end", () => resolve(Buffer.concat(chunks)));
+      stream.on("error", (err) => reject(err));
     });
   }
 
@@ -254,8 +275,8 @@ module.exports = cds.service.impl((srv) => {
 
   function _formatResult(decodedMedia, mediaType) {
     return {
-      value: decodedMedia,   // Buffer directly!
-      '*@odata.mediaContentType': mediaType
+      value: decodedMedia, // Buffer directly!
+      "*@odata.mediaContentType": mediaType,
     };
   }
 });

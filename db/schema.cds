@@ -30,7 +30,7 @@ entity Quarters : CodeList {
          bank,
          year,
          quarter
-]}
+]}  
 entity EarningFiles : cuid, managed {
   bank      : Association to Banks;
   year      : Association to Years default '2025';

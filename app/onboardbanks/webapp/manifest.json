@@ -7,7 +7,7 @@
     "applicationVersion": {
       "version": "0.0.1"
     },
-    "title": "{{appTitle}}",
+    "title": "PeerAnalysis",
     "description": "{{appDescription}}",
     "resources": "resources.json",
     "sourceTemplate": {
@@ -24,8 +24,22 @@
           "odataVersion": "4.0"
         }
       }
+    },
+    "crossNavigation": {
+      "inbounds": {
+        "Earnings-upload": {
+          "semanticObject": "Banks",
+          "action": "update",
+          "title": "New Bank Onboard",
+          "signature": {
+            "parameters": {},
+            "additionalParameters": "allowed"
+          }
+        }
+      }
     }
   },
+
   "sap.ui": {
     "technology": "UI5",
     "icons": {
@@ -97,17 +111,12 @@
         {
           "pattern": ":?query:",
           "name": "BanksList",
-          "target": [
-            "BanksList"
-          ]
+          "target": ["BanksList"]
         },
         {
           "pattern": "Banks({key}):?query:",
           "name": "BanksObjectPage",
-          "target": [
-            "BanksList",
-            "BanksObjectPage"
-          ]
+          "target": ["BanksList", "BanksObjectPage"]
         }
       ],
       "targets": {
@@ -137,7 +146,8 @@
                     "type": "ResponsiveTable"
                   }
                 }
-              }
+              },
+              "initialLoad": "Enabled"
             }
           },
           "controlAggregation": "beginColumnPages",

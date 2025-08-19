@@ -7,7 +7,7 @@
     "applicationVersion": {
       "version": "0.0.1"
     },
-    "title": "{{appTitle}}",
+    "title": "PeerAnalysis",
     "description": "{{appDescription}}",
     "resources": "resources.json",
     "sourceTemplate": {
@@ -20,7 +20,7 @@
         "Earnings-upload": {
           "semanticObject": "content",
           "action": "view",
-          "title": "{{peeranalysis.flpTitle}}",
+          "title": "Peer Analysis",
           "signature": {
             "parameters": {},
             "additionalParameters": "allowed"
@@ -54,7 +54,7 @@
         "sap.m": {},
         "sap.ui.core": {}
       }
-    },   
+    },
     "contentDensities": {
       "compact": true,
       "cozy": true
@@ -101,9 +101,7 @@
         {
           "name": "RoutePeerAnaysisView",
           "pattern": ":?query:",
-          "target": [
-            "TargetPeerAnaysisView"
-          ]
+          "target": ["TargetPeerAnaysisView"]
         },
         {
           "pattern": "ContentIngestionView",
@@ -156,8 +154,6 @@
           "id": "ReportsView",
           "name": "ReportsView"
         }
-
-
       }
     },
     "rootView": {
@@ -169,6 +165,6 @@
   },
   "sap.cloud": {
     "public": true,
-    "service": "peeranalysis"
+    "service": "earningupload"
   }
 }
