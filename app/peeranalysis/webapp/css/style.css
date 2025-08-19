@@ -178,7 +178,12 @@ body,
 .navListIcon .sapMText {
   color: var(--scbBrandColor) !important;
 }
-
+.fontBold{
+  font-family: SCProsperSansBold;
+}
+.brandColor{
+  color: var(--scbBrandColor) !important;
+}
 
 /* .earningsBox {
   align-items: center;
