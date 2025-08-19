@@ -1,44 +1,68 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller",
-    "sap/m/MessageToast"
-  ], function (Controller, MessageToast) {
-    "use strict";
-  
-    return Controller.extend("peeranalysis.controller.OnboardView", {
-      onInit: function () {
-      
-      },
-      onAfterRendering: function () {
- 
-        const currentUrl = window.location.href;
+  "sap/ui/core/mvc/Controller",
+  "sap/m/MessageToast"
+], function (Controller, MessageToast) {
+  "use strict";
 
-        // Strip off the hash fragment (e.g., #/Onboard)
-        const baseUrl = currentUrl.split("#")[0];
+  return Controller.extend("peeranalysis.controller.OnboardView", {
+    onInit: function () {
     
-        // Replace app name in the base URL
-        const pattern = /(\/[^\/]+\.earningupload\.)[^.]+(-[\d.]+\/index\.html)/;
-        const targetBank = "onboardbanks";
-      
-        const newBankUrl = baseUrl.replace(pattern, `$1${targetBank}$2`);
-     //   const newreportsUrl = baseUrl.replace(pattern, `$1${targetReports}$2`);
+    },
+    onAfterRendering: function () {
+      const oIframe = this.byId("onboardbanks")?.getDomRef();
+      if (!oIframe) { return; }
     
-        const bankiframe = this.byId("onboardbanks")?.getDomRef();
-        if (bankiframe) {
-            bankiframe.setAttribute("src", newBankUrl);
-        } else {
-            console.error("iframe element not found");
+      // 1. build URL first
+      const sUrl = this._isFLP() ? this._getFLPUrl() : this._getStandaloneUrl();
+    
+      // 2. attach handler *before* setting src
+      const fnInjectCss = () => {
+        try {
+          const oDoc = oIframe.contentDocument || oIframe.contentWindow.document;
+          const oStyle = oDoc.createElement("style");
+          oStyle.textContent = `
+            #shell-header, #shell-header-hdr, #header-shellArea { display:none!important; }
+            #shellLayout { padding-top:0!important; }
+          `;
+          oDoc.head.appendChild(oStyle);
+        } catch (e) {
+          console.error("Failed to inject style into iframe", e);
         }
+      };
+      oIframe.removeEventListener("load", fnInjectCss);
+      oIframe.addEventListener("load", fnInjectCss);
+    
+      // 3. finally trigger navigation
+      oIframe.src = sUrl;
+    },
 
-    //     const reportsiframe = this.byId("reports")?.getDomRef();
-    //     if (reportsiframe) {
-    //       reportsiframe.setAttribute("src", newreportsUrl);
-    //   } else {
-    //       console.error("iframe element not found");
-    //   }
-    }
+    _isFLP: () => !!sap.ushell?.Container,
+    
+    _getStandaloneUrl: function () {
+      const baseUrl = window.location.href.split("#")[0];
+      return baseUrl.replace(/(\/[^\/]+\.earningupload\.)[^.]+(-[\d.]+\/index\.html)/,
+                             "$1onboardbanks$2");
+    },
 
+    _getFLPUrl:function() {
+    const href = window.location.href;
+  
+    const url = new URL(href);
+    const siteId = url.searchParams.get("siteId");
+    const sapAppId = url.searchParams.get("sap-ui-app-id");
+    const appHint = "sap-ui-app-id-hint=saas_approuter_" + sapAppId;
+  
+    // Example: mapping app id to hash (like #Banks-update)
+    const hashMapping = {
+      peeranalysis: "Banks-update",
+      uploadearnings: "Earnings-upload",
+      // Add other mappings as needed
+    };    
+    const semanticHash = hashMapping[sapAppId] || "home";    
+    const formattedUrl = `${url.origin}/site?siteId=${siteId}`;
+    const completeurl = formattedUrl+"#Banks-update?sap-ui-app-id-hint=saas_approuter_onboardbanks";
+    return completeurl;
+  }  
 
-
-
-    });
   });
+});

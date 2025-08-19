@@ -25,6 +25,7 @@ service EarningUploadSrv {
   @Search.defaultSearchElement : ['bank_code','bank_name','fileName','createdBy','createdAt','quarter','status'] 
   @UI.DeleteHidden: {$edmJson: { $Path: '/EarningUploadSrv.EntityContainer/VisibilityConfig/isViewer'}}
   @UI.CreateHidden: {$edmJson: {  $Path: '/EarningUploadSrv.EntityContainer/VisibilityConfig/hideCreate'}}
+  @UI.UpdateHidden: true
   entity EarningFiles as projection on earning_upload.EarningFiles{
     *,
     bank.name as bank_name

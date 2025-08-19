@@ -20,10 +20,3 @@ builder:
         relativePaths: true
         additionalFiles:
           - xs-app.json
-    - name: ui5-tooling-stringreplace-task
-      afterTask: replaceVersion
-      configuration:
-        files:
-          - "**/*.js"
-          - "**/*.xml"
-          - "**/*.json"

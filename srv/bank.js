@@ -19,5 +19,13 @@ module.exports = cds.service.impl((srv) => {
         hideCreate: !req.user.is(Roles.EarningsViewer),
       })
     });
+    
+    srv.before('CREATE', 'Banks', req => {
+      const code = req.data.code;
+      if (!/^[a-zA-Z0-9_-]+$/.test(code)) {
+        req.error(400, 'Code must contain only letters and numbers. No special characters are allowed !');
+      }
+    });
+
 
 });

@@ -112,7 +112,7 @@ module.exports = cds.service.impl((srv) => {
       SELECT.from(EarningFiles).where({ ID: { in: deleteIds } })
     );
     
-    const othersFiles = files.filter(file => file.createby !== req.user.id );
+    const othersFiles = files.filter(file => file.createdBy !== req.user.id );
     const approvedFiles = files.filter(file => file.status === 'Approved');
 
     if (approvedFiles.length > 0) {

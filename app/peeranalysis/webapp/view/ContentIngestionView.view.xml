@@ -12,26 +12,29 @@
 
             <VBox id="attachmentBox" class="sapUiSmallMargin" visible="{=  ${authModel>/isViewer} }" />
             
-            <HBox class="sapUiSmallMarginTop sapUiSmallMarginBegin" visible="{= ${authModel>/isViewer} }">
-                <Button icon="sap-icon://add" class="sapUiTinyMarginEnd" text="Add Attachment" press="onAddAttachment"/>
-                <Button icon="sap-icon://upload" text="Upload All" press="onUploadFileContent"/>
+            <HBox class="sapUiSmallMarginTop" visible="{= ${authModel>/isViewer} }">
+                <Button type="Emphasized" icon="sap-icon://add" text="Add Attachment" press="onAddAttachment"/>
+                <Button type="Emphasized" icon="sap-icon://upload" text="Upload All" press="onUploadFileContent"/>
             </HBox>
 
-            <HBox backgroundDesign="Solid" width="100%" class="sapUiTinyMargin" justifyContent="Start" alignItems="Start" wrap="Wrap">
-                <sfb:SmartFilterBar
-                        id="smartFilterBar"
-                        entitySet="EmbeddingFiles"
-                        persistencyKey="SmartFilterBarFiles"
-                        enableBasicSearch="true"
-                        showClearOnFB="true"
-                        showFilterConfiguration="true"
-                        useToolbar="false"
-                    >
-                        <sfb:customData>
-                            <core:CustomData key="preselectionDefaults" value='{"status": "Completed"}' />
-                        </sfb:customData>
-                    </sfb:SmartFilterBar>
-            </HBox>
+<HBox class="sapUiSmallMarginTop" justifyContent="Start" alignItems="Start" wrap="Wrap">
+    <VBox>
+   
+        <sfb:SmartFilterBar
+            id="smartFilterBar"
+            entitySet="EmbeddingFiles"
+            persistencyKey="SmartFilterBarFiles"
+            enableBasicSearch="true"
+            showClearOnFB="true"
+            showFilterConfiguration="true"
+            useToolbar="false"
+         >
+            <sfb:customData>
+                <core:CustomData key="preselectionDefaults" value='{"status": "Completed"}' />
+            </sfb:customData>
+        </sfb:SmartFilterBar>
+    </VBox>
+</HBox>
             <smartTable:SmartTable
                 id="smartTable"
                 tableType="ResponsiveTable"

@@ -213,8 +213,6 @@ sap.ui.define([
         var appId = this.getOwnerComponent().getManifestEntry("/sap.app/id");
         var appPath = appId.replaceAll(".", "/");
         var appModulePath = jQuery.sap.getModulePath(appPath);
-        //dev change
-        return "";
         return appModulePath;
     },  
 
@@ -262,6 +260,18 @@ sap.ui.define([
   return hashHex;
 },
 
+// _autoRefreshSmartTable: function (){
+//      setInterval(() =>{
+//       const oSmartTable = this.byId("smartTable");
+//       const oFilesTable = oSmartTable?.getTable();
+//       const oBinding = oFilesTable?.getBinding("rows") || oFilesTable?.getBinding("items");
+//      if(oBinding){
+//       oBinding.refresh()
+//      }
+//      },120000)
+
+// },
+
  onApproveFiles: async function () {
   const oTable = this.byId("smartTable").getTable();
   const aSelectedItems = oTable.getSelectedItems();
@@ -282,7 +292,7 @@ sap.ui.define([
     return;
   }
 
-  oView.setBusy(true);
+ // oView.setBusy(true);
 
   const successList = [];
   const failedList = [];
@@ -301,10 +311,10 @@ sap.ui.define([
          "Content-Type": "application/json"
         },
         credentials: "include",
-        body: JSON.stringify({ status: "In-Progress" })
+        body: JSON.stringify({ status: "Processing" })
       });
 
-      oModel.setProperty(oCtx.getPath() + "/status", "In-Progress");
+      oModel.setProperty(oCtx.getPath() + "/status", "Processing");
       // oTable.removeSelection(oTable.indexOfItem(oItem));
       successList.push(fileId);
     } catch (error) {
@@ -313,61 +323,66 @@ sap.ui.define([
     }
   }
 
- 
+  //sap.m.MessageBox.success("Files were approved successfully");
  
 
   // Step 2: Call downstream API only if all PATCHes succeeded
   if (failedList.length === 0) {
-    busyDialogTxt = "Embedding is getting generated...";
-    const oBusyDialog = new sap.m.BusyDialog({
-      title: "Generating Embeddings",
-      text: busyDialogTxt
-    });
-    oBusyDialog.open();
+   // busyDialogTxt = "Embedding is getting generated...";
+    // const oBusyDialog = new sap.m.BusyDialog({
+    //   title: "Generating Embeddings",
+    //   text: busyDialogTxt
+    // });
+    // oBusyDialog.open();
   
     try {
-     let restResponse =  await fetch(embeddingUrl, {
+     let restResponse =  fetch(embeddingUrl, {
         method: "POST",
         headers: {
          "X-CSRF-Token": csrf,
          "Content-Type": "application/json"
         }
       });
-      if (!restResponse.ok) {
-        sap.m.MessageToast.show(restResponse.status);
-        throw new Error(`REST call failed with status ${restResponse.status}`);
-      }else{
-        await this._readEntitySetAsync(this.getView().getModel(), "/EmbeddingFiles");
-        this.onTableRefresh();
-        oModel.setProperty(oCtx.getPath() + "/status", "Completed");
+      await this._readEntitySetAsync(this.getView().getModel(), "/EmbeddingFiles");
+      this.onTableRefresh();
+      oModel.setProperty(oCtx.getPath() + "/status", "Processing");
+      sap.m.MessageBox.success("Files were approved successfully");
+     // this._autoRefreshSmartTable();
 
-
+     
+    //   if (!restResponse.ok) {
+    //     // sap.m.MessageToast.show(restResponse.status);
+    //     // throw new Error(`REST call failed with status ${restResponse.status}`);
+    //   }else{
     //     await this._readEntitySetAsync(this.getView().getModel(), "/EmbeddingFiles");
-    //     const oEmbTable = this.byId("smartTable");
-    //     oEmbTable.rebindTable();
-    // //    this.getView().getController().onInit();
-    //     oBusyDialog.close();
-            sap.m.MessageBox.success(`${successList.length} file(s) approved and embeddings generated.`);
-    //        const oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-    //        oRouter.navTo("ContentIngestionView",{},true);
+    //     this.onTableRefresh();
+    //     oModel.setProperty(oCtx.getPath() + "/status", "Processing");
+
+
+    // //     await this._readEntitySetAsync(this.getView().getModel(), "/EmbeddingFiles");
+    // //     const oEmbTable = this.byId("smartTable");
+    // //     oEmbTable.rebindTable();
+    // // //    this.getView().getController().onInit();
+    // //     oBusyDialog.close();
+    // //        sap.m.MessageBox.success(`${successList.length} file(s) approved and embeddings generated.`);
+    // //        const oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+    // //        oRouter.navTo("ContentIngestionView",{},true);
 
           
-      }
+    //   }
 
       // sap.m.MessageToast.show(`${successList.length} file(s) approved and embeddings generated.`);
       // sap.m.MessageBox.Success(`${successList.length} file(s) approved and embeddings generated.`);
     } catch (restErr) {
-      oBusyDialog.close();
-      oView.setBusy(false);
-      console.error("Downstream API call failed:", restErr);
-      sap.m.MessageBox.error("Files were approved but embedding generation failed.");
+     // oBusyDialog.close();
+      // oView.setBusy(false);
+      // console.error("Downstream API call failed:", restErr);
+      // sap.m.MessageBox.error("Files were approved but embedding generation failed.");
     }
     finally {
-      oBusyDialog.close();
-      oView.setBusy(false);
+   //   oBusyDialog.close();
+   //   oView.setBusy(false);
     }
-  } else {
-    sap.m.MessageBox.warning(`${failedList.length} file(s) failed to approve:\n\n${failedList.join(", ")}`);
   }
 
 
@@ -460,12 +475,27 @@ sap.ui.define([
     }
     const oModel = this.getView().getModel();
     const baseUrl = this.getBaseURL();
-    let serviceUrl = baseUrl + "/v2/odata/v4/earning-upload-srv/EmbeddingFiles/";
+    let serviceUrl = baseUrl + "/v2/odata/v4/earning-upload-srv/EmbeddingFiles/" ;
 
+    async function fetchCsrfToken(url) {
+      const response = await fetch(url, {
+          method: "HEAD",
+          credentials: "include",
+          headers: {
+              "X-CSRF-Token": "Fetch"
+          }
+      });
+      const token = response.headers.get("X-CSRF-Token");
+      if (!token) {
+          throw new Error("Failed to fetch CSRF token");
+      }
+      return token;
+  }
+  
     for (const oCtx of this._rejectionContexts) {
       const fileId = oCtx.getProperty("ID");
       serviceUrl = serviceUrl+fileId;
-      const csrfToken = await this.onfetchCSRF(serviceUrl);
+      const csrfToken = await fetchCsrfToken(serviceUrl);
       // Send rejection update to backend
       await fetch(serviceUrl, {
         method: "PATCH",
@@ -512,10 +542,9 @@ onfetchCSRF: async function(url){
     }
 });
 const token = response.headers.get("X-CSRF-Token");
-//dev change
-// if (!token) {
-//     throw new Error("Failed to fetch CSRF token");
-// }
+if (!token) {
+    throw new Error("Failed to fetch CSRF token");
+}
 return token;
 }, 
   
@@ -527,10 +556,26 @@ onUploadFileContent: async function () {
   const baseUrl = this.getBaseURL();
   const serviceUrl = baseUrl + "/v2/odata/v4/earning-upload-srv/";
 
+  // Helper to fetch CSRF token
+  async function fetchCsrfToken(url) {
+      const response = await fetch(url, {
+          method: "HEAD",
+          credentials: "include",
+          headers: {
+              "X-CSRF-Token": "Fetch"
+          }
+      });
+      const token = response.headers.get("X-CSRF-Token");
+      if (!token) {
+          throw new Error("Failed to fetch CSRF token");
+      }
+      return token;
+  }
+
   try {
       oPage.setBusy(true);
 
-      const csrfToken = await this.onfetchCSRF(serviceUrl);
+      const csrfToken = await fetchCsrfToken(serviceUrl);
 
       for (const uploader of this._uploaders) {
           const fileInput = uploader.getDomRef("fu");
@@ -542,6 +587,7 @@ onUploadFileContent: async function () {
 
           try {
               // Step 1: Create EmbeddingFiles entity
+              const fileBaseUrl = this.getBaseURL(); 
               const createResponse = await fetch(embedding_url, {
                   method: "POST",
                   headers: {
@@ -553,7 +599,7 @@ onUploadFileContent: async function () {
                       ID: fileHash,
                       fileName: file.name,
                       mediaType: file.type,
-                      url: `${baseUrl}/v2/odata/v4/earning-upload-srv/EmbeddingFiles('${fileHash}')/content`,
+                      url: fileBaseUrl + "/v2/odata/v4/earning-upload-srv/EmbeddingFiles('" +fileHash + "')/content",
                       status: "Submitted"
                   })
               });

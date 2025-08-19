@@ -26,25 +26,21 @@ sap.ui.define([
             const readPromise = new Promise((resolve, reject) => {
                 reader.onload = function (e) {
                     const content = e.currentTarget.result;
-
                     resolve(content);
                 };
-
                 reader.onerror = function (error) {
                     reject(error);
                 };
             });
             reader.readAsDataURL(oFile);
-
             const result = await readPromise;
-
             const fileContent = result.split("base64,")[1];
-
             try {
-                const fileUrl = "./odata/v4/earning-upload-srv/EarningFiles(ID=<ID>,IsActiveEntity=true)/content";
+                const fileUrl = "/odata/v4/earning-upload-srv/EarningFiles(ID=<ID>,IsActiveEntity=true)/content";                
                 oContext.setProperty("mediaType", oFile.type);
                 oContext.setProperty("fileName", oFile.name);
                 oContext.setProperty("content", fileContent);
+    //            oContext.setProperty("url", fileContent);
                 oContext.setProperty("url", fileUrl.replace("<ID>", oContext.getProperty("ID")));
                 MessageToast.show("File uploaded successfully");
             } catch (err) {

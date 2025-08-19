@@ -15,13 +15,9 @@
 				</Button>
 				<ToolbarSpacer width="20px" />
               <Image
-                src="./images/Scb_logo.png"
+                id="logo"
+                src="{imageModel>/path}/../images/logo.png"
                 decorative="true"
                 class="logo"/>
-                <HBox class="logo-spacer"></HBox>
-                <Image
-                src="./images/FinSight.png"
-                decorative="true"
-                class="logo-2"/>
         </tnt:ToolHeader>
 </core:FragmentDefinition>

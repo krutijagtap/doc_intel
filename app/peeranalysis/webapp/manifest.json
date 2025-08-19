@@ -7,7 +7,7 @@
     "applicationVersion": {
       "version": "0.0.1"
     },
-    "title": "{{appTitle}}",
+    "title": "PeerAnalysis",
     "description": "{{appDescription}}",
     "resources": "resources.json",
     "sourceTemplate": {
@@ -20,7 +20,7 @@
         "Earnings-upload": {
           "semanticObject": "content",
           "action": "view",
-          "title": "{{peeranalysis.flpTitle}}",
+          "title": "Peer Analysis",
           "signature": {
             "parameters": {},
             "additionalParameters": "allowed"
@@ -47,7 +47,7 @@
     }
   },
   "sap.ui5": {
-    "flexEnabled": false,
+    "flexEnabled": true,
     "dependencies": {
       "minUI5Version": "1.134.1",
       "libs": {
@@ -169,6 +169,6 @@
   },
   "sap.cloud": {
     "public": true,
-    "service": "peeranalysis"
+    "service": "earningupload"
   }
 }
