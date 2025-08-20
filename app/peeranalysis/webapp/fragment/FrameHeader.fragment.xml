@@ -13,11 +13,7 @@
 						<OverflowToolbarLayoutData priority="NeverOverflow" />
 					</layoutData>
 				</Button>
-				<ToolbarSpacer width="20px" />
-              <Image
-                id="logo"
-                src="{imageModel>/path}/../images/logo.png"
-                decorative="true"
-                class="logo"/>
+        <ToolbarSpacer width="20px"></ToolbarSpacer>
+        <Image id="logo" src="./images/Scb_logo.png" decorative="true" class="logo"/>
         </tnt:ToolHeader>
 </core:FragmentDefinition>
