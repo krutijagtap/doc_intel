@@ -78,14 +78,14 @@ body {
   --sapButton_BorderColor: var(--scbBrandColor);
   --sapButton_Accept_Background: var(--scbBrandColor);
   --sapButton_Accept_BorderColor: var(--scbBrandColor);
-  --sapButton_Accept_Hover_Background: var(--scbBrandColor);
-  --sapButton_Accept_Hover_BorderColor: var(--scbBrandColor);
+  --sapButton_Accept_Hover_Background: var(--sapButton_Emphasized_Hover_Background);
+  --sapButton_Accept_Hover_BorderColor: var(--sapButton_Emphasized_Hover_BorderColor);
   --sapButton_Accept_TextColor: white;
   --sapButton_Accept_Hover_TextColor: white;
   --sapButton_Reject_Background: var(--scbBrandColor);
   --sapButton_Reject_BorderColor: var(--scbBrandColor);
-  --sapButton_Reject_Hover_Background: var(--scbBrandColor);
-  --sapButton_Reject_Hover_BorderColor: var(--scbBrandColor);
+  --sapButton_Reject_Hover_Background: var(--sapButton_Emphasized_Hover_Background);
+  --sapButton_Reject_Hover_BorderColor: var(--sapButton_Emphasized_Hover_BorderColor);
   --sapButton_Reject_TextColor: white;
   --sapButton_Reject_Hover_TextColor: white;
 
@@ -113,6 +113,10 @@ body {
 .sapMTitle {
   font-family: SCProsperSansBold !important;
 }
+.sapMBtn:focus-visible>.sapMFocusable:not(.sapMBadgeIndicator)::before,html.sap-desktop .sapMBtn:focus>.sapMFocusable:not(.sapMBadgeIndicator)::before {
+  border-radius: 18px;
+}
+
 
 html,
 body,
@@ -380,7 +384,7 @@ body,
       border-color: var(--dasContent_Hover_BorderColor, var(--sapField_Hover_BorderColor, #333));
   } */
   
-  .dasTextAreaInput:focus-within,
+  /* .dasTextAreaInput:focus-within, */
   /* .dasTextAreaInput:hover {
     border-width: 0.125rem;
     border-color: var(
