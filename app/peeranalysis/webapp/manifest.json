@@ -68,7 +68,7 @@
       },
       "embeddings": {
         "type": "sap.ui.model.odata.v2.ODataModel",
-        "uri": "./v2/odata/v4/earning-upload-srv/",
+        "uri": "/v2/odata/v4/earning-upload-srv/",
         "settings": {
           "odataVersion": "2.0",
           "synchronizationMode": "None",
