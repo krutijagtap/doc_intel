@@ -1,12 +1,12 @@
 namespace com.scb.earningupload;
- 
+
 using {
   cuid,
   managed,
   sap.common.CodeList
 } from '@sap/cds/common';
- 
- 
+
+
 entity Banks : CodeList {
    key code : String(40);
 }
@@ -14,18 +14,18 @@ entity Banks : CodeList {
 entity Years : CodeList {
   key code : String(4);
 }
- 
+
 entity Quarters : CodeList {
   key code : String(2);
 }
- 
+
 // @UI.LineItem:[
 //    { Value: bank_code,$Type: 'UI.DataField', Label: 'Bank' },
 //    { Value: year_code,$Type: 'UI.DataField', Label: 'Year' },
 //    { Value: quarter_code,$Type: 'UI.DataField', Label: 'Quarter' },
 //    { Value: fileName,$Type: 'UI.DataField', Label: 'Download' },
 // ]
- 
+
  @assert.unique: {locale: [
          bank,
          year,
@@ -35,11 +35,11 @@ entity EarningFiles : cuid, managed {
   bank      : Association to Banks;
   year      : Association to Years default '2025';
   quarter   : Association to Quarters;
- 
- 
+  
+
   @Core.MediaType  : mediaType
   content   : LargeString;
- 
+
   @Core.IsMediaType: true @UI.Hidden
   mediaType : String;
   fileName  : String;
@@ -58,10 +58,10 @@ entity EarningFiles : cuid, managed {
 }
 @Common.ValueListWithFixedValues: true
 status    : String default 'Submitted';
- 
+
 }
- 
-@cds.server.body_parser.limit: '50mb'
+
+@cds.server.body_parser.limit: '50mb' 
 @UI.LineItem: [
     { Value: fileName,
       $Type: 'UI.DataField',
@@ -74,25 +74,24 @@ status    : String default 'Submitted';
         status,
         createdBy
     ]
- 
+  
 annotate EarningFiles with {
   createdAt @UI.Hidden;
 //  createdBy @UI.Hidden;
 };
- 
+
   @UI.LineItem: [
       {$Type: 'UI.DataFieldWithUrl',Label: 'Download',Value: fileName,Url: url},  
     { Value: mediaType, Label: 'Media Type' },
      { Value: status, Label: 'Status' },
-    { Value: createdBy, Label: 'Uploaded By' },
-     { Value: dublinCoreMetaData, Label: 'MetaData' }
+    { Value: createdBy, Label: 'Uploaded By' }
   ]
   @UI.SelectionFields : [
         status,
         createdBy
     ]
 entity EmbeddingFiles @(odata.stream)  :  managed {
- 
+
   key ID: String;
   @Core.MediaType: mediaType
   content: LargeBinary ;
@@ -113,21 +112,21 @@ entity EmbeddingFiles @(odata.stream)  :  managed {
 }
 @Common.ValueListWithFixedValues: true
   // @Common.FilterDefaultValue: 'Submitted'
- 
+
   status   : String(20);
   comments  : String;
- 
-dublinCoreMetaData: LargeString;
- 
+
+
+
 }
 action generateEmbedding() returns String;
-action uploadDublinCore() returns String;
+
 type FileStatus : String enum {
   Completed;
   InProgress;
   Test;
 };
- 
+
 // @odata.singleton
 // entity VisibilityConfig :cuid,{
 //       isAdmin : Boolean;
@@ -145,10 +144,11 @@ entity VisibilityConfig {
 entity FileStatusValues {
   key code : String(20);
 };
- 
+
 @UI.LineItem: [{Value: code, Label: 'Status'}]
 @UI.SelectionFields: [{$value: code}]
 entity EarningsFileStatusValues {
   key code : String(20);
 };
- 
+
+

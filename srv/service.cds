@@ -1,5 +1,5 @@
 using {com.scb.earningupload as earning_upload} from '../db/schema.cds';
- 
+
 @requires: 'authenticated-user'
 service EarningUploadSrv {
   @odata.draft.enabled
@@ -7,7 +7,7 @@ service EarningUploadSrv {
   // @UI.CreateHidden: {$edmJson:  {$Path: '/VisibilityConfig/isAdmin'}}
   // @UI.DeleteHidden: {$edmJson:  {$Path: '/VisibilityConfig/isAdmin'}}
   // @UI.UpdateHidden: {$edmJson:  {$Path: '/VisibilityConfig/isAdmin'}}
- 
+
     // @UI.CreateHidden: {$edmJson: {$Or: [
     //     {$Eq: [
     //         {$Path: '/EarningUploadSrv.EntityContainer/VisibilityConfig/isAdmin'},
@@ -18,11 +18,11 @@ service EarningUploadSrv {
     //         true
     //     ]}
     // ]}}
- 
-  @Capabilities.SearchRestrictions: {
+  
+  @Capabilities.SearchRestrictions: { 
     Searchable: true
    }
-  @Search.defaultSearchElement : ['bank_code','bank_name','fileName','createdBy','createdAt','quarter','status']
+  @Search.defaultSearchElement : ['bank_code','bank_name','fileName','createdBy','createdAt','quarter','status'] 
   @UI.DeleteHidden: {$edmJson: { $Path: '/EarningUploadSrv.EntityContainer/VisibilityConfig/isViewer'}}
   @UI.CreateHidden: {$edmJson: {  $Path: '/EarningUploadSrv.EntityContainer/VisibilityConfig/hideCreate'}}
   @UI.UpdateHidden: true
@@ -34,30 +34,23 @@ service EarningUploadSrv {
   entity Quarters         as projection on earning_upload.Quarters
                              order by
                                code asc;
- 
+
   entity Years            as projection on earning_upload.Years
                              order by
                                code asc;
- 
+
   entity VisibilityConfig as projection on earning_upload.VisibilityConfig;
- 
- // entity EmbeddingFiles as projection on earning_upload.EmbeddingFiles;
- 
- entity EmbeddingFiles as select from earning_upload.EmbeddingFiles{
-  *,
-  @UI.Hidden: true
-  dublinCoreMetaData
- };
+
+  entity EmbeddingFiles as projection on earning_upload.EmbeddingFiles;
   action generateEmbedding() returns String;
-  action uploadDublinCore() returns String;
- 
   action chatResponse(prompt:String,token:String) returns String;
   action approveFiles(ids: array of  UUID) returns String;
   action rejectFiles(ids: array of UUID) returns String;
   entity FileStatusValues   as projection on earning_upload.FileStatusValues;
   entity EarningsFileStatusValues   as projection on earning_upload.FileStatusValues;
- 
- 
- 
+
+
+
 }
- 
+
+
