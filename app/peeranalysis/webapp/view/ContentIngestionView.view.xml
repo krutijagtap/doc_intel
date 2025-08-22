@@ -45,6 +45,7 @@
                 enableAutoBinding="true"
                 header="Uploaded Files"
                 showRowCount="true"
+                requestAtLeastFields="dublinCoreMetaData"
                 useExportToExcel="true"
                 persistencyKey="SmartTableFiles" >
 
