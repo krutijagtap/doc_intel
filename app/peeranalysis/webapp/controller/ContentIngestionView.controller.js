@@ -18,6 +18,7 @@ sap.ui.define(
         const oSmartTable = this.byId("smartTable");
         const oModel = this.getOwnerComponent().getModel("embeddings");
         this.getView().setModel(oModel);
+        this.getView().setModel(new sap.ui.model.json.JSONModel({}),"viewModel");
 
         if (!oModel || !oSmartTable) {
           console.error("Model or SmartTable not found");
@@ -590,7 +591,7 @@ sap.ui.define(
 
         let formData = new FormData();
         formData.append("file", oFile);
-        const responseAPI = await fetch("/api/upload", {
+        const responseAPI = await fetch(uploadurl, {
           method: "POST",
           headers: {
             "X-CSRF-Token": csrfToken,
@@ -735,8 +736,7 @@ sap.ui.define(
         var metaDataValue = oContext.getProperty("dublinCoreMetaData");
         const parsedMeta = JSON.parse(metaDataValue);
         const metaData = parsedMeta.metadata || parsedMeta;
-
-        this.onOpenDialog(metaData);
+        this.onOpenDialog({metadata:metaData,filename:metaData.filename});
         return true;
       },
       onCloseDialog: function () {
@@ -764,6 +764,7 @@ sap.ui.define(
         } else {
           that._oDialog.open();
         }
+        return true;
       },
     });
   }
