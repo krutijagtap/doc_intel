@@ -14,7 +14,7 @@
             
             <HBox class="sapUiSmallMarginTop" visible="{= ${authModel>/isViewer} }">
                 <Button type="Emphasized" icon="sap-icon://add" text="Add Attachment" press="onAddAttachment"/>
-                <Button type="Emphasized" icon="sap-icon://upload" text="Upload All" press="onUploadFileContent"/>
+                <Button type="Emphasized" icon="sap-icon://upload" text="Upload" press="onUploadFileContent"/>
             </HBox>
 
 <HBox class="sapUiSmallMarginTop" justifyContent="Start" alignItems="Start" wrap="Wrap">
