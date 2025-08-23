@@ -10,15 +10,17 @@ sap.ui.define(
     "use strict";
 
     return Controller.extend("peeranalysis.controller.ContentIngestionView", {
-      onInit: function () {
-        this.onfetchRoles();
+      onInit: async function () {
+        await this.onfetchRoles();
         this._attachmentId = 0;
         this._uploaders = [];
 
         const oSmartTable = this.byId("smartTable");
         const oModel = this.getOwnerComponent().getModel("embeddings");
         this.getView().setModel(oModel);
-        this.getView().setModel(new sap.ui.model.json.JSONModel({}),"viewModel");
+        this.getView().setModel(new sap.ui.model.json.JSONModel({
+          addBtnEnabled:true
+        }),"viewModel");
 
         if (!oModel || !oSmartTable) {
           console.error("Model or SmartTable not found");
@@ -180,8 +182,9 @@ sap.ui.define(
 
       onAddAttachment: function () {
         const oVBox = this.byId("attachmentBox");
-
+        const oViewModel = this.getView().getModel("viewModel");
         if (this._uploaders.length === 0) {
+          oViewModel.setProperty("/addBtnEnabled", false);
           const oUploader = new sap.ui.unified.FileUploader({
             name: "attachment",
             width: "100%",
@@ -240,6 +243,7 @@ sap.ui.define(
           aFiles.splice(iIndex, 1);
           oModel.setProperty("/uploadedFiles", aFiles);
         }
+        this.getView().getModel("viewModel").setProperty("/addBtnEnabled", true);
       },
 
       getBaseURL: function () {
@@ -585,6 +589,7 @@ sap.ui.define(
         const uploadurl = sap.ui.require.toUrl("peeranalysis") + "/api/upload";
         const oFileUploader = this._uploaders[0];
         const oFile = oFileUploader.getDomRef("fu").files[0];
+        oPage.setBusy(true);
         const csrfToken = await this.onfetchCSRF(
           sap.ui.require.toUrl("peeranalysis")
         );
@@ -600,6 +605,7 @@ sap.ui.define(
         });
         if (!responseAPI.ok) {
           sap.m.MessageToast.show(response.message);
+          oPage.setBusy(false);
           return;
         }
         const json = await responseAPI.json();
@@ -607,7 +613,10 @@ sap.ui.define(
         const decision = json.metadata.processing_decision;
         this.getView().getModel("viewModel").setProperty("/decision", decision);
         if (dialog) {
-          if (decision == "REJECTED") return;
+          if (decision == "REJECTED") {  
+            oPage.setBusy(false);
+            return;
+          }
           else {
             const metadata = json.metadata;
             async function fetchCsrfToken(url) {
