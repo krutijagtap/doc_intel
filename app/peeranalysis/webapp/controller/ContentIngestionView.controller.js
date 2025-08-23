@@ -18,9 +18,10 @@ sap.ui.define(
         const oSmartTable = this.byId("smartTable");
         const oModel = this.getOwnerComponent().getModel("embeddings");
         this.getView().setModel(oModel);
+        this.getView().setModel(new sap.ui.model.json.JSONModel({}),"viewModel");
         this.getView().setModel(new sap.ui.model.json.JSONModel({
           addBtnEnabled:true
-        }),"viewModel");
+        }),"uiModel");
 
         if (!oModel || !oSmartTable) {
           console.error("Model or SmartTable not found");
@@ -182,9 +183,9 @@ sap.ui.define(
 
       onAddAttachment: function () {
         const oVBox = this.byId("attachmentBox");
-        const oViewModel = this.getView().getModel("viewModel");
+        const oUiModel = this.getView().getModel("uiModel");
         if (this._uploaders.length === 0) {
-          oViewModel.setProperty("/addBtnEnabled", false);
+          oUiModel.setProperty("/addBtnEnabled", false);
           const oUploader = new sap.ui.unified.FileUploader({
             name: "attachment",
             width: "100%",
@@ -243,7 +244,7 @@ sap.ui.define(
           aFiles.splice(iIndex, 1);
           oModel.setProperty("/uploadedFiles", aFiles);
         }
-        this.getView().getModel("viewModel").setProperty("/addBtnEnabled", true);
+        this.getView().getModel("uiModel").setProperty("/addBtnEnabled", true);
       },
 
       getBaseURL: function () {
@@ -734,6 +735,7 @@ sap.ui.define(
             }
           }
           this._uploaders = [];
+          this.getView().getModel("uiModel").setProperty("/addBtnEnabled",true);
         }
 
         oModel.setProperty("/uploadedFiles", aFiles);
