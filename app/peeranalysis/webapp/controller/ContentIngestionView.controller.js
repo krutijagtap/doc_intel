@@ -33,36 +33,7 @@ sap.ui.define(
 
         // Rebind the table first
         oSmartTable.rebindTable();
-        oSmartTable.attachInitialise(
-          function () {
-            var oTable = oSmartTable.getTable(); // inner sap.m.Table (ResponsiveTable in your case)
-
-            var oColumn = new sap.m.Column({
-              header: new sap.m.Text({ text: "MetaData" }),
-            });
-            oTable.addColumn(oColumn);
-
-            oTable.attachUpdateFinished(
-              function () {
-                oTable.getItems().forEach(
-                  function (oItem) {
-                    // Prevent duplicate buttons if UpdateFinished fires again
-                    if (
-                      oItem.getCells().length ===
-                      oTable.getColumns().length - 1
-                    ) {
-                      var oButton = new sap.m.Button({
-                        text: "Validation Summary",
-                        press: this.onShowMetaDataPress.bind(this),
-                      });
-                      oItem.addCell(oButton);
-                    }
-                  }.bind(this)
-                );
-              }.bind(this)
-            );
-          }.bind(this)
-        );
+        
         // Wait for SmartTable's internal table to be available
         oSmartTable.attachEventOnce("modelContextChange", () => {
           const oResponsiveTable = oSmartTable.getTable();
