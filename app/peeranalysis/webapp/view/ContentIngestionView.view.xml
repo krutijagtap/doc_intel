@@ -53,7 +53,25 @@
 				<smartTable:layoutData>
 					<m:FlexItemData id="flex" growFactor="1" baseSize="0%"/>
 				</smartTable:layoutData>
-
+                <Table>
+                    <columns>
+                        <!-- Existing columns -->
+                        <Column>
+                            <customData>
+                                <core:CustomData key="p13nData" value='{"columnKey": "MetaData", "leadingProperty": "dublinCoreMetaData"}'/>
+                            </customData>
+                            <Text text="MetaData"/>
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <!-- Existing cells -->
+                            <cells>
+                                <Button text="Validation Summary" press="onShowMetaDataPress"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
  
                   
 			</smartTable:SmartTable>
