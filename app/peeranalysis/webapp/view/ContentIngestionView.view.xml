@@ -59,8 +59,10 @@
                         <Column>
                             <customData>
                                 <core:CustomData key="p13nData" value='{"columnKey": "MetaData", "leadingProperty": "dublinCoreMetaData"}'/>
+                                <core:CustomData key="p13nData" value='{"columnKey": "Download", "leadingProperty": "fileName"}'/>
                             </customData>
                             <Text text="MetaData"/>
+                            <Text text="Download"/>
                         </Column>
                     </columns>
                     <items>
@@ -68,6 +70,7 @@
                             <!-- Existing cells -->
                             <cells>
                                 <Button text="Validation Summary" press="onShowMetaDataPress"/>
+                                <Link text="{fileName}" press="onDownloadFilePress"/>
                             </cells>
                         </ColumnListItem>
                     </items>

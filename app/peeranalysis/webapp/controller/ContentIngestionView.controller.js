@@ -18,10 +18,16 @@ sap.ui.define(
         const oSmartTable = this.byId("smartTable");
         const oModel = this.getOwnerComponent().getModel("embeddings");
         this.getView().setModel(oModel);
-        this.getView().setModel(new sap.ui.model.json.JSONModel({}),"viewModel");
-        this.getView().setModel(new sap.ui.model.json.JSONModel({
-          addBtnEnabled:true
-        }),"uiModel");
+        this.getView().setModel(
+          new sap.ui.model.json.JSONModel({}),
+          "viewModel"
+        );
+        this.getView().setModel(
+          new sap.ui.model.json.JSONModel({
+            addBtnEnabled: true,
+          }),
+          "uiModel"
+        );
 
         if (!oModel || !oSmartTable) {
           console.error("Model or SmartTable not found");
@@ -33,7 +39,7 @@ sap.ui.define(
 
         // Rebind the table first
         oSmartTable.rebindTable();
-        
+
         // Wait for SmartTable's internal table to be available
         oSmartTable.attachEventOnce("modelContextChange", () => {
           const oResponsiveTable = oSmartTable.getTable();
@@ -585,11 +591,10 @@ sap.ui.define(
         const decision = json.metadata.processing_decision;
         this.getView().getModel("viewModel").setProperty("/decision", decision);
         if (dialog) {
-          if (decision == "REJECTED") {  
+          if (decision == "REJECTED") {
             oPage.setBusy(false);
             return;
-          }
-          else {
+          } else {
             const metadata = json.metadata;
             async function fetchCsrfToken(url) {
               const response = await fetch(url, {
@@ -706,7 +711,9 @@ sap.ui.define(
             }
           }
           this._uploaders = [];
-          this.getView().getModel("uiModel").setProperty("/addBtnEnabled",true);
+          this.getView()
+            .getModel("uiModel")
+            .setProperty("/addBtnEnabled", true);
         }
 
         oModel.setProperty("/uploadedFiles", aFiles);
@@ -718,7 +725,7 @@ sap.ui.define(
         var metaDataValue = oContext.getProperty("dublinCoreMetaData");
         const parsedMeta = JSON.parse(metaDataValue);
         const metaData = parsedMeta.metadata || parsedMeta;
-        this.onOpenDialog({metadata:metaData,filename:metaData.filename});
+        this.onOpenDialog({ metadata: metaData, filename: metaData.filename });
         return true;
       },
       onCloseDialog: function () {
@@ -748,6 +755,15 @@ sap.ui.define(
         }
         return true;
       },
+      onDownloadFilePress: function (oEvent) {
+        var that = this;
+        var oContext = oEvent.getSource().getBindingContext();
+        var fileUrl = oContext.getProperty("url");
+        var baseUrl = this.getBaseURL();
+        var idx = fileUrl.indexOf("/v2");
+        fileUrl = baseUrl + fileUrl.substring(idx);
+        window.open(fileUrl);
+      }
     });
   }
 );
