@@ -45,7 +45,7 @@
                 enableAutoBinding="true"
                 header="Uploaded Files"
                 showRowCount="true"
-                requestAtLeastFields="dublinCoreMetaData"
+                requestAtLeastFields="dublinCoreMetaData,urlssssssss"
                 useExportToExcel="true"
                 persistencyKey="SmartTableFiles" >
 
@@ -59,9 +59,13 @@
                         <Column>
                             <customData>
                                 <core:CustomData key="p13nData" value='{"columnKey": "MetaData", "leadingProperty": "dublinCoreMetaData"}'/>
-                                <core:CustomData key="p13nData" value='{"columnKey": "Download", "leadingProperty": "fileName"}'/>
                             </customData>
                             <Text text="MetaData"/>
+                        </Column>
+                        <Column>
+                            <customData>
+                                <core:CustomData key="p13nData" value='{"columnKey": "fileName", "leadingProperty": "fileName"}'/>
+                            </customData>
                             <Text text="Download"/>
                         </Column>
                     </columns>
@@ -70,6 +74,8 @@
                             <!-- Existing cells -->
                             <cells>
                                 <Button text="Validation Summary" press="onShowMetaDataPress"/>
+                            </cells>
+                            <cells>
                                 <Link text="{fileName}" press="onDownloadFilePress"/>
                             </cells>
                         </ColumnListItem>

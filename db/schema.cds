@@ -68,7 +68,7 @@ status    : String default 'Submitted';
      Label: 'File Name' },
     { Value: mediaType,$Type: 'UI.DataField', Label: 'Media Type' },
     { Value: status,$Type: 'UI.DataField', Label: 'Status' },
-    {$Type: 'UI.DataFieldWithUrl',Label: 'Download',Value: fileName,Url: url},
+    // {$Type: 'UI.DataField',Label: 'Download',Value: fileName},
   ]
 @UI.SelectionFields : [
         status,
@@ -81,7 +81,7 @@ annotate EarningFiles with {
 };
  
   @UI.LineItem: [
-      {$Type: 'UI.DataFieldWithUrl',Label: 'Download',Value: fileName,Url: url},  
+      {Label: 'Download',Value: fileName},  
     { Value: mediaType, Label: 'Media Type' },
      { Value: status, Label: 'Status' },
     { Value: createdBy, Label: 'Uploaded By' },
