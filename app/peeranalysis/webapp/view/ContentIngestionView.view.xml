@@ -58,15 +58,15 @@
                         <!-- Existing columns -->
                         <Column>
                             <customData>
-                                <core:CustomData key="p13nData" value='{"columnKey": "MetaData", "leadingProperty": "dublinCoreMetaData"}'/>
+                                <core:CustomData key="p13nData" value='{"columnKey": "MetaData", "leadingProperty": "dublinCoreMetaData", "columnIndex":5}'/>
                             </customData>
-                            <Text text="MetaData"/>
+                            <Text text="Meta Data"/>
                         </Column>
                         <Column>
                             <customData>
                                 <core:CustomData key="p13nData" value='{"columnKey": "fileName", "leadingProperty": "fileName"}'/>
                             </customData>
-                            <Text text="Download"/>
+                            <Text text="File Name"/>
                         </Column>
                     </columns>
                     <items>

@@ -67,7 +67,7 @@ status    : String default 'Submitted';
       $Type: 'UI.DataField',
      Label: 'File Name' },
     { Value: mediaType,$Type: 'UI.DataField', Label: 'Media Type' },
-    { Value: status,$Type: 'UI.DataField', Label: 'Status' },
+    { Value: status,$Type: 'UI.DataField', Label: 'Status Code' },
     // {$Type: 'UI.DataField',Label: 'Download',Value: fileName},
   ]
 @UI.SelectionFields : [
@@ -81,11 +81,11 @@ annotate EarningFiles with {
 };
  
   @UI.LineItem: [
-      {Label: 'Download',Value: fileName},  
+      {Label: 'File Name',Value: fileName},  
     { Value: mediaType, Label: 'Media Type' },
-     { Value: status, Label: 'Status' },
-    { Value: createdBy, Label: 'Uploaded By' },
-     { Value: dublinCoreMetaData, Label: 'MetaData' }
+     { Value: status, Label: 'Status Code' },
+    { Value: createdBy, Label: 'Created By' },
+     { Value: dublinCoreMetaData, Label: 'Meta Data' }
   ]
   @UI.SelectionFields : [
         status,
@@ -140,13 +140,13 @@ entity VisibilityConfig {
       isViewer: Boolean;
       hideCreate: Boolean;
 }
-@UI.LineItem: [{Value: code, Label: 'Status'}]
+@UI.LineItem: [{Value: code, Label: 'Status Code'}]
 @UI.SelectionFields: [{$value: code}]
 entity FileStatusValues {
   key code : String(20);
 };
  
-@UI.LineItem: [{Value: code, Label: 'Status'}]
+@UI.LineItem: [{Value: code, Label: 'Status Code'}]
 @UI.SelectionFields: [{$value: code}]
 entity EarningsFileStatusValues {
   key code : String(20);
