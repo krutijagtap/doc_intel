@@ -28,7 +28,7 @@ sap.ui.define(
           }),
           "uiModel"
         );
-
+        this.getView().getModel("viewModel").setProperty("/decision");
         if (!oModel || !oSmartTable) {
           console.error("Model or SmartTable not found");
           return;
@@ -71,12 +71,14 @@ sap.ui.define(
               const status = oCtx?.getProperty("status");
 
               if (status === "Submitted" || status === "Failed") {
+
                 oItem.data("selectable", true);
                 oItem.setType("Active");
               } else {
                 oItem.addStyleClass("nonSelectableRow");
                 oItem.data("selectable", false);
               }
+
             });
           });
         });
@@ -94,6 +96,8 @@ sap.ui.define(
           } else {
             oFilterBar.search();
           }
+
+
         });
       },
 
@@ -522,6 +526,7 @@ sap.ui.define(
           oModel.setProperty(oCtx.getPath() + "/status", "Rejected");
         }
 
+
         this._rejectionDialog.close();
         oModel.refresh(true);
         sap.m.MessageToast.show("Files rejected.");
@@ -574,6 +579,31 @@ sap.ui.define(
 
         let formData = new FormData();
         formData.append("file", oFile);
+        const fileHash = await this.calculateFileHash(oFile);
+        const embedding_url = serviceUrl + "EmbeddingFiles";
+        const fileBaseUrl = this.getBaseURL();
+        // check if file already exists 28.08
+        const fileExists = await fetch(
+          `${fileBaseUrl}/v2/odata/v4/earning-upload-srv/EmbeddingFiles('${fileHash}')`,
+          {
+            method: "GET",
+            headers: {
+              "X-CSRF-Token": csrfToken,
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+          }
+        );
+
+        if (fileExists.status === 200) {
+          sap.m.MessageToast.show(
+            "File already exists " +
+            oFile.name + " Skipping creation."
+          );
+          return;
+        }
+
+
         const responseAPI = await fetch(uploadurl, {
           method: "POST",
           headers: {
@@ -587,9 +617,11 @@ sap.ui.define(
           return;
         }
         const json = await responseAPI.json();
-        const dialog = await this.onOpenDialog(json);
+
         const decision = json.metadata.processing_decision;
         this.getView().getModel("viewModel").setProperty("/decision", decision);
+        const dialog = await this.onOpenDialog(json);
+
         if (dialog) {
           if (decision == "REJECTED") {
             oPage.setBusy(false);
@@ -652,8 +684,8 @@ sap.ui.define(
                     if (createResponse.status === 400) {
                       sap.m.MessageToast.show(
                         "File already exists " +
-                          file.name +
-                          ".....Skipping creation."
+
+                        file.name + " Skipping creation."
                       );
                     } else {
                       throw new Error(
@@ -722,9 +754,18 @@ sap.ui.define(
       onShowMetaDataPress: async function (oEvent) {
         var that = this;
         var oContext = oEvent.getSource().getParent().getBindingContext();
+        if (!oContext) return;
+
         var metaDataValue = oContext.getProperty("dublinCoreMetaData");
+
+        const decision = oContext.getProperty('status');
+        if (!metaDataValue) {
+          console.warn("metaData field not available");
+          return;
+        }
         const parsedMeta = JSON.parse(metaDataValue);
         const metaData = parsedMeta.metadata || parsedMeta;
+        this.getView().getModel("viewModel").setProperty("/decision", decision);
         this.onOpenDialog({ metadata: metaData, filename: metaData.filename });
         return true;
       },
@@ -738,7 +779,10 @@ sap.ui.define(
           return;
         }
         metaData["filename"] = response.filename;
+        var decision = this.getView().getModel("viewModel").getProperty("/decision");
         this.getView().getModel("viewModel").setData(metaData);
+        var decision = this.getView().getModel("viewModel").setProperty("/decision", decision);
+
         if (!this._oDialog) {
           this._pDialog = Fragment.load({
             id: this.getView().getId() + "--myDialog",
@@ -747,7 +791,7 @@ sap.ui.define(
           }).then(function (oDialog) {
             that._oDialog = oDialog;
             that.getView().addDependent(oDialog);
-            // that._populateJsonData(jsonResponse);
+
             that._oDialog.open();
           });
         } else {

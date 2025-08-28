@@ -73,7 +73,9 @@
                         <ColumnListItem>
                             <!-- Existing cells -->
                             <cells>
-                                <Button text="Validation Summary" press="onShowMetaDataPress"/>
+                                <Button 
+                                icon="sap-icon://information" 
+                                press="onShowMetaDataPress"/>
                             </cells>
                             <cells>
                                 <Link text="{fileName}" press="onDownloadFilePress"/>
