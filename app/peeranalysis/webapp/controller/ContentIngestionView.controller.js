@@ -613,17 +613,27 @@ sap.ui.define(
           body: formData,
         });
         if (!responseAPI.ok) {
-          sap.m.MessageToast.show(response.message);
+          sap.m.MessageBox.error(response.message);
           oPage.setBusy(false);
           return;
         }
         const json = await responseAPI.json();
-
-        const decision = json.metadata.processing_decision;
+        if (!json.metadata) {
+          if(json.success){
+            sap.m.MessageBox.success(json.message);
+          }else{
+            sap.m.MessageBox.error(json.message?json.message:'Unhandled Error!');
+          }
+            
+          oPage.setBusy(false);
+        }
+        
+ 
+        const decision = json.metadata?.processing_decision;
         this.getView().getModel("viewModel").setProperty("/decision", decision);
         const dialog = await this.onOpenDialog(json);
 
-        if (dialog) {
+        // if (dialog) {
           if (decision == "REJECTED") {
             oPage.setBusy(false);
             return;
@@ -676,7 +686,7 @@ sap.ui.define(
                         "/v2/odata/v4/earning-upload-srv/EmbeddingFiles('" +
                         fileHash +
                         "')/content",
-                      status: "Submitted",
+                      status: metadata?"Submitted":"Completed",
                       dublinCoreMetaData: JSON.stringify({ metadata }),
                     }),
                   });
@@ -747,7 +757,7 @@ sap.ui.define(
           this.getView()
             .getModel("uiModel")
             .setProperty("/addBtnEnabled", true);
-        }
+        // }
 
         oModel.setProperty("/uploadedFiles", aFiles);
       },
