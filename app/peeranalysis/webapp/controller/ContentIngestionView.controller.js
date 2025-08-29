@@ -174,13 +174,18 @@ sap.ui.define(
             placeholder: "Choose a file...",
             buttonText: "Browse",
             fileType: ["pdf", "jpg", "png", "xlsx", "xls"],
-            maximumFileSize: 50,
+            maximumFileSize: 20,
             change: function (oEvent) {
               const file = oEvent.getParameter("files")[0];
               if (file) {
                 console.log("File selected: ", file.name);
               }
             },
+                fileSizeExceed: function (oEvent) {
+                sap.m.MessageBox.error("File size exceeds 20 MB. Please select a smaller file.");
+                // clear the file uploader
+                oEvent.getSource().clear();
+            }
           });
 
           const oDeleteButton = new sap.m.Button({
