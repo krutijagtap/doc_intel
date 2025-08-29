@@ -64,7 +64,8 @@
                         </Column>
                         <Column>
                             <customData>
-                                <core:CustomData key="p13nData" value='{"columnKey": "fileName", "leadingProperty": "fileName"}'/>
+                              <core:CustomData key="p13nData" value='{"columnKey": "fileName", "leadingProperty": "fileName",
+                                  "sortProperty": "fileName","filterProperty": "fileName","groupProperty": "fileName"}'/>
                             </customData>
                             <Text text="File Name"/>
                         </Column>

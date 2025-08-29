@@ -74,6 +74,7 @@ sap.ui.define(
 
                 oItem.data("selectable", true);
                 oItem.setType("Active");
+                oItem.removeStyleClass("nonSelectableRow");
               } else {
                 oItem.addStyleClass("nonSelectableRow");
                 oItem.data("selectable", false);
@@ -86,14 +87,13 @@ sap.ui.define(
         const oFilterBar = this.byId("smartFilterBar");
         oFilterBar.attachInitialise(() => {
           const oAuthModel = this.getView().getModel("authModel");
-          const bIsAdmin = oAuthModel?.getProperty("/isAdmin");
-          if (bIsAdmin) {
+         
             const oCurrentFilters = oFilterBar.getFilterData();
             if (!oCurrentFilters.status) {
               oFilterBar.setFilterData({ status: "Submitted" });
               oFilterBar.search();
             }
-          } else {
+           else {
             oFilterBar.search();
           }
 
@@ -113,6 +113,7 @@ sap.ui.define(
             const status = oContext?.getProperty("status");
             if (status === "Submitted" || status === "Failed") {
               oItem.data("selectable", true);
+              oItem.removeStyleClass("nonSelectableRow");
             }
           });
         });
@@ -596,11 +597,10 @@ sap.ui.define(
         );
 
         if (fileExists.status === 200) {
-          sap.m.MessageBox.error(
+          sap.m.MessageToast.show(
             "File already exists " +
             oFile.name + " Skipping creation."
           );
-          oPage.setBusy(false);
           return;
         }
 
@@ -693,7 +693,7 @@ sap.ui.define(
 
                   if (!createResponse.ok) {
                     if (createResponse.status === 400) {
-                      sap.m.MessageBox.error(
+                      sap.m.MessageToast.show(
                         "File already exists " +
 
                         file.name + " Skipping creation."

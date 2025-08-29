@@ -10,7 +10,7 @@
     xmlns:tnt="sap.tnt"
     controllerName="peeranalysis.controller.ReportsView"
 >
-    <Page id="OnboardBank" title="PeerAnalysis">
+    <Page id="OnboardBank" title="Standard Reports">
         <content>
             <VBox
                 height="100%"
