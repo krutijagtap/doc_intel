@@ -99,24 +99,6 @@ module.exports = cds.service.impl((srv) => {
       req.query.where('status =', 'Approved');
     }
   });
-  srv.after('READ', 'EarningFiles', each => {
-    switch (each.status) {
-      case "Completed":
-        each.statusIndication = 4;
-        break;
-      case "Rejected":
-        each.statusIndication = 1;
-        break;
-      case "Failed":
-        each.statusIndication = 2;
-        break;
-      case "Processing":
-        each.statusIndication = 5;
-        break;
-      case "Submitted":
-        each.statusIndication = 10;
-    }
-  });
 
   srv.before('DELETE', EarningFiles, async (req) => {
 
