@@ -7,7 +7,7 @@
     xmlns:m="sap.m"
     controllerName="peeranalysis.controller.ContentIngestionView">
 
-    <Page id="page1" title="Upload Content" showFooter="true">
+    <Page id="page1" title="Content Ingestion" showFooter="true">
         <content>
 
             <VBox id="attachmentBox" class="sapUiSmallMargin" visible="{=  ${authModel>/isViewer} }" />

@@ -49,7 +49,10 @@ sap.ui.define([
   const chatModel = this.getOwnerComponent().getModel("chatModel");
   const oView = this.getView();
   const sInput = this.byId("chatFeedInput").getValue();
-
+  if(sInput.trim() === ''){
+     sap.m.MessageBox.error("Please Enter a prompt for AskFinsight!");
+     return;
+  }
   // Disable submit + hide previous result
   chatModel.setSubmit(false);
   chatModel.setvisibleResult(false);
