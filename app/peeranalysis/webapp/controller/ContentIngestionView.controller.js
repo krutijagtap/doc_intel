@@ -596,7 +596,7 @@ sap.ui.define(
         );
 
         if (fileExists.status === 200) {
-          sap.m.MessageBox.alert(
+          sap.m.MessageBox.error(
             "File already exists " +
             oFile.name + " Skipping creation."
           );
@@ -683,7 +683,7 @@ sap.ui.define(
 
                   if (!createResponse.ok) {
                     if (createResponse.status === 400) {
-                      sap.m.MessageBox.alert(
+                      sap.m.MessageBox.error(
                         "File already exists " +
 
                         file.name + " Skipping creation."
