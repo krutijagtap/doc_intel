@@ -74,6 +74,7 @@
                             <!-- Existing cells -->
                             <cells>
                                 <Button 
+                                enabled="{= !!${dublinCoreMetaData} }"
                                 icon="sap-icon://information" 
                                 press="onShowMetaDataPress"/>
                             </cells>

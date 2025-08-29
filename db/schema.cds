@@ -57,8 +57,11 @@ entity EarningFiles : cuid, managed {
   ]
 }
 @Common.ValueListWithFixedValues: true
+@UI.DataFieldType: #Status
+@UI.Criticality: 'statusIndication'
+@UI.CriticalityRepresentationType: #WithoutIcon
 status    : String default 'Submitted';
- 
+virtual statusIndication : Integer; // 1-5 for Indication01-Indication05
 }
  
 @cds.server.body_parser.limit: '50mb'
@@ -77,6 +80,10 @@ status    : String default 'Submitted';
  
 annotate EarningFiles with {
   createdAt @UI.Hidden;
+  status @UI.DataFieldType: #Status;
+  status @UI.Criticality: 'statusIndication';
+  status @UI.CriticalityRepresentationType: #WithoutIcon;
+  statusIndication @UI.Criticality;
 //  createdBy @UI.Hidden;
 };
  
