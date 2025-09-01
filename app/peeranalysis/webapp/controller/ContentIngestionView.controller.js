@@ -318,7 +318,7 @@ sap.ui.define(
         // const embcsrf = await this.onfetchCSRF(emb_csrfUrl);
 
         if (aSelectedItems.length === 0) {
-          sap.m.MessageToast.show("Please select at least one file.");
+          sap.m.MessageBox.error("Please select at least one file.");
           return;
         }
 
@@ -462,7 +462,7 @@ sap.ui.define(
         const aSelectedContexts = oTable.getSelectedContexts();
 
         if (!aSelectedContexts || aSelectedContexts.length === 0) {
-          sap.m.MessageToast.show("Please select at least one file to reject.");
+          sap.m.MessageBox.error("Please select at least one file to reject.");
           return;
         }
 
@@ -602,10 +602,11 @@ sap.ui.define(
         );
 
         if (fileExists.status === 200) {
-          sap.m.MessageToast.show(
+          sap.m.MessageBox.error(
             "File already exists " +
             oFile.name + " Skipping creation."
           );
+          oPage.setBusy(false);
           return;
         }
 
@@ -698,7 +699,7 @@ sap.ui.define(
 
                   if (!createResponse.ok) {
                     if (createResponse.status === 400) {
-                      sap.m.MessageToast.show(
+                      sap.m.MessageBox.error(
                         "File already exists " +
 
                         file.name + " Skipping creation."
