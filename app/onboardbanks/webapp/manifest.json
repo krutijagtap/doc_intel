@@ -39,7 +39,6 @@
       }
     }
   },
-
   "sap.ui": {
     "technology": "UI5",
     "icons": {

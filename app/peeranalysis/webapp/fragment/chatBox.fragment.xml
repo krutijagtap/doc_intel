@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
 
  
-  <VBox>
+  <VBox class="ChatBox dasTextAreaInput"  >
     <Title text="Which results should I analyze?" level="H4" class="gradientTitle sapUiSmallMarginTop sapUiTinyMarginBottom"/>
       <FlexBox id="ChatBotresult" height="5rem" >
 
@@ -40,7 +40,7 @@
                 
                  <!-- <Button text="Ask FinSight"  enabled="{chatModel>/enableSubmit}" visible="{chatModel>/enableQuery}" press="onUserChat" /> -->
                   <Button text="Ask FinSight"  type="Emphasized" press="onUserChat" />
-
+             
 
 
             </FlexBox>

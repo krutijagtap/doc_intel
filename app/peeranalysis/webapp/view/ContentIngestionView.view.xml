@@ -7,31 +7,34 @@
     xmlns:m="sap.m"
     controllerName="peeranalysis.controller.ContentIngestionView">
 
-    <Page id="page1" title="Upload Content" showFooter="true">
+    <Page id="page1" title="Content Ingestion" showFooter="true">
         <content>
 
             <VBox id="attachmentBox" class="sapUiSmallMargin" visible="{=  ${authModel>/isViewer} }" />
             
-            <HBox class="sapUiSmallMarginTop sapUiSmallMarginBegin" visible="{= ${authModel>/isViewer} }">
-                <Button icon="sap-icon://add" class="sapUiTinyMarginEnd" text="Add Attachment" press="onAddAttachment"/>
-                <Button icon="sap-icon://upload" text="Upload All" press="onUploadFileContent"/>
+            <HBox class="sapUiSmallMarginTop" visible="{= ${authModel>/isViewer} }">
+                <Button type="Emphasized" enabled="{uiModel>/addBtnEnabled}" icon="sap-icon://add" text="Add Attachment" press="onAddAttachment"/>
+                <Button type="Emphasized" icon="sap-icon://upload" text="Upload" press="onUploadFileContent"/>
             </HBox>
 
-            <HBox backgroundDesign="Solid" width="100%" class="sapUiTinyMargin" justifyContent="Start" alignItems="Start" wrap="Wrap">
-                <sfb:SmartFilterBar
-                        id="smartFilterBar"
-                        entitySet="EmbeddingFiles"
-                        persistencyKey="SmartFilterBarFiles"
-                        enableBasicSearch="true"
-                        showClearOnFB="true"
-                        showFilterConfiguration="true"
-                        useToolbar="false"
-                    >
-                        <sfb:customData>
-                            <core:CustomData key="preselectionDefaults" value='{"status": "Completed"}' />
-                        </sfb:customData>
-                    </sfb:SmartFilterBar>
-            </HBox>
+<HBox class="sapUiSmallMarginTop" justifyContent="Start" alignItems="Start" wrap="Wrap">
+    <VBox>
+   
+        <sfb:SmartFilterBar
+            id="smartFilterBar"
+            entitySet="EmbeddingFiles"
+            persistencyKey="SmartFilterBarFiles"
+            enableBasicSearch="true"
+            showClearOnFB="true"
+            showFilterConfiguration="true"
+            useToolbar="false"
+         >
+            <sfb:customData>
+                <core:CustomData key="preselectionDefaults" value='{"status": "Completed"}' />
+            </sfb:customData>
+        </sfb:SmartFilterBar>
+    </VBox>
+</HBox>
             <smartTable:SmartTable
                 id="smartTable"
                 tableType="ResponsiveTable"
@@ -42,6 +45,7 @@
                 enableAutoBinding="true"
                 header="Uploaded Files"
                 showRowCount="true"
+                requestAtLeastFields="dublinCoreMetaData,url"
                 useExportToExcel="true"
                 persistencyKey="SmartTableFiles" >
 
@@ -49,7 +53,38 @@
 				<smartTable:layoutData>
 					<m:FlexItemData id="flex" growFactor="1" baseSize="0%"/>
 				</smartTable:layoutData>
-
+                <Table>
+                    <columns>
+                        <!-- Existing columns -->
+                        <Column>
+                            <customData>
+                                <core:CustomData key="p13nData" value='{"columnKey": "MetaData", "leadingProperty": "dublinCoreMetaData", "columnIndex":5}'/>
+                            </customData>
+                            <Text text="Meta Data"/>
+                        </Column>
+                        <Column>
+                            <customData>
+                              <core:CustomData key="p13nData" value='{"columnKey": "fileName", "leadingProperty": "fileName",
+                                  "sortProperty": "fileName","filterProperty": "fileName","groupProperty": "fileName"}'/>
+                            </customData>
+                            <Text text="File Name"/>
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <!-- Existing cells -->
+                            <cells>
+                                <Button 
+                                enabled="{= !!${dublinCoreMetaData} }"
+                                icon="sap-icon://information" 
+                                press="onShowMetaDataPress"/>
+                            </cells>
+                            <cells>
+                                <Link text="{fileName}" press="onDownloadFilePress"/>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
  
                   
 			</smartTable:SmartTable>

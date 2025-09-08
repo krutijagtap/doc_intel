@@ -51,13 +51,12 @@
     "requires": {
       "auth": {
         "[development]": {
-          "kind": "mocked",
+          "kind": "basic",
           "users": {
             "alice": {
               "roles": [
                 "Workzone_EFDNA_GenAI_Earnings_Maker"
               ],
-              "password": "alice",
               "attr": {
                 "givenName": "Alice",
                 "familyName": "Doe",
@@ -74,6 +73,7 @@
         "[production]": {
           "kind": "hana-cloud"
         },
+        
         "model": [
           "db",
           "srv"

@@ -4,8 +4,10 @@
     xmlns:html="http://www.w3.org/1999/xhtml"
     xmlns:unified="sap.ui.unified"
     xmlns:uxap="sap.uxap"
-    xmlns:tnt="sap.tnt" controllerName="peeranalysis.controller.OnboardView">
-    <Page id="OnboardBank" title="PeerAnalysis">
+    xmlns:tnt="sap.tnt"
+    controllerName="peeranalysis.controller.OnboardView"
+>
+    <Page id="OnboardBank" title="New Bank Onboarding">
         <content>
             <VBox height="100%" width="100%" class="sapUiSmallMargin" fitContainer="true">
                 <html:iframe id="onboardbanks" width="100%" height="100%" style="border:none; min-height: 800px;" />

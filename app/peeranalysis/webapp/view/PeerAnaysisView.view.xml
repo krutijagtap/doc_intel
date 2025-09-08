@@ -4,7 +4,7 @@
     xmlns:core="sap.ui.core"
     xmlns:uxap="sap.uxap"
     xmlns:tnt="sap.tnt">
-    <Page id="page" title="{i18n>title}" titleAlignment="Center">
+    <Page id="page" title="PeerAnalysis" titleAlignment="Center">
         <IconTabBar id="idIconTabBarNoIcons" expanded="true" expandable="false" class="sapUiContentPadding" backgroundDesign="Transparent">
             <items>
                 <IconTabFilter text="Ask Anything" key="chatbox">
@@ -13,10 +13,10 @@
                             <core:Fragment fragmentName="peeranalysis.fragment.chatBox" type="XML"/>
                         </Panel>
                     </VBox>
-                    
+
                 </IconTabFilter>
                 <IconTabFilter text="Generate report" key="report">
-                 <VBox class="styleBox1">
+                    <VBox class="styleBox1">
                         <Panel class="sapMShellGlobalOuterBackground sapUiContentPadding">
                             <VBox>
                                 <Text text="Generate standard report" class="generateReportTitle sapUiSmallMarginBottom"></Text>
@@ -40,7 +40,7 @@
                                 </HBox>
                             </VBox>
                         </Panel>
-                  </VBox>
+                    </VBox>
                 </IconTabFilter>
             </items>
         </IconTabBar>
@@ -48,7 +48,13 @@
             <FlexBox id="resultFlexBox" visible="{chatModel>/visibleResult}">
                 <core:Fragment fragmentName="peeranalysis.fragment.resultBox" type="XML"/>
             </FlexBox>
-        </VBox>
-        
-    </Page>
+
+            <FlexBox id="resultFlexBox" class="ResultFlexBox" visible="{chatModel>/visibleResult}">
+                <core:Fragment fragmentName="peeranalysis.fragment.resultBox" type="XML"/>
+            </FlexBox>
+
+
+        </FlexBox>
+    </content>
+</Page>
 </mvc:View>
