@@ -91,6 +91,9 @@ body {
 
 }
 
+.fontBold{
+  font-weight: bold;
+}
 .sapUiBody,
 .sapUiArea,
 .sapUiCoreDefaultFont,
@@ -136,13 +139,16 @@ body,
   }
   
   .gradientTitle {
-    text-align: center;
+    text-align: center !important;
     width: 100%;
-    color: #0070f2;
     display: block;
-
+    font-size: 40px;
+    font-family: SCProsperSansMedium;
   }
-  
+  .generateReportTitle{
+    font-size: 40px;
+    font-family: SCProsperSansMedium;
+  }
 
   
   .iconbtns {
@@ -192,12 +198,13 @@ body,
   .ChatBox {
     border: none;
     border-radius: 16px;
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 0px 10px 1px;
-    background: hsl(0, 0%, 100%) !important;
     width: 100% !important;
     padding: 3rem;
     max-width: 1200px;
-    background-color: lightgray;
+  }
+  .styleBox1{
+    width: 100% !important;
+    max-width: 1200px;
   }
   
   .dynamicChatBox {
@@ -355,13 +362,11 @@ body,
   .dasTextAreaInput {
     padding: 4px 0px 4px 0px;
     gap: 0px;
-    border-radius: 8px;
     border: 2px 0px 0px 0px;
     opacity: 0px;
-    border: 1px solid #e0e0e0;
   }
   
-  .dasTextAreaInput:not(:focus-within):not(:focus):not(:hover),
+  /* .dasTextAreaInput:not(:focus-within):not(:focus):not(:hover),
   .dasTextAreaInput:not(:focus-within):not(:focus):not(:hover) {
     background-color: var(--sapField_Background);
     background-position: center bottom 0;
@@ -376,7 +381,7 @@ body,
       --dasTextArea_BackgroundImage,
       var(--_ui5_textarea_background_image)
     );
-  }
+  } */
   
   /* {
       box-shadow: var(--dasContent_Shadow2, var(--sapContent_Interaction_Shadow));
@@ -400,20 +405,21 @@ body,
   .chattextarea {
     width: 100% !important;
     height: 100% !important;
-    padding: 5px 0px 7px 8px;
+    padding: 5px 0px 7px 0;
     gap: 10px;
   
     max-width: 100%;
     /* border: none !important; */
     /* border-width: 2rem; */
-    border:#0070f2
+    
   }
   
   .chattextarea .sapMInputBaseContentWrapper {
     /* border: none !important; */
     box-shadow: none !important;
     background: none !important;
-    border:#0070f2
+    border:1px solid #d9d9d9;
+    border-radius: 8px;
   
   }
   
@@ -423,13 +429,13 @@ body,
       .sapMInputBaseContentWrapperState
     ):focus {
     /* border: none !important; */
-    border:#0070f2
+    border:1px solid #0070f2;
   }
   
   .chattextarea
     .sapMInputBaseContentWrapper:not(.sapMInputBaseDisabledWrapper)::before {
     /* border: none !important; */
-    border:#0070f2
+    border:1px solid #0070f2;
   }
   
   .dasChatInputSubmitButtonDisabled {

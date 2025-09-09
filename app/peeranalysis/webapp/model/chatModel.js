@@ -13,7 +13,7 @@ sap.ui.define(["sap/ui/model/json/JSONModel"], function (JSONModel) {
     result:      "",
     maker: true,
     checker: true,
-  
+    userId: "",
   }; 
   return JSONModel.extend("com.sap.shae.flp.plugins.homepage.chatModel", {
     /**

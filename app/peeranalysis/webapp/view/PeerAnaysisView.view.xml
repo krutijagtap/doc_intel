@@ -4,7 +4,7 @@
     xmlns:core="sap.ui.core"
     xmlns:uxap="sap.uxap"
     xmlns:tnt="sap.tnt">
-    <Page id="page" title="PeerAnalysis" titleAlignment="Center">
+    <Page id="page" title="PeerAnalysis" backgroundDesign="List" titleAlignment="Center">
         <IconTabBar id="idIconTabBarNoIcons" expanded="true" expandable="false" class="sapUiContentPadding" backgroundDesign="Transparent">
             <items>
                 <IconTabFilter text="Ask Anything" key="chatbox">
@@ -28,8 +28,8 @@
                                 <Text text="Step 3: Upload prompt template and generate report"></Text>
                                 <HBox justifyContent="SpaceBetween" class="sapUiSmallMarginTop">
                                     <HBox>
-                                        <unified:FileUploader id="promptFileUploader" class="sapUiTinyMarginEnd" buttonOnly="true" iconFirst="false" buttonText="Add prompt template" change="onFileUpload" uploadComplete="onUploadComplete" icon="sap-icon://attachment" tooltip="Upload File" visible="{chatModel>/enableUpload}"/>
-                                        <unified:FileUploader id="mapperFileUploader" buttonOnly="true" iconFirst="false" buttonText="Add mapper" change="onFileUpload" uploadComplete="onUploadComplete" icon="sap-icon://attachment" tooltip="Upload File" visible="{chatModel>/enableUpload}"/>
+                                        <unified:FileUploader id="promptFileUploader" class="sapUiTinyMarginEnd" buttonOnly="true" iconFirst="false" buttonText="Add prompt template" change="onPromptFileUpload" uploadComplete="onPromptFileUploadComplete" icon="sap-icon://attachment" tooltip="Upload File" visible="{chatModel>/enableUpload}"/>
+                                        <unified:FileUploader id="mapperFileUploader" buttonOnly="true" iconFirst="false" buttonText="Add mapper" change="onMapperFileUpload" uploadComplete="onMapperFileUploadComplete" icon="sap-icon://attachment" tooltip="Upload File" visible="{chatModel>/enableUpload}"/>
                                     </HBox>
                                     <Button text="Generate Report" type="Emphasized" press="onGenerateReport" class="sapUiTinyMarginLeft" enabled="{chatModel>/enableSubmit}"/>
                                 </HBox>
@@ -45,16 +45,12 @@
             </items>
         </IconTabBar>
         <VBox class="resultBoxContainer">
-            <FlexBox id="resultFlexBox" visible="{chatModel>/visibleResult}">
-                <core:Fragment fragmentName="peeranalysis.fragment.resultBox" type="XML"/>
-            </FlexBox>
 
             <FlexBox id="resultFlexBox" class="ResultFlexBox" visible="{chatModel>/visibleResult}">
                 <core:Fragment fragmentName="peeranalysis.fragment.resultBox" type="XML"/>
             </FlexBox>
 
 
-        </FlexBox>
-    </content>
+        </VBox>
 </Page>
 </mvc:View>
