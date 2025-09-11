@@ -28,8 +28,8 @@
                                 <Text text="Step 3: Upload prompt template and generate report"></Text>
                                 <HBox justifyContent="SpaceBetween" class="sapUiSmallMarginTop">
                                     <HBox>
-                                        <unified:FileUploader id="promptFileUploader" class="sapUiTinyMarginEnd" buttonOnly="true" iconFirst="false" buttonText="Add prompt template" change="onPromptFileUpload" uploadComplete="onPromptFileUploadComplete" icon="sap-icon://attachment" tooltip="Upload File" visible="{chatModel>/enableUpload}"/>
-                                        <unified:FileUploader id="mapperFileUploader" buttonOnly="true" iconFirst="false" buttonText="Add mapper" change="onMapperFileUpload" uploadComplete="onMapperFileUploadComplete" icon="sap-icon://attachment" tooltip="Upload File" visible="{chatModel>/enableUpload}"/>
+                                        <unified:FileUploader id="promptFileUploader" class="sapUiTinyMarginEnd" buttonOnly="true" iconFirst="false" buttonText="Add prompt template" change="onPromptFileUpload" uploadComplete="onPromptFileUploadComplete" icon="sap-icon://attachment" tooltip="Upload File"/>
+                                        <unified:FileUploader id="mapperFileUploader" buttonOnly="true" iconFirst="false" buttonText="Add mapper" change="onMapperFileUpload" uploadComplete="onMapperFileUploadComplete" icon="sap-icon://attachment" tooltip="Upload File" />
                                     </HBox>
                                     <Button text="Generate Report" type="Emphasized" press="onGenerateReport" class="sapUiTinyMarginLeft" enabled="{chatModel>/enableSubmit}"/>
                                 </HBox>
