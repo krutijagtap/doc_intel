@@ -9,7 +9,7 @@
     midColumnVisible="true">
   
     <f:beginColumnPages>
-      <Page id="approvalListPage" title="Pending Approvals">
+      <Page id="approvalListPage" title="Peer Analysis - Pending Approvals">
         <Table
           items="{ path: 'contentModel>/EmbeddingFiles'}"
           itemPress="onFileSelect"

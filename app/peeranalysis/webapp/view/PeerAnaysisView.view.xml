@@ -6,7 +6,7 @@
 	xmlns:tnt="sap.tnt"
     
     >
-    <Page id="page" title="PeerAnalysis">
+    <Page id="page" title="Peer Analysis - AskFinSight">
 
         <content>
     <FlexBox direction="Column" class="earningsBox">

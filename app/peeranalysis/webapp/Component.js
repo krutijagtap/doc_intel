@@ -31,9 +31,12 @@ sap.ui.define([
                         this.setModel(new chatModel(), "chatModel");
 
                         //RootPath
+                        var appId = this.getManifestEntry("/sap.app/id");
+                        var appPath = appId.replaceAll(".", "/");
+                        var appModulePath = jQuery.sap.getModulePath(appPath);
                         let oRootPath = jQuery.sap.getModulePath("earningsai"); // your resource root
                         let oImageModel = new sap.ui.model.json.JSONModel({
-                            path: oRootPath,
+                            path: appModulePath,
                         });
             
                         this.setModel(oImageModel, "imageModel");
