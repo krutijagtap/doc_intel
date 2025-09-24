@@ -5,7 +5,7 @@
             expanded="false"
             itemSelect="onItemSelect">
            	<tnt:NavigationList id="mainList" class="navListIcon">
-				<tnt:NavigationListItem id="Dashboard" text="Ask Finsight" tooltip="Ask Finsight" icon="sap-icon://bbyd-dashboard" key="home"/>
+				<tnt:NavigationListItem id="Dashboard" text="Ask FinSight" tooltip="Ask FinSight" icon="sap-icon://bbyd-dashboard" key="home"/>
 				<tnt:NavigationListItem id="ContentIngestion" text="Content Ingestion" tooltip="Content Ingestion" icon="sap-icon://employee-lookup" key="ContentIngestionView" />
 				<tnt:NavigationListItem id="Reports" text="Standard Reports" tooltip="Standard Reports" icon="sap-icon://manager-insight" key="Reports" />
                 <tnt:NavigationListItem id="Onboard" text="New Bank Onboarding" tooltip="New Bank Onboarding" icon="sap-icon://add-product" key="Onboard" />

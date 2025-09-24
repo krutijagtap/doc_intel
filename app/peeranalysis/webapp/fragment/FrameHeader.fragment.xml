@@ -14,6 +14,6 @@
 					</layoutData>
 				</Button>
         <ToolbarSpacer width="20px"></ToolbarSpacer>
-        <Image id="logo" src="./images/Scb_logo.png" decorative="true" class="logo"/>
+        <Image id="logo" src="{imageModel>/path}/images/FinSight.png" decorative="true" class="logo"/>
         </tnt:ToolHeader>
 </core:FragmentDefinition>
