@@ -49,12 +49,12 @@ modules:
         - Name: earning-upload-v2-earning-upload-v2-repo-host
           ServiceInstanceName: earning-upload-v2-html5-service
           ServiceKeyName: earning-upload-v2-repo-host-key
-          sap.cloud.service: earningupload 
+          sap.cloud.service: earninguploadv2 
         - Authentication: OAuth2UserTokenExchange
           Name: earning-upload-v2-earning-upload-v2-auth
           ServiceInstanceName: earning-upload-v2-auth
           ServiceKeyName: earning-upload-v2-auth-key
-          sap.cloud.service: earningupload
+          sap.cloud.service: earninguploadv2
         existing_destinations_policy: update
   build-parameters:
     no-source: true
