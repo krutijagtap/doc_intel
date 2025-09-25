@@ -2,7 +2,7 @@
 
 specVersion: "3.1"
 metadata:
-  name: peeranalysis
+  name: peeranalysisv2
 type: application
 server:
   customMiddleware:

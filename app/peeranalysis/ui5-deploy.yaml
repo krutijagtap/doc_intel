@@ -2,7 +2,7 @@
 
 specVersion: "3.1"
 metadata:
-  name: peeranalysis
+  name: peeranalysisv2
 type: application
 resources:
   configuration:
@@ -16,7 +16,7 @@ builder:
     - name: ui5-task-zipper
       afterTask: generateCachebusterInfo
       configuration:
-        archiveName: peeranalysis
+        archiveName: peeranalysisv2
         relativePaths: true
         additionalFiles:
           - xs-app.json

@@ -2,7 +2,7 @@
 
 specVersion: "3.1"
 metadata:
-  name: onboardbanks
+  name: onboardbanksv2
 type: application
 resources:
   configuration:
@@ -16,7 +16,7 @@ builder:
     - name: ui5-task-zipper
       afterTask: generateCachebusterInfo
       configuration:
-        archiveName: onboardbanks
+        archiveName: onboardbanksv2
         relativePaths: true
         additionalFiles:
           - xs-app.json

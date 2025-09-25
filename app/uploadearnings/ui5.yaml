@@ -1,6 +1,6 @@
 specVersion: "3.1"
 metadata:
-  name: com.scb.uploadearnings
+  name: com.scb.uploadearningsv2
 type: application
 
 framework:

@@ -2,7 +2,7 @@
 
 specVersion: "3.1"
 metadata:
-  name: onboardbanks
+  name: onboardbanksv2
 type: application
 server:
   customMiddleware:
