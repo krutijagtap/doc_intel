@@ -69,18 +69,18 @@ modules:
     build-result: resources
     requires:
     - artifacts:
-      - comscbuploadearnings.zip
-      name: comscbuploadearnings
+      - comscbuploadearningsv2.zip
+      name: comscbuploadearningsv2
       target-path: resources/
     - artifacts:
-      - onboardbanks.zip
-      name: onboardbanks
+      - onboardbanksv2.zip
+      name: onboardbanksv2
       target-path: resources/
     - artifacts:
-      - peeranalysis.zip
-      name: peeranalysis
+      - peeranalysisv2.zip
+      name: peeranalysisv2
       target-path: resources/
-- name: comscbuploadearnings
+- name: comscbuploadearningsv2
   type: html5
   path: app/uploadearnings
   build-parameters:
@@ -90,7 +90,7 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
-- name: onboardbanks
+- name: onboardbanksv2
   type: html5
   path: app/onboardbanks
   build-parameters:
@@ -100,7 +100,7 @@ modules:
     - npm install
     - npm run build:cf
     supported-platforms: []
-- name: peeranalysis
+- name: peeranalysisv2
   type: html5
   path: app/peeranalysis
   build-parameters:
