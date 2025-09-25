@@ -1,7 +1,7 @@
 _schema-version: 3.3.0
 ID: earning-upload-v2
 description: A simple CAP project.
-version: 1.0.0
+version: 2.0.0
 modules:
 - name: earning-upload-v2-srv
   type: nodejs
