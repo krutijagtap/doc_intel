@@ -7,7 +7,7 @@
     <Page id="page" title="Peer Analysis - AskFinSight" backgroundDesign="List" titleAlignment="Center">
         <IconTabBar id="idIconTabBarNoIcons" expanded="true" expandable="false" class="sapUiContentPadding" backgroundDesign="Transparent">
             <items>
-                <IconTabFilter text="Ask Anything" key="chatbox">
+                <IconTabFilter text="Analyze earnings results" key="chatbox">
                     <VBox class="styleBox1">
                         <Panel class="sapMShellGlobalOuterBackground sapUiContentPadding">
                             <core:Fragment fragmentName="peeranalysis.fragment.chatBox" type="XML"/>
