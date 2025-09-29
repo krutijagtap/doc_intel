@@ -55,6 +55,15 @@ modules:
           ServiceInstanceName: earning-upload-v2-auth
           ServiceKeyName: earning-upload-v2-auth-key
           sap.cloud.service: earningupload
+        - Name: MyCAPServiceDestination # Name of your destination
+          Type: HTTP
+          URL: ${env.MY_CAP_SERVICE_URL} # URL of the target CAP service
+          ProxyType: Internet
+          Authentication: OAuth2ClientCredentials
+          ClientId: ~{mycapapp-xsuaa-service/clientid} # Retrieve clientid from XSUAA service key
+          ClientSecret: ~{mycapapp-xsuaa-service/clientsecret} # Retrieve clientsecret from XSUAA service key
+          TokenServiceURL: ~{mycapapp-xsuaa-service/url}/oauth/token # Token URL from XSUAA service key
+          TokenServiceURLType: Dedicated
         existing_destinations_policy: update
   build-parameters:
     no-source: true
