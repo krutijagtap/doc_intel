@@ -41,7 +41,7 @@ sap.ui.define([
     _getStandaloneUrl: function () {
       const baseUrl = window.location.href.split("#")[0];
       return baseUrl.replace(/(\/[^\/]+\.earningupload\.)[^.]+(-[\d.]+\/index\.html)/,
-                             "$1onboardbanks$2");
+                             "$1onboardbanksv2$2");
     },
 
     _getFLPUrl:function() {

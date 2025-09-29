@@ -43,7 +43,7 @@ sap.ui.define([
     _getStandaloneUrl: function () {
       const baseUrl = window.location.href.split("#")[0];
       return baseUrl.replace(/(\/[^\/]+\.earningupload\.)[^.]+(-[\d.]+\/index\.html)/,
-                             "$1comscbuploadearnings$2");
+                             "$1comscbuploadearningsv2$2");
     },
     _getFLPUrl:function() {
     const href = window.location.href;
