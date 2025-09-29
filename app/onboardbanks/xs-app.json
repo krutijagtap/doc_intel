@@ -5,7 +5,7 @@
     {
       "source": "^/odata/v4/config-srv/(.*)$",
       "target": "/odata/v4/config-srv/$1",
-      "destination": "earning-upload-srv-api",
+      "destination": "earning-upload-v2-srv-api",
       "authenticationType": "none"
     },
     {

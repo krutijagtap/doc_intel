@@ -139,7 +139,6 @@ body,
   }
   
   .gradientTitle {
-    text-align: center !important;
     width: 100%;
     display: block;
     font-size: 40px;
@@ -205,6 +204,9 @@ body,
   .styleBox1{
     width: 100% !important;
     max-width: 1200px;
+  }
+  .styleBox1 .sapMPanel{
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 0px 2px 1px;
   }
   
   .dynamicChatBox {
@@ -702,3 +704,11 @@ button[id$="--smartFilterBar-btnFilters"] {
   margin-right: 0.75rem;
 }
 
+.sapMITH.sapMITHBackgroundDesignTransparent{
+  border: none;
+}
+.tabcontainer .sapMITBContent{
+  padding-top: 0 !important;
+  padding-bottom:0 !important;
+}
+  

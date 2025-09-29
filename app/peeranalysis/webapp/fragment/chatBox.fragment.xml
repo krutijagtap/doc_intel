@@ -6,7 +6,8 @@
 
  
   <VBox class="dasTextAreaInput"  >
-    <Text text="Which results should I analyze?" class="gradientTitle sapUiTinyMarginBottom"/>
+    <Text text="How can I help you?" class="gradientTitle sapUiTinyMarginBottom"/>
+    <core:HTML content="&lt;span&gt;Type your question in the box below. Remember to include the &lt;strong&gt;bank name, metric&lt;/strong&gt; and &lt;strong&gt;period&lt;/strong&gt;.&lt;br/&gt; Prompt example: &lt;strong&gt;JPMC income&lt;/strong&gt; analysis with key drivers for &lt;strong&gt;1Q 2025&lt;/strong&gt;&lt;/span&gt;"></core:HTML>
       <FlexBox id="ChatBotresult" height="7rem" >
 
         <TextArea id="chatFeedInput" class="chattextarea" liveChange="userlivechange"  value="{chatModel>/userMessage}" enabled="{= !${chatModel>/busyIndicator} }" rows="1" growingMaxLines="23" placeholder="{chatModel>/placeHolder}" growing="true">
@@ -23,23 +24,7 @@
             </FlexBox>
 
                 <FlexBox id="btncontrolls" justifyContent= "Start" alignItems="Start" class="busyBox">
-                <!-- <Button icon="sap-icon://upload" class="myMicrophoneIcon"  visible="{chatModel>/enableUpload}" ></Button> -->
-<!-- 
-                     <u:FileUploader id="fileUploader"
-                    
-                      buttonOnly = "true"
-                      iconOnly = "true"
-                      change="onFileUpload"
-                      uploadComplete="onUploadComplete"
-                      icon="sap-icon://upload"
-                      tooltip="Upload File"
-                      style="Emphasized"
-                       visible="{chatModel>/enableUpload}"/>  -->
-
-
-                
-                 <!-- <Button text="Ask FinSight"  enabled="{chatModel>/enableSubmit}" visible="{chatModel>/enableQuery}" press="onUserChat" /> -->
-                  <Button text="Ask FinSight" class="sapUiTinyMarginTop" type="Emphasized" press="onUserChat" />
+                <Button text="Ask FinSight" class="sapUiTinyMarginTop" type="Emphasized" press="onUserChat" />
              
 
 
