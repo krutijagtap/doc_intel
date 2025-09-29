@@ -1,9 +1,9 @@
 sap.ui.require(
     [
         'sap/fe/test/JourneyRunner',
-        'onboardbanks/test/integration/FirstJourney',
-		'onboardbanks/test/integration/pages/BanksList',
-		'onboardbanks/test/integration/pages/BanksObjectPage'
+        'onboardbanksv2/test/integration/FirstJourney',
+		'onboardbanksv2/test/integration/pages/BanksList',
+		'onboardbanksv2/test/integration/pages/BanksObjectPage'
     ],
     function(JourneyRunner, opaJourney, BanksList, BanksObjectPage) {
         'use strict';

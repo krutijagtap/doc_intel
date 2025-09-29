@@ -74,7 +74,7 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "com.scb.uploadearnings.i18n.i18n"
+          "bundleName": "com.scb.uploadearningsv2.i18n.i18n"
         }
       },
       "": {
@@ -150,7 +150,7 @@
                   },
                   "actions": {
                     "Approve": {
-                      "press": "com.scb.uploadearnings.ext.controller.EarningListPageExtend.onApprove",
+                      "press": "com.scb.uploadearningsv2.ext.controller.EarningListPageExtend.onApprove",
                       "visible": "{/VisibilityConfig/isAdmin}",
                       "icon": "sap-icon://accept",
                       "enabled": true,
@@ -179,7 +179,7 @@
                 "body": {
                   "sections": {
                     "UploadEarningDocument": {
-                      "template": "com.scb.uploadearnings.ext.fragment.UploadEarningDocument",
+                      "template": "com.scb.uploadearningsv2.ext.fragment.UploadEarningDocument",
                       "position": {
                         "placement": "After",
                         "anchor": "Main"
@@ -188,7 +188,7 @@
                       "visible": "{ui>/isEditable}"
                     },
                     "DisplayEarningDocument": {
-                      "template": "com.scb.uploadearnings.ext.fragment.DisplayEarningDocument",
+                      "template": "com.scb.uploadearningsv2.ext.fragment.DisplayEarningDocument",
                       "position": {
                         "placement": "After",
                         "anchor": "UploadEarningDocument"
@@ -210,7 +210,7 @@
       "extensions": {
         "sap.ui.controllerExtensions": {
           "sap.fe.templates.ObjectPage.ObjectPageController": {
-            "controllerName": "com.scb.uploadearnings.ext.controller.EarningObjectPageExtend"
+            "controllerName": "com.scb.uploadearningsv2.ext.controller.EarningObjectPageExtend"
           }
         }
       }

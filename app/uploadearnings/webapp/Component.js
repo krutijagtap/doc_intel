@@ -5,7 +5,7 @@ sap.ui.define(
     function (Component) {
         "use strict";
 
-        return Component.extend("com.scb.uploadearnings.Component", {
+        return Component.extend("com.scb.uploadearningsv2.Component", {
             metadata: {
                 manifest: "json"
             },

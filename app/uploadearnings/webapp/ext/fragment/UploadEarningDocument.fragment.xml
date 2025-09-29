@@ -6,7 +6,7 @@
 >
     <VBox
         id="idUploadEarningFileVBox"
-        core:require="{ handler: 'com/scb/uploadearnings/ext/fragment/UploadEarningDocument'}"
+        core:require="{ handler: 'com/scb/uploadearningsv2/ext/fragment/UploadEarningDocument'}"
     >
         <u:FileUploader
             id="idUploadEarningUploader"

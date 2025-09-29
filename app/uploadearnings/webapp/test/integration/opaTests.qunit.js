@@ -1,9 +1,9 @@
 sap.ui.require(
     [
         'sap/fe/test/JourneyRunner',
-        'com/scb/uploadearnings/test/integration/FirstJourney',
-		'com/scb/uploadearnings/test/integration/pages/EarningFilesList',
-		'com/scb/uploadearnings/test/integration/pages/EarningFilesObjectPage'
+        'com/scb/uploadearningsv2/test/integration/FirstJourney',
+		'com/scb/uploadearningsv2/test/integration/pages/EarningFilesList',
+		'com/scb/uploadearningsv2/test/integration/pages/EarningFilesObjectPage'
     ],
     function(JourneyRunner, opaJourney, EarningFilesList, EarningFilesObjectPage) {
         'use strict';
