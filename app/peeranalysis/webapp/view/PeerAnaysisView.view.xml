@@ -31,14 +31,14 @@
                                     </HBox>
                                     <Button text="Generate Report" type="Emphasized" press="onGenerateReport" class="sapUiTinyMarginLeft" enabled="{chatModel>/enableSubmit}"/>
                                 </HBox>
-                                <HBox class="sapUiSmallMarginTop" alignContent="Center">
-                                    <core:Icon class="brandColor sapUiTinyMarginEnd" src="sap-icon://hint" />
-                                    <Text class="fontBold sapUiTinyMarginEnd" text="Mapper is optional:"></Text>
-                                    <Text text="Only required for new banks or existing banks that have changed their nomenclature."></Text>
-                                </HBox>
+                                <FlexBox alignItems="Center" class="sapUiSmallMarginTop">
+                                    <core:Icon src="sap-icon://hint" class="sapUiTinyMarginEnd" color="#0072B9" />
+                                    <Text text="You can verify the currently used" class="sapUiTinyMarginEnd"></Text>
+                                    <Link text="standard account line mapping" press=".onDownload"></Link>
+                                </FlexBox>
                             </VBox>
                         </Panel>
-                        
+
                     </VBox>
                 </IconTabFilter>
             </items>
