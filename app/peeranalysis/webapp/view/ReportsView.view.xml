@@ -8,7 +8,7 @@
     xmlns:unified="sap.ui.unified"
     xmlns:uxap="sap.uxap"
     xmlns:tnt="sap.tnt"
-    controllerName="peeranalysis.controller.ReportsView"
+    controllerName="peeranalysisv2.controller.ReportsView"
 >
     <Page id="OnboardBank" title="Peer Analysis - Standard Reports">
         <content>

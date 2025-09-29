@@ -6,7 +6,7 @@ sap.ui.define([
 ], (Controller) => {
     "use strict";
 
-    return Controller.extend("peeranalysis.controller.PeerAnaysisView", {
+    return Controller.extend("peeranalysisv2.controller.PeerAnaysisView", {
       onInit() {
         let oView = this.getView();
         oView.setBusy(false); // Show busy indicator

@@ -63,7 +63,7 @@
       "i18n": {
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
-          "bundleName": "peeranalysis.i18n.i18n"
+          "bundleName": "peeranalysisv2.i18n.i18n"
         }
       },
       "embeddings": {
@@ -93,9 +93,9 @@
         "transition": "slide",
         "type": "View",
         "viewType": "XML",
-        "path": "peeranalysis.view",
+        "path": "peeranalysisv2.view",
         "async": true,
-        "viewPath": "peeranalysis.view"
+        "viewPath": "peeranalysisv2.view"
       },
       "routes": [
         {
@@ -157,7 +157,7 @@
       }
     },
     "rootView": {
-      "viewName": "peeranalysis.view.App",
+      "viewName": "peeranalysisv2.view.App",
       "type": "XML",
       "id": "App",
       "async": true

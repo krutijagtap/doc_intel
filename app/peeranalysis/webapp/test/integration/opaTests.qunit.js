@@ -1,6 +1,6 @@
 /* global QUnit */
 
-sap.ui.require(["peeranalysis/test/integration/AllJourneys"
+sap.ui.require(["peeranalysisv2/test/integration/AllJourneys"
 ], function () {
 	QUnit.config.autostart = false;
 	QUnit.start();

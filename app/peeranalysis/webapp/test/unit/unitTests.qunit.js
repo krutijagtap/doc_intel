@@ -5,7 +5,7 @@ sap.ui.getCore().attachInit(function () {
 	"use strict";
 
 	sap.ui.require([
-		"peeranalysis/test/unit/AllTests"
+		"peeranalysisv2/test/unit/AllTests"
 	], function () {
 		QUnit.start();
 	});

@@ -1,4 +1,4 @@
-<mvc:View xmlns:unified="sap.ui.unified" controllerName="peeranalysis.controller.PeerAnaysisView"
+<mvc:View xmlns:unified="sap.ui.unified" controllerName="peeranalysisv2.controller.PeerAnaysisView"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
@@ -10,7 +10,7 @@
                 <IconTabFilter text="Analyze earnings results" key="chatbox">
                     <VBox class="styleBox1">
                         <Panel class="sapMShellGlobalOuterBackground sapUiContentPadding">
-                            <core:Fragment fragmentName="peeranalysis.fragment.chatBox" type="XML"/>
+                            <core:Fragment fragmentName="peeranalysisv2.fragment.chatBox" type="XML"/>
                         </Panel>
                     </VBox>
                 </IconTabFilter>
@@ -46,7 +46,7 @@
         <VBox class="resultBoxContainer">
 
             <FlexBox id="resultFlexBox" class="ResultFlexBox" visible="{chatModel>/visibleResult}">
-                <core:Fragment fragmentName="peeranalysis.fragment.resultBox" type="XML"/>
+                <core:Fragment fragmentName="peeranalysisv2.fragment.resultBox" type="XML"/>
             </FlexBox>
 
 

@@ -1,5 +1,5 @@
 sap.ui.define([
-	"peeranalysis/test/unit/controller/PeerAnaysisView.controller"
+	"peeranalysisv2/test/unit/controller/PeerAnalysisView.controller"
 ], function () {
 	"use strict";
 });

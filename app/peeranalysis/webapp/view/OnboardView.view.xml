@@ -5,7 +5,7 @@
     xmlns:unified="sap.ui.unified"
     xmlns:uxap="sap.uxap"
     xmlns:tnt="sap.tnt"
-    controllerName="peeranalysis.controller.OnboardView"
+    controllerName="peeranalysisv2.controller.OnboardView"
 >
     <Page id="OnboardBank" title="Peer Analysis - New Bank Onboarding">
         <content>

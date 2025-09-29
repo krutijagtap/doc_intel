@@ -1,7 +1,7 @@
 /*global QUnit*/
 
 sap.ui.define([
-	"peeranalysis/controller/PeerAnaysisView.controller"
+	"peeranalysisv2/controller/PeerAnaysisView.controller"
 ], function (Controller) {
 	"use strict";
 

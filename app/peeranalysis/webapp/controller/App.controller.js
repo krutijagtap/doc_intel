@@ -3,7 +3,7 @@ sap.ui.define([
 ], (BaseController) => {
   "use strict";
 
-  return BaseController.extend("peeranalysis.controller.App", {
+  return BaseController.extend("peeranalysisv2.controller.App", {
       onInit() {
       },
       onAfterRendering(){

@@ -5,7 +5,7 @@
     xmlns:sfb="sap.ui.comp.smartfilterbar"
     xmlns:smartTable="sap.ui.comp.smarttable"
     xmlns:m="sap.m"
-    controllerName="peeranalysis.controller.ContentIngestionView">
+    controllerName="peeranalysisv2.controller.ContentIngestionView">
 
     <Page id="page1" title="Peer Analysis - Content Ingestion" showFooter="true">
         <content>

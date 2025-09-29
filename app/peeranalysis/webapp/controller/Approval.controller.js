@@ -4,7 +4,7 @@ sap.ui.define([
   ], function (Controller, MessageToast) {
     "use strict";
   
-    return Controller.extend("peeranalysis.controller.Approval", {
+    return Controller.extend("peeranalysisv2.controller.Approval", {
       onInit: function () {
         this.oModel = this.getView().getModel(); // assume it's already set globally
       },

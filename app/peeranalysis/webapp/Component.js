@@ -1,12 +1,12 @@
 sap.ui.define([
     "sap/ui/core/UIComponent",
-    "peeranalysis/model/models",
-     "peeranalysis/model/chatModel",
+    "peeranalysisv2/model/models",
+     "peeranalysisv2/model/chatModel",
      "sap/ui/model/odata/v4/ODataModel"
 ], (UIComponent, models,chatModel,ODataModel,uploadEarnings) => {
     "use strict";
 
-    return UIComponent.extend("peeranalysis.Component", {
+    return UIComponent.extend("peeranalysisv2.Component", {
         metadata: {
        
             manifest: "json",

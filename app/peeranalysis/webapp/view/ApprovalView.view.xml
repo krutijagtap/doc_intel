@@ -1,5 +1,5 @@
 <mvc:View
-  controllerName="peeranalysis.controller.Approval"
+  controllerName="peeranalysisv2.controller.Approval"
   xmlns:mvc="sap.ui.core.mvc"
   xmlns:f="sap.f"
   xmlns="sap.m">

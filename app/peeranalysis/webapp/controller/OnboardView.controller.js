@@ -4,7 +4,7 @@ sap.ui.define([
 ], function (Controller, MessageToast) {
   "use strict";
 
-  return Controller.extend("peeranalysis.controller.OnboardView", {
+  return Controller.extend("peeranalysisv2.controller.OnboardView", {
     onInit: function () {
     
     },

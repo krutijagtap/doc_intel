@@ -9,7 +9,7 @@ sap.ui.define(
   function (Controller, Fragment) {
     "use strict";
 
-    return Controller.extend("peeranalysis.controller.ContentIngestionView", {
+    return Controller.extend("peeranalysisv2.controller.ContentIngestionView", {
       onInit: async function () {
         await this.onfetchRoles();
         this._attachmentId = 0;
@@ -446,7 +446,7 @@ sap.ui.define(
       //   this._rejectionContexts = aSelectedItems.map(item => item.getBindingContext());
 
       //   if (!this._rejectionDialog) {
-      //     this._rejectionDialog = sap.ui.xmlfragment("peeranalysis.fragment.RejectionDialog", this);
+      //     this._rejectionDialog = sap.ui.xmlfragment("peeranalysisv2.fragment.RejectionDialog", this);
       //     this.getView().addDependent(this._rejectionDialog);
       //   }
 
@@ -470,7 +470,7 @@ sap.ui.define(
 
         if (!this._rejectionDialog) {
           this._rejectionDialog = sap.ui.xmlfragment(
-            "peeranalysis.fragment.RejectionDialog",
+            "peeranalysisv2.fragment.RejectionDialog",
             this
           );
           this.getView().addDependent(this._rejectionDialog);
@@ -803,7 +803,7 @@ sap.ui.define(
         if (!this._oDialog) {
           this._pDialog = Fragment.load({
             id: this.getView().getId() + "--myDialog",
-            name: "peeranalysis.fragment.MetaDataDialog",
+            name: "peeranalysisv2.fragment.MetaDataDialog",
             controller: this,
           }).then(function (oDialog) {
             that._oDialog = oDialog;
