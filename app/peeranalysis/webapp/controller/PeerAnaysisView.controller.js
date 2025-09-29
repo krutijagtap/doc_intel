@@ -440,8 +440,8 @@ sap.ui.define([
       onUploadFileContent: async function (oFile) {
         const chatModel = this.getOwnerComponent().getModel("chatModel");
         chatModel.setProperty("/busyIndicator", true);
-        // const url = sap.ui.require.toUrl("peeranalysis") + "/api/chat_upload";
-        const url = "https://standard-chartered-bank-core-foundational-12982zqn-genaidbe36f0.cfapps.ap11.hana.ondemand.com/api/chat_upload";
+        const url = sap.ui.require.toUrl("peeranalysisv2") + "/api/chat_upload";
+        // const url = "https://standard-chartered-bank-core-foundational-12982zqn-genaidbe36f0.cfapps.ap11.hana.ondemand.com/api/chat_upload";
         let formData = new FormData();
         formData.append("file", oFile);
         formData.append("userId", chatModel.getProperty("/userId"));
