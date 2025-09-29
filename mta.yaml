@@ -55,7 +55,7 @@ modules:
           ServiceInstanceName: earning-upload-v2-auth
           ServiceKeyName: earning-upload-v2-auth-key
           sap.cloud.service: earningupload
-        - Name: MyCAPServiceDestination # Name of your destination
+        - Name: EARNINGS_CORE_V2 # Name of your destination
           Type: HTTP
           URL: ${env.MY_CAP_SERVICE_URL} # URL of the target CAP service
           ProxyType: Internet
