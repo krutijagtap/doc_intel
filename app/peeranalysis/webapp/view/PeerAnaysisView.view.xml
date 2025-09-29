@@ -9,7 +9,7 @@
             <items>
                 <IconTabFilter text="Analyze earnings results" key="chatbox">
                     <VBox class="styleBox1">
-                        <Panel class="sapMShellGlobalOuterBackground">
+                        <Panel class="sapMShellGlobalOuterBackground sapUiContentPadding">
                             <core:Fragment fragmentName="peeranalysisv2.fragment.chatBox" type="XML"/>
                         </Panel>
                     </VBox>
@@ -28,7 +28,6 @@
                                 <HBox justifyContent="SpaceBetween" class="sapUiSmallMarginTop">
                                     <HBox>
                                         <unified:FileUploader id="promptFileUploader" class="sapUiTinyMarginEnd" buttonOnly="true" iconFirst="false" buttonText="Add prompt template" change="onPromptFileUpload" uploadComplete="onPromptFileUploadComplete" icon="sap-icon://attachment" tooltip="Upload File"/>
-                                        <unified:FileUploader id="mapperFileUploader" buttonOnly="true" iconFirst="false" buttonText="Add mapper" change="onMapperFileUpload" uploadComplete="onMapperFileUploadComplete" icon="sap-icon://attachment" tooltip="Upload File" />
                                     </HBox>
                                     <Button text="Generate Report" type="Emphasized" press="onGenerateReport" class="sapUiTinyMarginLeft" enabled="{chatModel>/enableSubmit}"/>
                                 </HBox>
@@ -39,6 +38,7 @@
                                 </HBox>
                             </VBox>
                         </Panel>
+                        
                     </VBox>
                 </IconTabFilter>
             </items>

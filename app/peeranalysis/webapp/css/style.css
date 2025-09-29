@@ -152,14 +152,7 @@ body,
   
   .iconbtns {
     background-color: #007aff !important;
-  
   } 
-  
-  .sapMFlexItemAlignAuto {
-    margin-left: 10px;
-  
-  }
-  
   
   .logo {
     height: 40px !important;
@@ -711,4 +704,6 @@ button[id$="--smartFilterBar-btnFilters"] {
   padding-top: 0 !important;
   padding-bottom:0 !important;
 }
-  
+.tabcontainer .sapMITBFilter .sapMITBText{
+  font-weight: normal;
+}
