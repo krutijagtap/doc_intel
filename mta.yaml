@@ -153,17 +153,17 @@ resources:
             ProxyType: Internet
             Type: HTTP
             URL: ~{srv-api/srv-url}
-          - Name: EARNINGS_CORE_V2 # Name of your destination
-            Type: HTTP
-            URL: https://standard-chartered-bank-core-foundational-12982zqn-gena6a6a8080.cfapps.ap11.hana.ondemand.com # URL of the target service
-            ProxyType: Internet
-            Authentication: OAuth2ClientCredentials
-            ClientId: sb-earningsai-asst-srv!t5156 
-            ClientSecret: MTfj/vfkbSeQoRt0FjYVWHJf8sg=
-            TokenServiceURL: https://core-foundational-12982zqn.authentication.ap11.hana.ondemand.com
-            TokenServiceURLType: Dedicated
-            ServiceInstanceName: earning-upload-v2-auth
-            ServiceKeyName: earning-upload-v2-auth-key
+          # - Name: EARNINGS_CORE_V2 # Name of your destination
+          #   Type: HTTP
+          #   URL: https://standard-chartered-bank-core-foundational-12982zqn-gena6a6a8080.cfapps.ap11.hana.ondemand.com # URL of the target service
+          #   ProxyType: Internet
+          #   Authentication: OAuth2ClientCredentials
+          #   ClientId: sb-earningsai-asst-srv!t5156 
+          #   ClientSecret: MTfj/vfkbSeQoRt0FjYVWHJf8sg=
+          #   TokenServiceURL: https://core-foundational-12982zqn.authentication.ap11.hana.ondemand.com
+          #   TokenServiceURLType: Dedicated
+          #   ServiceInstanceName: earning-upload-v2-auth
+          #   ServiceKeyName: earning-upload-v2-auth-key
           existing_destinations_policy: update
       version: 1.0.0
     service: destination
