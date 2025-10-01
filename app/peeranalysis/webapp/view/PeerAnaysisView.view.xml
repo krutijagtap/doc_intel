@@ -13,6 +13,11 @@
                             <core:Fragment fragmentName="peeranalysisv2.fragment.chatBox" type="XML"/>
                         </Panel>
                     </VBox>
+                    <VBox class="resultBoxContainer">
+                        <FlexBox id="resultFlexBox" class="ResultFlexBox" visible="{chatModel>/visibleResult}">
+                            <core:Fragment fragmentName="peeranalysisv2.fragment.resultBox" type="XML"/>
+                        </FlexBox>
+                    </VBox>
                 </IconTabFilter>
                 <IconTabFilter text="Generate report" key="report">
                     <VBox class="styleBox1">
@@ -38,18 +43,48 @@
                                 </FlexBox>
                             </VBox>
                         </Panel>
-
+                        <Table class="sapUiSmallMarginTop" items="{chatModel>/resultItems}">
+                            <columns>
+                                <Column>
+                                    <Text text="Uploaded Files"/>
+                                </Column>
+                                <Column>
+                                    <Text text="Status"/>
+                                </Column>
+                                <Column>
+                                    <Text text="Download"/>
+                                </Column>
+                                <Column>
+                                    <Text text="View"/>
+                                </Column>
+                                <Column>
+                                    <Text text="Date generated"/>
+                                </Column>
+                            </columns>
+                            <items>
+                                <ColumnListItem>
+                                    <cells>
+                                        <Link text="{chatModel>fileName}"/>
+                                        <HBox>
+                                            <core:Icon src="{path:'chatModel>status', formatter:'.formatProcessingStatusIcon'}"/>
+                                            <Text text="{chatModel>status}"/>
+                                        </HBox>
+                                        <Button type="Transparent" icon="sap-icon://download" press=".onDownload" text="Download"></Button>
+                                        <Button type="Transparent" icon="sap-icon://show" press=".onViewReport" text="View"></Button>
+                                        <Text text="{chatModel>dateGenerated}"/>
+                                    </cells>
+                                </ColumnListItem>
+                            </items>
+                        </Table>
+                    </VBox>
+                    <VBox class="resultBoxContainer">
+                        <FlexBox class="ResultFlexBox" visible="{chatModel>/generateVisibleResult}">
+                            <!-- <core:Fragment fragmentName="peeranalysisv2.fragment.resultBox" type="XML"/> -->
+                        </FlexBox>
                     </VBox>
                 </IconTabFilter>
             </items>
         </IconTabBar>
-        <VBox class="resultBoxContainer">
-
-            <FlexBox id="resultFlexBox" class="ResultFlexBox" visible="{chatModel>/visibleResult}">
-                <core:Fragment fragmentName="peeranalysisv2.fragment.resultBox" type="XML"/>
-            </FlexBox>
-
-
-        </VBox>
+        
 </Page>
 </mvc:View>

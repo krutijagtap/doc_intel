@@ -8,7 +8,7 @@
 
     <FlexBox class="summaryBox">
       <Title text="SUMMARY" class="summaryTitle"></Title>
-      <HBox class="messageEmotions" id="messageEmotions">
+      <HBox class="messageEmotions">
         <Button icon="sap-icon://copy" type="Transparent" press="onChatCopy" tooltip="{i18n>copyTooltip}"/>
         <Button icon="sap-icon://download" type="Transparent" press="onChatExport" tooltip="{i18n>export}" app:message="chatModel>/result"/>
       </HBox>

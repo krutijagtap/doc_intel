@@ -441,7 +441,8 @@ sap.ui.define([
         const chatModel = this.getOwnerComponent().getModel("chatModel");
         chatModel.setProperty("/busyIndicator", true);
         // const url = sap.ui.require.toUrl("peeranalysisv2") + "/api/chat_upload";
-        const url = "https://standard-chartered-bank-core-foundational-12982zqn-gena6a6a8080.cfapps.ap11.hana.ondemand.com/api/chat_upload";
+        const url =
+          "https://standard-chartered-bank-core-foundational-12982zqn-gena6a6a8080.cfapps.ap11.hana.ondemand.com/api/chat_upload";
         let formData = new FormData();
         formData.append("file", oFile);
         formData.append("userId", chatModel.getProperty("/userId"));
@@ -472,5 +473,17 @@ sap.ui.define([
         const oFile = oEvent.getParameters("files").files[0];
         this.onUploadFileContent(oFile);
       },
+      formatProcessingStatusIcon: function (sStatus) {
+        switch (sStatus) {
+          case "Processing":
+            return "sap-icon://synchronize";
+          case "Complete":
+            return "sap-icon://sys-enter-2";
+          case "Failed":
+            return "sap-icon://error";
+          default:
+            return "sap-icon://question-mark";
+        }
+      }
     });
 });
