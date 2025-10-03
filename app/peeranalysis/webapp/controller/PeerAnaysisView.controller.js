@@ -440,9 +440,8 @@ sap.ui.define([
       onUploadFileContent: async function (oFile) {
         const chatModel = this.getOwnerComponent().getModel("chatModel");
         chatModel.setProperty("/busyIndicator", true);
-        const url =
-          this.getBaseURL() +
-          "/v2/odata/v4/earning-upload-srv/uploadPromptFile";
+        // const url = this.getBaseURL() + "/v2/odata/v4/earning-upload-srv/uploadPromptFile";
+        const url = this.getBaseURL() + "/api/chat_upload";
        let formData = new FormData();
         formData.append("file", oFile);
         formData.append("userId", chatModel.getProperty("/userId"));
@@ -468,7 +467,22 @@ sap.ui.define([
 
           const data = await response.json();
           chatModel.setProperty("/busyIndicator", false);
-          return data;
+          //show dialog
+          sap.m.Dialog({
+            title: "File Upload Status",
+            content: [
+              new sap.m.Text({ text: data.message }),
+              new sap.m.Text({ text: "Prompts found: " + data.prompts_found }),
+              new sap.m.Text({ text: "Estimated processing time: " + data.estimated_processing_time }),
+              new sap.m.Link({ text: "Download (when ready)", href: data.download_url, target: "_blank" }),
+            ],
+            beginButton: new sap.m.Button({
+              text: "OK",
+              press: function () {
+                this.getParent().close();
+              }
+            })
+          }).open();
 
           // Optional: Store result in SAPUI5 JSONModel
           // var oModel = new sap.ui.model.json.JSONModel({ apiResult: sResponse });
@@ -477,19 +491,37 @@ sap.ui.define([
           console.error("API Error:", error);
         }
       },
+      fetchFileStatus: async function () {
+        const chatModel = this.getOwnerComponent().getModel("chatModel");
+        const url =
+          this.getBaseURL() +`/api/job/latest_status_and_download_by_userId?userId=${chatModel.getProperty("/userId")}`;
+        try {
+          const response = await fetch(url, {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+          });
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          } 
+          const data = await response.json();
+          chatModel.setProperty("/fileStatus", data);
+        } catch (error) {
+          console.error("Error fetching file status:", error);
+        }
+      },
       // {
       //   "filename": "Peer Analysis-mod_c9f8d235091c.html",
       //   "job_id": "c9f8d235091c",
       //   "message": "File is currently running. Download will be available when completed.",
       //   "status": "running"
-      }
+      // }
       onPromptFileUpload: async function (oEvent) {
         const oFile = oEvent.getParameters("files").files[0];
         this.onUploadFileContent(oFile);
       },
       formatProcessingStatusIcon: function (sStatus) {
         switch (sStatus) {
-          case "Processing":
+          case "running":
             return "sap-icon://synchronize";
           case "Complete":
             return "sap-icon://sys-enter-2";
