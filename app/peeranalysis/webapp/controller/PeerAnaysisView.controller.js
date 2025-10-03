@@ -456,6 +456,15 @@ sap.ui.define([
           //   sap.m.MessageToast.show(response.status);
           //   throw new Error(`HTTP error! Status: ${response.status}`);
           // }
+          // {
+          //   "download_url": "http://localhost:8080/api/job/c9f8d235091c/download",
+          //   "estimated_processing_time": "2 minute(s)",
+          //   "job_id": "c9f8d235091c",
+          //   "message": "File 'Peer Analysis-mod.xlsx' uploaded successfully and queued for processing.",
+          //   "prompts_found": 3,
+          //   "status_url": "http://localhost:8080/api/job/c9f8d235091c",
+          //   "userId": "8221550"
+          // }
 
           const data = await response.json();
           chatModel.setProperty("/busyIndicator", false);
@@ -468,7 +477,12 @@ sap.ui.define([
           console.error("API Error:", error);
         }
       },
-
+      // {
+      //   "filename": "Peer Analysis-mod_c9f8d235091c.html",
+      //   "job_id": "c9f8d235091c",
+      //   "message": "File is currently running. Download will be available when completed.",
+      //   "status": "running"
+      }
       onPromptFileUpload: async function (oEvent) {
         const oFile = oEvent.getParameters("files").files[0];
         this.onUploadFileContent(oFile);
