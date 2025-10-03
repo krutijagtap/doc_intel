@@ -202,6 +202,61 @@ module.exports = cds.service.impl((srv) => {
       throw new Error(`Error creating chat response ${response.status}`);
     }
   });
+  srv.on("uploadPromptFile", async (req) => {
+    console.log("request obj" + req);
+    // const response = await executeHttpRequest(
+    //   { destinationName: "EARNINGS_CORE" },
+    //   {
+    //     method: "POST",
+    //     url: "/api/upload-prompt-file",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     data: { fileName: req.data.fileName, content: req.data.content },
+    //   }
+    // );
+    const authUrl =
+      "https://core-foundational-12982zqn.authentication.ap11.hana.ondemand.com/oauth/token?grant_type=client_credentials";
+    const clientId = "sb-earningsai-asst-srv!t5156";
+    const clientSecret = "MTfj/vfkbSeQoRt0FjYVWHJf8sg=";
+
+    const tokenResponse = await executeHttpRequest(
+      { url: authUrl },
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Basic c2ItZWFybmluZ3NhaS1hc3N0LXNydiF0NTE1NjpNVGZqL3Zma2JTZVFvUnQwRmpZVldISmY4c2c9`,
+        },
+      },
+      {
+        fetchCsrfToken: false,
+      }
+    );
+
+    const bearerToken = tokenResponse.data.access_token;
+
+    const response = await executeHttpRequest(
+      {
+        url: "https://standard-chartered-bank-core-foundational-12982zqn-gena6a6a8080.cfapps.ap11.hana.ondemand.com/api/chat_upload",
+      },
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${bearerToken}`,
+        },
+        data: { userId: req.data.userId, content: req.data.file },
+      },
+      {
+        fetchCsrfToken: false,
+      }
+    );
+    if (response.status === 200 && response.data != null) {
+      return response.data;
+    } else {
+      throw new Error(`Error creating chat response ${response.status}`);
+    }
+  });
   srv.on("READ", ["EmbeddingFiles"], async (req, next) => {
     if (!req.data.ID) {
       return next();
