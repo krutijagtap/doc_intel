@@ -15,6 +15,7 @@ sap.ui.define([
       onAfterRendering: function () {
         let me = this;
         me.attachEventchatFeedInput(me);
+        me.fetchFileStatus();
       },
       userlivechange: function (oEvent) {
         const userinp = oEvent.getParameter("value");
@@ -473,21 +474,30 @@ sap.ui.define([
           const data = await response.json();
           chatModel.setProperty("/busyIndicator", false);
           //show dialog
-          sap.m.Dialog({
-            title: "File Upload Status",
-            content: [
+          const dialogContent = new sap.m.VBox({
+            items: [
               new sap.m.Text({ text: data.message }),
               new sap.m.Text({ text: "Prompts found: " + data.prompts_found }),
-              new sap.m.Text({ text: "Estimated processing time: " + data.estimated_processing_time }),
-              new sap.m.Link({ text: "Download (when ready)", href: data.download_url, target: "_blank" }),
+              new sap.m.Text({
+                text:
+                  "Estimated processing time: " +
+                  data.estimated_processing_time,
+              }),
             ],
+            width: "100%",
+          });
+          dialogContent.addStyleClass("sapUiSmallMargin");
+          new sap.m.Dialog({
+            title: "File Upload Status",
+            content: [dialogContent],
             beginButton: new sap.m.Button({
               text: "OK",
               press: function () {
                 this.getParent().close();
-              }
-            })
+              },
+            }),
           }).open();
+          this.fetchFileStatus();
 
           // Optional: Store result in SAPUI5 JSONModel
           // var oModel = new sap.ui.model.json.JSONModel({ apiResult: sResponse });
