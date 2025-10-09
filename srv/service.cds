@@ -54,7 +54,7 @@ service EarningUploadSrv {
   action chatResponse(prompt:String,token:String) returns String;
   action approveFiles(ids: array of  UUID) returns String;
   action rejectFiles(ids: array of UUID) returns String;
-  action uploadPromptFile(fileName:String,content:String) returns String;
+  action uploadPromptFile(userId:String,content:String) returns String;
   entity FileStatusValues   as projection on earning_upload.FileStatusValues;
   entity EarningsFileStatusValues   as projection on earning_upload.FileStatusValues;
  
