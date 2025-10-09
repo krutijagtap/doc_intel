@@ -6,14 +6,14 @@
       "source": "^/v2/odata/v4/earning-upload-srv/(.*)$",
       "target": "/v2/odata/v4/earning-upload-srv/$1",
       "authenticationType": "xsuaa",
-      "destination": "peeranalysis"
+      "destination": "earning-upload-v2-srv-api"
     },
 
     {
       "source": "^/odata/v4/earning-upload-srv/(.*)$",
       "target": "/odata/v4/earning-upload-srv/$1",
       "authenticationType": "xsuaa",
-      "destination": "peeranalysis"
+      "destination": "earning-upload-v2-srv-api"
     },
     {
       "source": "^/uploadearnings/(.*)$",
