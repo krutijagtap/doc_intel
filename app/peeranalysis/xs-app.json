@@ -25,7 +25,7 @@
       "source": "^/api/(.*)$",
       "target": "/api/$1",
       "authenticationType": "xsuaa",
-      "destination": "EARNINGS_CORE_V2"
+      "destination": "EARNINGS_CORE"
     },
     {
       "source": "^/user-api/currentUser$",

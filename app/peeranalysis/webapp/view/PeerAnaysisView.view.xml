@@ -71,7 +71,7 @@
                                         </HBox>
                                         <Button type="Transparent" icon="sap-icon://download" press=".onDownload" text="Download"></Button>
                                         <Button type="Transparent" icon="sap-icon://show" press=".onViewReport" text="View"></Button>
-                                        <Text text="{chatModel>dateGenerated}"/>
+                                        <Text text="{chatModel>created_at}"/>
                                     </cells>
                                 </ColumnListItem>
                             </items>
