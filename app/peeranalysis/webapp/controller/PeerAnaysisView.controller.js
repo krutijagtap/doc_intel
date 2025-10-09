@@ -442,11 +442,16 @@ sap.ui.define([
         chatModel.setProperty("/busyIndicator", true);
         const url = this.getBaseURL() + "/v2/odata/v4/earning-upload-srv/uploadPromptFile";
         // const url = this.getBaseURL() + "/api/chat_upload";
+        const csrfUrl = this.getBaseURL() + "/v2/odata/v4/earning-upload-srv/";
+        const csrf = await this.onfetchCSRF(csrfUrl);
        let formData = new FormData();
         formData.append("file", oFile);
         formData.append("userId", chatModel.getProperty("/userId"));
         try {
           const response = await fetch(url, {
+            headers: {
+              "X-CSRF-Token": csrf,
+            },
             method: "POST",
             body: formData,
           });
