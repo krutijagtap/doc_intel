@@ -522,7 +522,24 @@ sap.ui.define([
       // }
       onPromptFileUpload: async function (oEvent) {
         const oFile = oEvent.getParameters("files").files[0];
-        this.onUploadFileContent(oFile);
+        const chatModel = this.getOwnerComponent().getModel("chatModel");
+        if (oFile) {
+          chatModel.setProperty("/enableSubmit", true);
+          this._uploadingFile = oFile;
+        }else{
+          chatModel.setProperty("/enableSubmit", false);
+          this._uploadingFile = null;
+        }
+      },
+      onGenerateReport: async function () {
+        if (!this._uploadingFile) {
+          sap.m.MessageBox.error("Please upload a prompt template file before generating report.");
+          return;
+        }
+        this.onUploadFileContent(this._uploadingFile);
+        this.getView().byId("promptFileUploader").clear();
+        this._uploadingFile = null;
+        this.getView().getModel("chatModel").setProperty("/enableSubmit", false);
       },
       formatProcessingStatusIcon: function (sStatus) {
         switch (sStatus) {
