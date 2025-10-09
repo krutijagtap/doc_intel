@@ -440,8 +440,8 @@ sap.ui.define([
       onUploadFileContent: async function (oFile) {
         const chatModel = this.getOwnerComponent().getModel("chatModel");
         chatModel.setProperty("/busyIndicator", true);
-        // const url = this.getBaseURL() + "/v2/odata/v4/earning-upload-srv/uploadPromptFile";
-        const url = this.getBaseURL() + "/api/chat_upload";
+        const url = this.getBaseURL() + "/v2/odata/v4/earning-upload-srv/uploadPromptFile";
+        // const url = this.getBaseURL() + "/api/chat_upload";
        let formData = new FormData();
         formData.append("file", oFile);
         formData.append("userId", chatModel.getProperty("/userId"));
