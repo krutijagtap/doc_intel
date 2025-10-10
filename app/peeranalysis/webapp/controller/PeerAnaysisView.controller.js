@@ -522,7 +522,8 @@ sap.ui.define([
       fetchFileStatus: async function () {
         const chatModel = this.getOwnerComponent().getModel("chatModel");
         const url =
-          this.getBaseURL() +`/api/job/status_by_userid?userId=${chatModel.getProperty("/userId")}`;
+          // this.getBaseURL() +`/api/job/status_by_userid?userId=${chatModel.getProperty("/userId")}`;
+          this.getBaseURL() +`/api/job/status_by_userid?userId=8226807`;
         try {
           const response = await fetch(url, {
             method: "GET",
@@ -533,8 +534,8 @@ sap.ui.define([
             throw new Error(errorData.error || `HTTP error! Status: ${response.status}`);
           } 
           const data = await response.json();
-          chatModel.setProperty("/fileStatus", data);
-          if (data.length > 0) {
+          chatModel.setProperty("/fileStatus", data.jobs);
+          if (data.jobs.length > 0) {
             chatModel.setProperty("/fileStatusVisible", true);
           }
         } catch (error) {
