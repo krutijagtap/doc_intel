@@ -523,8 +523,8 @@ sap.ui.define([
       fetchFileStatus: async function () {
         const chatModel = this.getOwnerComponent().getModel("chatModel");
         const url =
-          // this.getBaseURL() +`/api/job/status_by_userid?userId=${chatModel.getProperty("/userId")}`;
-          this.getBaseURL() + `/api/job/status_by_userid?userId=8226807`;
+          this.getBaseURL() +`/api/job/status_by_userid?userId=${chatModel.getProperty("/userId")}`;
+          // this.getBaseURL() + `/api/job/status_by_userid?userId=8226807`;
         try {
           const response = await fetch(url, {
             method: "GET",
