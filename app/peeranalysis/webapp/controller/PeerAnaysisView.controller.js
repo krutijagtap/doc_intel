@@ -9,13 +9,16 @@ sap.ui.define([
     return Controller.extend("peeranalysisv2.controller.PeerAnaysisView", {
       onInit() {
         let oView = this.getView();
-        oView.setBusy(false); // Show busy indicator
-        this.onfetchRoles().then((resp) => console.log("resp" + resp));
+        oView.setBusy(true); // Show busy indicator
+        this.onfetchRoles().then((resp) => 
+          {
+            oView.setBusy(false); // Hide busy indicator
+            this.fetchFileStatus();
+          });
       },
       onAfterRendering: function () {
         let me = this;
         me.attachEventchatFeedInput(me);
-        me.fetchFileStatus();
       },
       userlivechange: function (oEvent) {
         const userinp = oEvent.getParameter("value");
@@ -165,33 +168,36 @@ sap.ui.define([
       onfetchRoles: async function (params) {
         const chatModel = this.getOwnerComponent().getModel("chatModel");
         const url = this.getBaseURL() + "/user-api/currentUser";
-        try {
-          const response = await fetch(url, {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-          });
-          if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+        const oPromise = new Promise(async (resolve, reject) => {
+          try {
+            const response = await fetch(url, {
+              method: "GET",
+              headers: { "Content-Type": "application/json" },
+            });
+            if (!response.ok) {
+              throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            const data = await response.json();
+            const roles = data.scopes;
+            const hasScopeForView = roles.some((role) =>
+              role.includes("scopeforview")
+            );
+            const hasScopeForManage = roles.some((role) =>
+              role.includes("scopeformanage")
+            );
+            // chatModel.setenablUpload(hasScopeForManage);
+            // chatModel.setenableQuery(hasScopeForView);
+            chatModel.setProperty("/enableUpload", hasScopeForManage);
+            chatModel.setProperty("/enableQuery", hasScopeForView);
+            chatModel.setProperty("/userId", data.name);
+            const sResponse = data.result; // ✅ Store API response in a variable
+            resolve(sResponse);
+          } catch (error) {
+            console.error("API Error:", error);
+            reject(error);
           }
-          const data = await response.json();
-          const roles = data.scopes;
-          const hasScopeForView = roles.some((role) =>
-            role.includes("scopeforview")
-          );
-          const hasScopeForManage = roles.some((role) =>
-            role.includes("scopeformanage")
-          );
-          // chatModel.setenablUpload(hasScopeForManage);
-          // chatModel.setenableQuery(hasScopeForView);
-          chatModel.setProperty("/enableUpload", hasScopeForManage);
-          chatModel.setProperty("/enableQuery", hasScopeForView);
-          chatModel.setProperty("/userId", data.name);
-          const sResponse = data.result; // ✅ Store API response in a variable
-          console.log("API Response:", sResponse);
-          return sResponse;
-        } catch (error) {
-          console.error("API Error:", error);
-        }
+        });
+        return oPromise;
       },
 
       getBaseURL: function () {
