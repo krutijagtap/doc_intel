@@ -595,9 +595,9 @@ sap.ui.define([
         switch (sStatus) {
           case "running":
             return "sap-icon://synchronize";
-          case "Complete":
+          case "completed":
             return "sap-icon://sys-enter-2";
-          case "Failed":
+          case "failed":
             return "sap-icon://error";
           default:
             return "sap-icon://question-mark";

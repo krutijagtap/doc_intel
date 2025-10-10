@@ -79,7 +79,7 @@
                     </VBox>
                     <VBox class="resultBoxContainer">
                         <FlexBox class="ResultFlexBox" visible="{chatModel>/generateVisibleResult}">
-                            <!-- <core:Fragment fragmentName="peeranalysisv2.fragment.resultBox" type="XML"/> -->
+                            <core:Fragment fragmentName="peeranalysisv2.fragment.promptResultBox" type="XML"/>
                         </FlexBox>
                     </VBox>
                 </IconTabFilter>
