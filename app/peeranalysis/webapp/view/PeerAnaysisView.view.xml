@@ -43,7 +43,7 @@
                                 </FlexBox>
                             </VBox>
                         </Panel>
-                        <Table class="sapUiSmallMarginTop" items="{chatModel>/fileStatus}" visible="{= ${chatModel>/fileStatus}.length > 0 }">
+                        <Table class="sapUiSmallMarginTop" items="{chatModel>/fileStatus}" visible="{chatModel>/fileStatusVisible}">
                             <columns>
                                 <Column>
                                     <Text text="Uploaded Files"/>
@@ -69,7 +69,7 @@
                                             <core:Icon src="{path:'chatModel>status', formatter:'.formatProcessingStatusIcon'}"/>
                                             <Text text="{chatModel>status}"/>
                                         </HBox>
-                                        <Button type="Transparent" icon="sap-icon://download" press=".onDownload" text="Download"></Button>
+                                        <Button type="Transparent" icon="sap-icon://download" press=".onDownloadReport" text="Download"></Button>
                                         <Button type="Transparent" icon="sap-icon://show" press=".onViewReport" text="View"></Button>
                                         <Text text="{chatModel>created_at}"/>
                                     </cells>

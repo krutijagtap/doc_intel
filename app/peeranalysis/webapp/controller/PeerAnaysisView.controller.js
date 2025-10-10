@@ -93,8 +93,12 @@ sap.ui.define([
        * Copy the Agent Chat
        * @param {object} oEvent
        */
-      onChatCopy: function () {
-        const oChatBox = this.byId("ChatBotResult");
+      onChatCopy: function (oEvent) {
+        const sourceData = oEvent.getSource().data("source");
+        const oChatBox =
+          sourceData === "promptResult"
+            ? this.byId("PromptResultBox")
+            : this.byId("ChatBotResult");
         const domRef = oChatBox?.getDomRef();
 
         if (!domRef) {
@@ -311,7 +315,8 @@ sap.ui.define([
       //   }
       // },
 
-      onChatExport: async function () {
+      onChatExport: async function (oEvent) {
+        const sourceData = oEvent.getSource().data("source");
         if (!window.jspdf || !window.html2canvas) {
           sap.m.MessageToast.show("Required libraries not loaded.");
           return;
@@ -340,29 +345,31 @@ sap.ui.define([
         document.body.appendChild(wrapper);
 
         // --- User Input Section ---
-        const userInputBox = document.createElement("div");
-        userInputBox.style.background =
-          "linear-gradient(to right, #e8f0ff, #f2f6fd)";
-        userInputBox.style.padding = "16px 24px";
-        userInputBox.style.borderRadius = "8px";
-        userInputBox.style.marginBottom = "24px";
-        userInputBox.style.border = "1px solid #cdddfb";
+        if (sourceData !== "promptResult" && userInput) {
+          const userInputBox = document.createElement("div");
+          userInputBox.style.background =
+            "linear-gradient(to right, #e8f0ff, #f2f6fd)";
+          userInputBox.style.padding = "16px 24px";
+          userInputBox.style.borderRadius = "8px";
+          userInputBox.style.marginBottom = "24px";
+          userInputBox.style.border = "1px solid #cdddfb";
 
-        const headerText = document.createElement("div");
-        headerText.textContent = "USER INPUT";
-        headerText.style.fontSize = "18px";
-        headerText.style.fontWeight = "bold";
-        headerText.style.color = "#1a73e8";
-        headerText.style.marginBottom = "8px";
+          const headerText = document.createElement("div");
+          headerText.textContent = "USER INPUT";
+          headerText.style.fontSize = "18px";
+          headerText.style.fontWeight = "bold";
+          headerText.style.color = "#1a73e8";
+          headerText.style.marginBottom = "8px";
 
-        const userInputText = document.createElement("div");
-        userInputText.textContent = userInput;
-        userInputText.style.fontSize = "14px";
-        userInputText.style.color = "#333";
+          const userInputText = document.createElement("div");
+          userInputText.textContent = userInput;
+          userInputText.style.fontSize = "14px";
+          userInputText.style.color = "#333";
 
-        userInputBox.appendChild(headerText);
-        userInputBox.appendChild(userInputText);
-        wrapper.appendChild(userInputBox);
+          userInputBox.appendChild(headerText);
+          userInputBox.appendChild(userInputText);
+          wrapper.appendChild(userInputBox);
+        }
 
         // --- Clone Chat Response ---
         const responseClone = domRef.cloneNode(true);
@@ -522,20 +529,19 @@ sap.ui.define([
             headers: { "Content-Type": "application/json" },
           });
           if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+            const errorData = await response.json();
+            throw new Error(errorData.error || `HTTP error! Status: ${response.status}`);
           } 
           const data = await response.json();
           chatModel.setProperty("/fileStatus", data);
+          if (data.length > 0) {
+            chatModel.setProperty("/fileStatusVisible", true);
+          }
         } catch (error) {
-          console.error("Error fetching file status:", error);
+          //log error josn message from backend
+
         }
       },
-      // {
-      //   "filename": "Peer Analysis-mod_c9f8d235091c.html",
-      //   "job_id": "c9f8d235091c",
-      //   "message": "File is currently running. Download will be available when completed.",
-      //   "status": "running"
-      // }
       onPromptFileUpload: async function (oEvent) {
         const oFile = oEvent.getParameters("files").files[0];
         const chatModel = this.getOwnerComponent().getModel("chatModel");
@@ -556,6 +562,33 @@ sap.ui.define([
         this.getView().byId("promptFileUploader").clear();
         this._uploadingFile = null;
         this.getView().getModel("chatModel").setProperty("/enableSubmit", false);
+      },
+      onViewReport: async function (oEvent) {
+        const sJobId = oEvent.getSource().getBindingContext("chatModel").getProperty("job_id");
+        const reportUrl = this.getBaseURL() + `/api/job/${sJobId}/download?inline=1`;
+        const chatModel = this.getOwnerComponent().getModel("chatModel");
+        const reportContent = await fetch(reportUrl, {
+          method: "GET",
+          headers: { "Content-Type": "text/html" },
+        });
+        if (!reportContent.ok) {
+          sap.m.MessageBox.error("Failed to fetch report content.");
+          return false;
+        }
+        const data = await reportContent.json();
+        const sResponse = data.d.chatResponse.result;
+        chatModel.setProperty("/promptResult", sResponse);
+        chatModel.setProperty("/visiblePromptResult", true);
+        return sResponse;
+      },
+      onDownloadReport: async function (oEvent) {
+        const viewResult = await this.onViewReport(oEvent);
+        if (!viewResult) {
+          return;
+        }
+        setTimeout(() => {
+          this.getView().byId("downloadPromptResultBtn").firePress();
+        }, 500); 
       },
       formatProcessingStatusIcon: function (sStatus) {
         switch (sStatus) {

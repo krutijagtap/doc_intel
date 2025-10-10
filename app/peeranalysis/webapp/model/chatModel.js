@@ -4,16 +4,19 @@ sap.ui.define(["sap/ui/model/json/JSONModel"], function (JSONModel) {
   const initialData = {
     busyIndicator: false,
     enableSubmit: false,
-    visibleResult:false,
+    visibleResult: false,
     enableUpload: true,
     enableQuery: true,
-    userMessage : "",
-    placeHolder : "Type your question here",
-    busyText:"",
-    result:      "",
+    userMessage: "",
+    placeHolder: "Type your question here",
+    busyText: "",
+    result: "",
     maker: true,
     checker: true,
     userId: "",
+    fileStatusVisible: false,
+    visiblePromptResult: false,
+    promptResult: ""
   }; 
   return JSONModel.extend("com.sap.shae.flp.plugins.homepage.chatModel", {
     /**

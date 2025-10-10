@@ -1,0 +1,25 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:html="http://www.w3.org/1999/xhtml"
+  xmlns:f="sap.f"
+  xmlns:core="sap.ui.core"
+  xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+
+  <FlexBox id="PromptResultBox" class="result" visible="{chatModel>/visiblePromptResult}" direction="Column">
+
+    <FlexBox class="summaryBox">
+      <Title text="SUMMARY" class="summaryTitle"></Title>
+      <HBox class="messageEmotions">
+        <Button icon="sap-icon://copy" type="Transparent" press="onChatCopy" tooltip="{i18n>copyTooltip}" app:source="promptResult"/>
+        <Button id="downloadPromptResultBtn" icon="sap-icon://download" type="Transparent" press="onChatExport" tooltip="{i18n>export}" app:source="promptResult"/>
+      </HBox>
+    </FlexBox>
+    <FlexBox class="responseTextBox response-content">
+      <FormattedText htmlText="{chatModel>/promptResult}" class="response-content" />
+
+    </FlexBox>
+
+
+  </FlexBox>
+
+
+</core:FragmentDefinition>
