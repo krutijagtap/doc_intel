@@ -568,16 +568,18 @@ sap.ui.define([
         const sJobId = oEvent.getSource().getBindingContext("chatModel").getProperty("job_id");
         const reportUrl = this.getBaseURL() + `/api/job/${sJobId}/download?inline=1`;
         const chatModel = this.getOwnerComponent().getModel("chatModel");
+        const oView = this.getView();
+        oView.setBusy(true); 
         const reportContent = await fetch(reportUrl, {
           method: "GET",
           headers: { "Content-Type": "text/html" },
         });
+        oView.setBusy(false);
         if (!reportContent.ok) {
           sap.m.MessageBox.error("Failed to fetch report content.");
           return false;
         }
-        const data = await reportContent.json();
-        const sResponse = data.d.chatResponse.result;
+        const sResponse = reportContent.body ? await reportContent.text() : "No content available";
         chatModel.setProperty("/promptResult", sResponse);
         chatModel.setProperty("/visiblePromptResult", true);
         return sResponse;
