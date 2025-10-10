@@ -69,9 +69,9 @@
                                             <core:Icon class="sapUiTinyMarginEnd" src="{path:'chatModel>status', formatter:'.formatProcessingStatusIcon'}" color="#0473EA"/>
                                             <Text text="{chatModel>status}"/>
                                         </HBox>
-                                        <Button type="Transparent" icon="sap-icon://download" press=".onDownloadReport" text="Download"></Button>
-                                        <Button type="Transparent" icon="sap-icon://show" press=".onViewReport" text="View"></Button>
-                                        <Text text="{chatModel>created_at}"/>
+                                        <Button enabled="{= ${chatModel>status} === 'completed'}" type="Transparent" icon="sap-icon://download" press=".onDownloadReport" text="Download"></Button>
+                                        <Button enabled="{= ${chatModel>status} === 'completed'}" type="Transparent" icon="sap-icon://show" press=".onViewReport" text="View"></Button>
+                                        <Text text="{path:'chatModel>created_at', formatter:'.formatDateTime'}"/>
                                     </cells>
                                 </ColumnListItem>
                             </items>

@@ -10,11 +10,10 @@ sap.ui.define([
       onInit() {
         let oView = this.getView();
         oView.setBusy(true); // Show busy indicator
-        this.onfetchRoles().then((resp) => 
-          {
-            oView.setBusy(false); // Hide busy indicator
-            this.fetchFileStatus();
-          });
+        this.onfetchRoles().then((resp) => {
+          oView.setBusy(false); // Hide busy indicator
+          this.fetchFileStatus();
+        });
       },
       onAfterRendering: function () {
         let me = this;
@@ -327,7 +326,9 @@ sap.ui.define([
           this.getView().getModel("chatModel").getProperty("/userMessage") ||
           "";
 
-        const domRef = this.byId("ChatBotResult")?.getDomRef();
+        const domRef = this.byId(
+          sourceData === "promptResult" ? "PromptResultBox" : "ChatBotResult"
+        )?.getDomRef();
         if (!domRef) {
           sap.m.MessageToast.show("No content to export");
           return;
@@ -458,7 +459,7 @@ sap.ui.define([
         const url = this.getBaseURL() + "/api/chat_upload";
         const csrfUrl = this.getBaseURL() + "/v2/odata/v4/earning-upload-srv/";
         const csrf = await this.onfetchCSRF(csrfUrl);
-       let formData = new FormData();
+        let formData = new FormData();
         formData.append("file", oFile);
         formData.append("userId", chatModel.getProperty("/userId"));
         try {
@@ -523,7 +524,7 @@ sap.ui.define([
         const chatModel = this.getOwnerComponent().getModel("chatModel");
         const url =
           // this.getBaseURL() +`/api/job/status_by_userid?userId=${chatModel.getProperty("/userId")}`;
-          this.getBaseURL() +`/api/job/status_by_userid?userId=8226807`;
+          this.getBaseURL() + `/api/job/status_by_userid?userId=8226807`;
         try {
           const response = await fetch(url, {
             method: "GET",
@@ -531,8 +532,10 @@ sap.ui.define([
           });
           if (!response.ok) {
             const errorData = await response.json();
-            throw new Error(errorData.error || `HTTP error! Status: ${response.status}`);
-          } 
+            throw new Error(
+              errorData.error || `HTTP error! Status: ${response.status}`
+            );
+          }
           const data = await response.json();
           chatModel.setProperty("/fileStatus", data.jobs);
           if (data.jobs.length > 0) {
@@ -540,7 +543,6 @@ sap.ui.define([
           }
         } catch (error) {
           //log error josn message from backend
-
         }
       },
       onPromptFileUpload: async function (oEvent) {
@@ -549,27 +551,35 @@ sap.ui.define([
         if (oFile) {
           chatModel.setProperty("/enableSubmit", true);
           this._uploadingFile = oFile;
-        }else{
+        } else {
           chatModel.setProperty("/enableSubmit", false);
           this._uploadingFile = null;
         }
       },
       onGenerateReport: async function () {
         if (!this._uploadingFile) {
-          sap.m.MessageBox.error("Please upload a prompt template file before generating report.");
+          sap.m.MessageBox.error(
+            "Please upload a prompt template file before generating report."
+          );
           return;
         }
         this.onUploadFileContent(this._uploadingFile);
         this.getView().byId("promptFileUploader").clear();
         this._uploadingFile = null;
-        this.getView().getModel("chatModel").setProperty("/enableSubmit", false);
+        this.getView()
+          .getModel("chatModel")
+          .setProperty("/enableSubmit", false);
       },
       onViewReport: async function (oEvent) {
-        const sJobId = oEvent.getSource().getBindingContext("chatModel").getProperty("job_id");
-        const reportUrl = this.getBaseURL() + `/api/job/${sJobId}/download?inline=1`;
+        const sJobId = oEvent
+          .getSource()
+          .getBindingContext("chatModel")
+          .getProperty("job_id");
+        const reportUrl =
+          this.getBaseURL() + `/api/job/${sJobId}/download?inline=1`;
         const chatModel = this.getOwnerComponent().getModel("chatModel");
         const oView = this.getView();
-        oView.setBusy(true); 
+        oView.setBusy(true);
         const reportContent = await fetch(reportUrl, {
           method: "GET",
           headers: { "Content-Type": "text/html" },
@@ -579,7 +589,9 @@ sap.ui.define([
           sap.m.MessageBox.error("Failed to fetch report content.");
           return false;
         }
-        const sResponse = reportContent.body ? await reportContent.text() : "No content available";
+        const sResponse = reportContent.body
+          ? await reportContent.text()
+          : "No content available";
         chatModel.setProperty("/promptResult", sResponse);
         chatModel.setProperty("/visiblePromptResult", true);
         return sResponse;
@@ -591,7 +603,7 @@ sap.ui.define([
         }
         setTimeout(() => {
           this.getView().byId("downloadPromptResultBtn").firePress();
-        }, 500); 
+        }, 500);
       },
       formatProcessingStatusIcon: function (sStatus) {
         switch (sStatus) {
@@ -604,6 +616,21 @@ sap.ui.define([
           default:
             return "sap-icon://question-mark";
         }
-      }
+      },
+      formatDateTime: function (dateString) {
+        if (!dateString) return "";
+        const date = new Date(dateString);
+        if (isNaN(date)) return dateString; // fallback if invalid date
+
+        const pad = (n) => (n < 10 ? "0" + n : n);
+        const MM = pad(date.getMonth() + 1);
+        const DD = pad(date.getDate());
+        const YYYY = date.getFullYear();
+        const HH = pad(date.getHours());
+        const mm = pad(date.getMinutes());
+        const ss = pad(date.getSeconds());
+
+        return `${MM}/${DD}/${YYYY} ${HH}:${mm}:${ss}`;
+      },
     });
 });
