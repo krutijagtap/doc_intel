@@ -1,6 +1,6 @@
 sap.ui.define(["sap/ui/model/json/JSONModel"], function (JSONModel) {
   "use strict";
-
+  const baseURL = 
   const initialData = {
     busyIndicator: false,
     enableSubmit: false,
@@ -16,7 +16,8 @@ sap.ui.define(["sap/ui/model/json/JSONModel"], function (JSONModel) {
     userId: "",
     fileStatusVisible: false,
     visiblePromptResult: false,
-    promptResult: ""
+    promptResult: "",
+    downloadTemplateLink: "",
   }; 
   return JSONModel.extend("com.sap.shae.flp.plugins.homepage.chatModel", {
     /**

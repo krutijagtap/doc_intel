@@ -14,6 +14,8 @@ sap.ui.define([
           oView.setBusy(false); // Hide busy indicator
           this.fetchFileStatus();
         });
+        const chatModel = this.getOwnerComponent().getModel("chatModel");
+        chatModel.setProperty("/downloadTemplateLink", this.getBaseURL() + "/static/PromptTemplate.xlsx");
       },
       onAfterRendering: function () {
         let me = this;
