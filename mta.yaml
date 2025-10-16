@@ -14,6 +14,7 @@ modules:
   - name: srv-api
     properties:
       srv-url: ${default-url}
+      timeout: 180000
   parameters:
     buildpack: nodejs_buildpack
     instances: 1
@@ -149,6 +150,7 @@ resources:
           - Authentication: NoAuthentication
             HTML5.DynamicDestination: true
             HTML5.ForwardAuthToken: true
+            HTML5.Timeout: 180000
             Name: earning-upload-v2-srv-api
             ProxyType: Internet
             Type: HTTP

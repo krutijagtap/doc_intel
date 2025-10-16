@@ -6,6 +6,7 @@ const { Roles, Messages, Status } = require("./utils/constants");
 
 module.exports = cds.service.impl((srv) => {
   const { EarningFiles, VisibilityConfig } = srv.entities;
+  srv.keepAliveTimeout = 3*60*1000;
   srv.on("READ", VisibilityConfig, async (req) => {
     let viewer;
     if (
