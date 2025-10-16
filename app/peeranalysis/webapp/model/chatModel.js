@@ -1,6 +1,5 @@
 sap.ui.define(["sap/ui/model/json/JSONModel"], function (JSONModel) {
   "use strict";
-  const baseURL = 
   const initialData = {
     busyIndicator: false,
     enableSubmit: false,

@@ -28,6 +28,12 @@
       "destination": "EARNINGS_CORE"
     },
     {
+      "source": "^/ci_api/odata/v4/catalog/(.*)$",
+      "target": "/odata/v4/catalog/$1",
+      "authenticationType": "none",
+      "destination": "GenAIContentIngestionSrv"
+    },   
+    {
       "source": "^/user-api/currentUser$",
       "target": "/currentUser",
       "service": "sap-approuter-userapi"

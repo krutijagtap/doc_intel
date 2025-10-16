@@ -577,6 +577,7 @@ sap.ui.define([
           .getSource()
           .getBindingContext("chatModel")
           .getProperty("job_id");
+        this._currentJobId = sJobId;
         const reportUrl =
           this.getBaseURL() + `/api/job/${sJobId}/download?inline=1`;
         const chatModel = this.getOwnerComponent().getModel("chatModel");
@@ -598,14 +599,50 @@ sap.ui.define([
         chatModel.setProperty("/visiblePromptResult", true);
         return sResponse;
       },
-      onDownloadReport: async function (oEvent) {
-        const viewResult = await this.onViewReport(oEvent);
-        if (!viewResult) {
+      onDownloadReport: function (oEvent) {
+        const sJobId = oEvent
+          .getSource()
+          .getBindingContext("chatModel")
+          .getProperty("job_id");
+        this._currentJobId = sJobId;
+        this.getView().byId("downloadPromptResultBtn").firePress();
+      },
+      onDownloadPromptResult: function(){
+        const docUrl =`${this.getBaseURL()}/api/job/${this._currentJobId}/download?format=docx`;
+        window.open(docUrl);
+      },
+      onDownloadMetadata: async function () {
+        const baseUrl = this.getBaseURL();
+        const downloadUrl = baseUrl + "/ci_api/odata/v4/catalog/downloadMetadata";
+        const csrf = await this.onfetchCSRF(baseUrl);
+        const responseAPI = await fetch(downloadUrl, {
+          method: "POST",
+          headers: {
+            "X-CSRF-Token": csrf,
+            "Accept": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            "Content-type": "application/json"
+          },
+          body:"{}"
+        });
+        if (!responseAPI.ok) {
+          let res;
+          try {
+            res = await responseAPI.json();
+            sap.m.MessageToast.show(res.message);
+          } catch (e) {
+            sap.m.MessageToast.show("Download failed.");
+          }
           return;
         }
-        setTimeout(() => {
-          this.getView().byId("downloadPromptResultBtn").firePress();
-        }, 500);
+        const blob = await responseAPI.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'metadata.xlsx';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        window.URL.revokeObjectURL(url);
       },
       formatProcessingStatusIcon: function (sStatus) {
         switch (sStatus) {

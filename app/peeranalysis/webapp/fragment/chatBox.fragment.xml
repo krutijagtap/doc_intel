@@ -27,7 +27,7 @@
       <FlexBox alignItems="Center" class="sapUiTinyMarginTop">
         <core:Icon src="sap-icon://hint" class="sapUiTinyMarginEnd" color="#0072B9" />
         <Text text="You can verify the currently used" class="sapUiTinyMarginEnd"></Text>
-        <Link text="standard account line mapping" press=".onDownload"></Link>
+        <Link text="standard account line mapping" press=".onDownloadMetadata"></Link>
       </FlexBox>
       <Button text="Ask FinSight" class="sapUiTinyMarginTop" type="Emphasized" press="onUserChat" />
 

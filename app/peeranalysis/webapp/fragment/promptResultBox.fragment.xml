@@ -10,7 +10,7 @@
       <Title text="SUMMARY" class="summaryTitle"></Title>
       <HBox class="messageEmotions">
         <Button icon="sap-icon://copy" type="Transparent" press="onChatCopy" tooltip="{i18n>copyTooltip}" app:source="promptResult"/>
-        <Button id="downloadPromptResultBtn" icon="sap-icon://download" type="Transparent" press="onChatExport" tooltip="{i18n>export}" app:source="promptResult"/>
+        <Button id="downloadPromptResultBtn" icon="sap-icon://download" type="Transparent" press="onDownloadPromptResult" tooltip="{i18n>export}" app:source="promptResult"/>
       </HBox>
     </FlexBox>
     <FlexBox class="responseTextBox response-content">
