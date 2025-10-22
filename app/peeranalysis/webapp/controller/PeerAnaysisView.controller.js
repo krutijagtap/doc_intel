@@ -1,9 +1,10 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
+    "sap/m/MessageBox",
     "../lib/jspdf/jspdf.umd.min",
     "../lib/dompurify/purify.min",
     "../lib/html2canvas/html2canvas.min"
-], (Controller) => {
+], (Controller,MessageBox) => {
     "use strict";
 
     return Controller.extend("peeranalysisv2.controller.PeerAnaysisView", {
@@ -489,6 +490,10 @@ sap.ui.define([
 
           const data = await response.json();
           chatModel.setProperty("/busyIndicator", false);
+          if (data.error) {
+            MessageBox.error(data.error);
+            return;
+          }
           //show dialog
           const dialogContent = new sap.m.VBox({
             items: [
@@ -646,7 +651,7 @@ sap.ui.define([
       },
       formatProcessingStatusIcon: function (sStatus) {
         switch (sStatus) {
-          case "running":
+          case "queued":
             return "sap-icon://synchronize";
           case "completed":
             return "sap-icon://sys-enter-2";

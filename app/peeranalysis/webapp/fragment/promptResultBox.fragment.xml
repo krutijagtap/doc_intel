@@ -14,7 +14,9 @@
       </HBox>
     </FlexBox>
     <FlexBox class="responseTextBox response-content">
-      <FormattedText htmlText="{chatModel>/promptResult}" class="response-content" />
+    
+      <core:HTML content="{chatModel>/promptResult}" class="response-content"></core:HTML>
+      <!-- <FormattedText htmlText="{chatModel>/promptResult}" class="response-content" /> -->
 
     </FlexBox>
 
