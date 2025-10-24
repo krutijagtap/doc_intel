@@ -555,6 +555,17 @@ body,
     margin: 0.75rem 0;
     color: #333;
   }
+
+  .response-content>ul>li>ul>li:before {
+    content: "•";
+    color: #007aff;
+    font-size: 1.5rem;
+    position: absolute;
+    left: -1.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
   
   /* Enhanced Table Styles */
   .response-content table {
