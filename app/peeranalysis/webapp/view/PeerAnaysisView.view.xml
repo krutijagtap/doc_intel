@@ -25,14 +25,14 @@
                             <VBox>
                                 <Text text="Generate standard report" class="generateReportTitle sapUiSmallMarginBottom"></Text>
                                 <HBox>
-                                    <Text text="Step 1: If you don't have it, "></Text>
+                                    <Text class="intro-text" text="Step 1: If you don't have it, "></Text>
                                     <Link text="download prompt template" href="{chatModel>/downloadTemplateLink}" class="sapUiTinyMarginBegin" target="_blank"></Link>
                                 </HBox>
-                                <Text text="Step 2: Edit fields in prompt template in Excel"></Text>
-                                <Text text="Step 3: Upload prompt template and generate report"></Text>
+                                <Text class="intro-text" text="Step 2: Edit fields in prompt template in Excel"></Text>
+                                <Text class="intro-text" text="Step 3: Upload prompt template and generate report"></Text>
                                 <HBox justifyContent="SpaceBetween" class="sapUiSmallMarginTop">
                                     <HBox>
-                                        <unified:FileUploader id="promptFileUploader" class="sapUiTinyMarginEnd" buttonOnly="true" iconFirst="false" buttonText="Add prompt template" change="onPromptFileUpload" uploadComplete="onPromptFileUploadComplete" icon="sap-icon://attachment" tooltip="Upload File"/>
+                                        <unified:FileUploader id="promptFileUploader" class="sapUiTinyMarginEnd" buttonText="Browse" change="onPromptFileUpload" uploadComplete="onPromptFileUploadComplete" icon="sap-icon://attachment" tooltip="Upload File"/>
                                     </HBox>
                                     <Button text="Generate Report" type="Emphasized" press="onGenerateReport" class="sapUiTinyMarginLeft" enabled="{chatModel>/enableSubmit}"/>
                                 </HBox>

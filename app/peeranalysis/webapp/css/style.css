@@ -167,6 +167,9 @@ body,
   .earningsBox {
     align-items: center;
   }
+  .intro-text{
+    font-size: 1rem;
+  }
   .result {
     border: none;
     border-radius: 16px;
@@ -360,42 +363,6 @@ body,
     border: 2px 0px 0px 0px;
     opacity: 0px;
   }
-  
-  /* .dasTextAreaInput:not(:focus-within):not(:focus):not(:hover),
-  .dasTextAreaInput:not(:focus-within):not(:focus):not(:hover) {
-    background-color: var(--sapField_Background);
-    background-position: center bottom 0;
-  }
-  
-  .dasTextAreaInput:not(:focus-within):not(:focus),
-  .dasTextAreaInput:not(:focus-within):not(:focus) {
-    background-position: center bottom 0;
-    background-size: 100% 2px;
-    background-repeat: repeat-x;
-    background-image: var(
-      --dasTextArea_BackgroundImage,
-      var(--_ui5_textarea_background_image)
-    );
-  } */
-  
-  /* {
-      box-shadow: var(--dasContent_Shadow2, var(--sapContent_Interaction_Shadow));
-      border-color: var(--dasContent_Hover_BorderColor, var(--sapField_Hover_BorderColor, #333));
-  } */
-  
-  /* .dasTextAreaInput:focus-within, */
-  /* .dasTextAreaInput:hover {
-    border-width: 0.125rem;
-    border-color: var(
-      --dasContent_FocusColor,
-      var(--sapContent_FocusColor, #333)
-    );
-    border-style: solid;
-    box-shadow: var(
-      --dasFooter_ButtonShadow,
-      var(--sapContent_Interaction_Shadow)
-    );
-  } */  /* remove this comment to have border in the flex box */
   
   .chattextarea {
     width: 100% !important;
