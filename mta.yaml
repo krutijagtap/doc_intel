@@ -142,15 +142,15 @@ resources:
       init_data:
         instance:
           destinations:
-          - Authentication: NoAuthentication
-            Name: ui5
-            ProxyType: Internet
-            Type: HTTP
-            URL: https://ui5.sap.com
-          - Authentication: NoAuthentication
-            HTML5.DynamicDestination: true
-            HTML5.ForwardAuthToken: true
-            HTML5.Timeout: 180000
+          # - Authentication: NoAuthentication
+          #   Name: ui5
+          #   ProxyType: Internet
+          #   Type: HTTP
+          #   URL: https://ui5.sap.com
+          # - Authentication: NoAuthentication
+          #   HTML5.DynamicDestination: true
+          #   HTML5.ForwardAuthToken: true
+          #   HTML5.Timeout: 180000
             # Name: earning-upload-v2-srv-api
             # ProxyType: Internet
             # Type: HTTP
