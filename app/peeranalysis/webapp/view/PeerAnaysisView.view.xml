@@ -26,19 +26,19 @@
                                 <Text text="Generate standard report" class="generateReportTitle sapUiSmallMarginBottom"></Text>
                                 <HBox>
                                     <Text class="intro-text" text="Step 1: If you don't have it, "></Text>
-                                    <Link text="download prompt template" href="{chatModel>/downloadTemplateLink}" class="sapUiTinyMarginBegin" target="_blank"></Link>
+                                    <Link class="intro-text sapUiTinyMarginBegin" text="download prompt template" href="{chatModel>/downloadTemplateLink}" target="_blank"></Link>
                                 </HBox>
                                 <Text class="intro-text" text="Step 2: Edit fields in prompt template in Excel"></Text>
                                 <Text class="intro-text" text="Step 3: Upload prompt template and generate report"></Text>
                                 <HBox justifyContent="SpaceBetween" class="sapUiSmallMarginTop">
                                     <HBox>
-                                        <unified:FileUploader id="promptFileUploader" class="sapUiTinyMarginEnd" buttonText="Browse" change="onPromptFileUpload" uploadComplete="onPromptFileUploadComplete" icon="sap-icon://attachment" tooltip="Upload File"/>
+                                        <unified:FileUploader id="promptFileUploader" placeholder="Choose a prompt template file..." class="sapUiTinyMarginEnd" buttonText="Browse" change="onPromptFileUpload" uploadComplete="onPromptFileUploadComplete" icon="sap-icon://attachment" tooltip="Upload File"/>
                                     </HBox>
                                     <Button text="Generate Report" type="Emphasized" press="onGenerateReport" class="sapUiTinyMarginLeft" enabled="{chatModel>/enableSubmit}"/>
                                 </HBox>
                                 <FlexBox alignItems="Center" class="sapUiSmallMarginTop">
                                     <core:Icon src="sap-icon://hint" class="sapUiTinyMarginEnd" color="#0072B9" />
-                                    <Text text="You can verify the currently used" class="sapUiTinyMarginEnd"></Text>
+                                    <Text class="sapUiTinyMarginEnd" text="You can verify the currently used"></Text>
                                     <Link text="standard account line mapping" press=".onDownloadMetadata"></Link>
                                 </FlexBox>
                             </VBox>
