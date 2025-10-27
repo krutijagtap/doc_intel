@@ -1,0 +1,13 @@
+# @name TOKEN
+HEAD http://localhost:4004/odata/v4/earning-upload-srv
+X-CSRF-Token: Fetch
+Authorization: Basic YWxpY2U6YWxpY2U=
+
+###
+POST http://localhost:4004/odata/v4/earning-upload-srv/chatResponse
+Content-Type: application/json
+Authorization: Basic YWxpY2U6YWxpY2U=
+
+{
+    "prompt":"Bank: OCBC and SCB \nPeriod:Q1 2025\nPrompt: Compare key earnings results. Include the following metrics: Net Earnings, Return on tangible common equity (RoTCE),  Net revenue, Operating expenses. "
+}
