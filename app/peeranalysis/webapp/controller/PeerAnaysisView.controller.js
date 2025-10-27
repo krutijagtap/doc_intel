@@ -617,6 +617,9 @@ sap.ui.define([
         window.open(docUrl);
       },
       onDownloadMetadata: async function () {
+        sap.m.MessageToast.show(
+          "For any change in Standard Account line mappings please reach out to Group FP&A"
+        );
         const baseUrl = this.getBaseURL();
         const downloadUrl = baseUrl + "/ci_api/odata/v4/catalog/downloadMetadata";
         const csrf = await this.onfetchCSRF(baseUrl);
@@ -639,6 +642,7 @@ sap.ui.define([
           }
           return;
         }
+        
         const blob = await responseAPI.blob();
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
