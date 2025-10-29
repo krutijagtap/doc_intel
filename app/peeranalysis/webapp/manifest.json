@@ -7,7 +7,7 @@
     "applicationVersion": {
       "version": "0.0.1"
     },
-    "title": "PeerAnalysis",
+    "title": "{{appTitle}}",
     "description": "{{appDescription}}",
     "resources": "resources.json",
     "sourceTemplate": {
@@ -20,7 +20,7 @@
         "Earnings-upload": {
           "semanticObject": "content",
           "action": "view",
-          "title": "Peer Analysis",
+          "title":  "{{title}}",
           "signature": {
             "parameters": {},
             "additionalParameters": "allowed"

@@ -584,10 +584,11 @@ sap.ui.define([
           .getSource()
           .getBindingContext("chatModel")
           .getProperty("job_id");
+        const chatModel = this.getOwnerComponent().getModel("chatModel");
         this._currentJobId = sJobId;
+        chatModel.setProperty("/promptResult",'');
         const reportUrl =
           this.getBaseURL() + `/api/job/${sJobId}/download?inline=1`;
-        const chatModel = this.getOwnerComponent().getModel("chatModel");
         const oView = this.getView();
         oView.setBusy(true);
         const reportContent = await fetch(reportUrl, {
@@ -658,6 +659,7 @@ sap.ui.define([
       formatProcessingStatusIcon: function (sStatus) {
         switch (sStatus) {
           case "queued":
+          case "running":
             return "sap-icon://synchronize";
           case "completed":
             return "sap-icon://sys-enter-2";
