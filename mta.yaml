@@ -142,11 +142,11 @@ resources:
       init_data:
         instance:
           destinations:
-          - Authentication: NoAuthentication
-            Name: ui5
-            ProxyType: Internet
-            Type: HTTP
-            URL: https://ui5.sap.com
+            - Authentication: NoAuthentication
+              Name: ui5
+              ProxyType: Internet
+              Type: HTTP
+              URL: https://ui5.sap.com
           # - Authentication: NoAuthentication
           #   HTML5.DynamicDestination: true
           #   HTML5.ForwardAuthToken: true

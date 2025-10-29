@@ -14,7 +14,7 @@
       </HBox>
     </FlexBox>
     <FlexBox class="responseTextBox response-content">
-      <core:HTML content="{chatModel>/result}" class="response-content"></core:HTML>
+      <core:HTML content="{chatModel>/result}" preferDOM="false" class="response-content"></core:HTML>
       <!-- <FormattedText htmlText="{chatModel>/result}" class="response-content" /> -->
 
     </FlexBox>
