@@ -572,6 +572,14 @@ sap.ui.define([
           );
           return;
         }
+        //check the excel file, rows number should less than 20
+        const isValid = await this._validatePromptFile(this._uploadingFile);
+        if (!isValid) {
+          MessageBox.error(
+            "Prompt template accepts 20 only. Please limit prompts to 20 and re-upload the template."
+          );
+          return;
+        }
         this.onUploadFileContent(this._uploadingFile);
         this.getView().byId("promptFileUploader").clear();
         this._uploadingFile = null;
@@ -579,6 +587,26 @@ sap.ui.define([
           .getModel("chatModel")
           .setProperty("/enableSubmit", false);
       },
+      _validatePromptFile: async function (oFile) {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            const data = new Uint8Array(e.target.result);
+            const workbook = XLSX.read(data, { type: "array" });
+            const sheetName = workbook.SheetNames[0];
+            const worksheet = workbook.Sheets[sheetName];
+            const range = XLSX.utils.decode_range(worksheet["!ref"]);
+            const rowCount = range.e.r - range.s.r;
+            if (rowCount > 19) {
+              reject(new Error("The uploaded file has more than 20 data rows."));
+              return;
+            }
+            resolve(true);
+          };
+          reader.readAsArrayBuffer(oFile);
+        });
+      },
+
       onViewReport: async function (oEvent) {
         const sJobId = oEvent
           .getSource()
@@ -620,7 +648,7 @@ sap.ui.define([
         window.open(docUrl);
       },
       onDownloadMetadata: async function () {
-        sap.m.MessageToast.show(
+        MessageBox.alert(
           "For any change in Standard Account line mappings please reach out to Group FP&A"
         );
         const baseUrl = this.getBaseURL();
