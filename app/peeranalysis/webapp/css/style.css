@@ -556,7 +556,7 @@ body,
     color: #333;
   }
 
-  .response-content>div>ul>li>ul>li:before {
+  .response-content>div>ul>li>:before {
     content: "•";
     color: #007aff;
     font-size: 1.5rem;
