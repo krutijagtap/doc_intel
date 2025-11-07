@@ -8,15 +8,13 @@
   <VBox class="dasTextAreaInput">
     <Text text="How can I help you?" class="gradientTitle sapUiTinyMarginBottom"/>
     <core:HTML content="&lt;span&gt;Type your question in the box below. Remember to include the &lt;strong&gt;bank name, metric&lt;/strong&gt; and &lt;strong&gt;period&lt;/strong&gt;.&lt;br/&gt; Prompt example: &lt;strong&gt;JPMC income&lt;/strong&gt; analysis with key drivers for &lt;strong&gt;1Q 2025&lt;/strong&gt;&lt;/span&gt;"></core:HTML>
-    <FlexBox id="ChatBotresult" height="7rem" class="sapUiSmallMarginTop">
+    <FlexBox height="7rem" class="sapUiSmallMarginTop">
 
       <TextArea id="chatFeedInput" class="chattextarea" liveChange="userlivechange" value="{chatModel>/userMessage}" enabled="{= !${chatModel>/busyIndicator} }" rows="1" growingMaxLines="23" placeholder="{chatModel>/placeHolder}" growing="true">
         <layoutData>
           <FlexItemData growFactor="1" />
         </layoutData>
       </TextArea>
-      <!-- <Button id="chatFeedSubmit" icon="sap-icon://paper-plane" type="Emphasized" press="onUserChat" class="dasChatInputSubmitButton sapUiTinyMargin" enabled="{chatModel>/enableSubmit}" /> -->
-
     </FlexBox>
 
     <FlexBox id="chatBusyIndicator1" visible="{chatModel>/busyIndicator}" justifyContent="Center" alignItems="Center" class="busyBox">

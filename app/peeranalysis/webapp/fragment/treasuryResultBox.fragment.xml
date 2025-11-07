@@ -1,0 +1,25 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:html="http://www.w3.org/1999/xhtml"
+  xmlns:f="sap.f"
+  xmlns:core="sap.ui.core"
+  xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+
+  <FlexBox id="TreasuryResultBox" class="result" visible="{chatModel>/visibleTreasuryResult}" direction="Column">
+
+    <FlexBox class="summaryBox">
+      <Title text="SUMMARY" class="summaryTitle"></Title>
+      <HBox class="messageEmotions">
+        <Button icon="sap-icon://copy" id="TreasuryChatCopyButton" type="Transparent" press="onChatCopy" tooltip="{i18n>copyTooltip}" app:source="treasuryResult"/>
+        <Button icon="sap-icon://download" id="TreasuryChatExportButton" type="Transparent" press="onChatExport" tooltip="{i18n>export}" app:source="treasuryResult"/>
+      </HBox>
+    </FlexBox>
+    <FlexBox class="responseTextBox response-content">
+      <core:HTML id="treasuryHtmlContent" content="{chatModel>/treasuryResult}" preferDOM="false" class="response-content"></core:HTML>
+      <VBox id="pdfContainer" renderType="Bare" class="stretchBox" visible="false"/>
+    </FlexBox>
+
+
+  </FlexBox>
+
+
+</core:FragmentDefinition>

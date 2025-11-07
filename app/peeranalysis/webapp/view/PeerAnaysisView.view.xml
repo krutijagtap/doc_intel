@@ -5,21 +5,39 @@
     xmlns:uxap="sap.uxap"
     xmlns:tnt="sap.tnt">
     <Page id="page" backgroundDesign="Transparent" titleAlignment="Center" showHeader="false">
+        <Select change="onAIChange" selectedKey="{chatModel>/chatMode}" class="modeSelect sapUiTinyMargin">
+            <items>
+                <core:Item key="peerAnalysis" text="Peer Analysis"/>
+                <core:Item key="treasury" text="Treasury"/>
+            </items>
+        </Select>
         <IconTabBar id="idIconTabBarNoIcons" class="tabcontainer" expanded="true" expandable="false" headerBackgroundDesign="Transparent" backgroundDesign="Transparent">
             <items>
-                <IconTabFilter text="Analyze earnings results" key="chatbox">
+                <IconTabFilter visible="{= ${chatModel>/chatMode} === 'peerAnalysis' }" text="Analyze earnings results" key="chatbox">
                     <VBox class="styleBox1">
                         <Panel class="sapMShellGlobalOuterBackground sapUiContentPadding">
                             <core:Fragment fragmentName="peeranalysisv2.fragment.chatBox" type="XML"/>
                         </Panel>
                     </VBox>
                     <VBox class="resultBoxContainer">
-                        <FlexBox id="resultFlexBox" class="ResultFlexBox" visible="{chatModel>/visibleResult}">
+                        <FlexBox class="ResultFlexBox" visible="{chatModel>/visibleResult}">
                             <core:Fragment fragmentName="peeranalysisv2.fragment.resultBox" type="XML"/>
                         </FlexBox>
                     </VBox>
                 </IconTabFilter>
-                <IconTabFilter text="Generate report" key="report">
+                <IconTabFilter visible="{= ${chatModel>/chatMode} === 'treasury' }" text="Treasury" key="treasury">
+                    <VBox class="styleBox1">
+                        <Panel class="sapMShellGlobalOuterBackground sapUiContentPadding">
+                            <core:Fragment fragmentName="peeranalysisv2.fragment.treasuryChatBox" type="XML"/>
+                        </Panel>
+                    </VBox>
+                    <VBox class="resultBoxContainer">
+                        <FlexBox class="ResultFlexBox" visible="{chatModel>/visibleResult}">
+                            <core:Fragment fragmentName="peeranalysisv2.fragment.treasuryResultBox" type="XML"/>
+                        </FlexBox>
+                    </VBox>
+                </IconTabFilter>
+                <IconTabFilter visible="{= ${chatModel>/chatMode} === 'peerAnalysis' }" text="Generate report" key="report">
                     <VBox class="styleBox1">
                         <Panel class="sapMShellGlobalOuterBackground sapUiContentPadding">
                             <VBox>

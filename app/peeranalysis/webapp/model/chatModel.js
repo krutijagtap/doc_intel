@@ -7,6 +7,7 @@ sap.ui.define(["sap/ui/model/json/JSONModel"], function (JSONModel) {
     enableUpload: true,
     enableQuery: true,
     userMessage: "",
+    treasuryUserMessage: "",
     placeHolder: "Type your question here",
     busyText: "",
     result: "",
@@ -17,6 +18,8 @@ sap.ui.define(["sap/ui/model/json/JSONModel"], function (JSONModel) {
     visiblePromptResult: false,
     promptResult: "",
     downloadTemplateLink: "",
+    chatMode: "peerAnalysis",
+    visibleTreasuryResult: false,
   }; 
   return JSONModel.extend("com.sap.shae.flp.plugins.homepage.chatModel", {
     /**

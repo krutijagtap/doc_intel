@@ -9,11 +9,10 @@
     "node": "18"
   },
   "dependencies": {
+    "@cap-js/hana": "^2.3.1",
     "@sap-cloud-sdk/http-client": "^3.26.4",
-    "@sap/cds": "^7.9.5",
-    "@sap/cds-compiler": "4.8.0",
-    "@sap/cds-dk": "^7.9.3",
-    "@sap/cds-hana": "2.0.0",
+    "@sap/cds": "^9.3.1",
+    "@sap/cds-compiler": "^6.3.6",
     "@sap/cds-odata-v2-adapter-proxy": "^1.9.21",
     "@sap/xsenv": "^3",
     "@sap/xssec": "^3",
@@ -30,10 +29,11 @@
     "string-similarity": "^4.0.4"
   },
   "devDependencies": {
+    "@cap-js/sqlite": "^2.0.3",
+    "@sap/cds-dk": "^9.3.2",
     "@sap/ux-specification": "^1.108.12",
-    "rimraf": "^3.0.2",
-    "@sap/cds-dk": "^7.9.5",
-    "mbt": "^1.2.29"
+    "mbt": "^1.2.29",
+    "rimraf": "^3.0.2"
   },
   "scripts": {
     "start": "cds-serve",
@@ -73,7 +73,6 @@
         "[production]": {
           "kind": "hana-cloud"
         },
-        
         "model": [
           "db",
           "srv"

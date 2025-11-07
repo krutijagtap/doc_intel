@@ -1,0 +1,44 @@
+<core:FragmentDefinition xmlns="sap.m"
+  xmlns:f="sap.f"
+  xmlns:core="sap.ui.core"
+  xmlns:u="sap.ui.unified"
+  xmlns:app="http://schemas.sap.com/sapui5/extension/sap.ui.core.CustomData/1">
+
+
+  <VBox class="dasTextAreaInput">
+    <Text text="How can I help you?" class="gradientTitle sapUiTinyMarginBottom"/>
+    <core:HTML content="&lt;span&gt;Get Started by choosing your file or entering a query to Intellibase&lt;/span&gt;"></core:HTML>
+    <HBox justifyContent="End">
+      <MultiComboBox id="multiCombo" items="{path:'/Content', filters: [{ path: 'status', operator: 'EQ', value1: 'COMPLETED' }]}" selectionChange="onSelectDocument" placeholder="Choose files to analyze">
+        <core:Item key="{ID}" text="{fileName}" />
+      </MultiComboBox>
+    </HBox>
+    <FlexBox id="TreasuryChatBotResult" height="7rem">
+      <TextArea id="TreasuryChatFeedInput" class="chattextarea" liveChange="treasuryUserLiveChange" value="{chatModel>/treasuryUserMessage}" enabled="{= !${chatModel>/busyIndicator} }" rows="1" growingMaxLines="23" placeholder="Enter a query here" growing="true" maxLength="1000" showExceededText="true">
+        <layoutData>
+          <FlexItemData growFactor="1" />
+        </layoutData>
+      </TextArea>
+
+    </FlexBox>
+
+    <FlexBox visible="{chatModel>/busyIndicator}" justifyContent="Center" alignItems="Center" class="busyBox">
+
+    </FlexBox>
+
+    <FlexBox justifyContent="End" alignItems="Center" class="busyBox">
+      <Button text="Ask FinSight" class="sapUiTinyMarginTop" type="Emphasized" press="onTreasuryUserChat" />
+      <Button text="Summary" class="sapUiTinyMarginTop sapUiSmallMarginBegin" type="Emphasized" press="onGenerateSummary" />
+
+
+
+    </FlexBox>
+
+  </VBox>
+
+
+
+
+
+
+</core:FragmentDefinition>

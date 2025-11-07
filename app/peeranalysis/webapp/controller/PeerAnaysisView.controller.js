@@ -10,18 +10,18 @@ sap.ui.define([
     return Controller.extend("peeranalysisv2.controller.PeerAnaysisView", {
       onInit() {
         let oView = this.getView();
-        oView.setBusy(true); // Show busy indicator
+        // oView.setBusy(true); // Show busy indicator
         this.onfetchRoles().then((resp) => {
           oView.setBusy(false); // Hide busy indicator
           this.fetchFileStatus();
         });
         const chatModel = this.getOwnerComponent().getModel("chatModel");
-        chatModel.setProperty("/downloadTemplateLink", this.getBaseURL() + "/static/PromptTemplate.xlsx");
+        chatModel.setProperty(
+          "/downloadTemplateLink",
+          this.getBaseURL() + "/static/PromptTemplate.xlsx"
+        );
       },
-      onAfterRendering: function () {
-        let me = this;
-        me.attachEventchatFeedInput(me);
-      },
+      onAfterRendering: function () {},
       userlivechange: function (oEvent) {
         const userinp = oEvent.getParameter("value");
         const chatModel = this.getOwnerComponent().getModel("chatModel");
@@ -31,21 +31,7 @@ sap.ui.define([
           chatModel.setSubmit(true);
         }
       },
-      /**
-       * Attach Enter Event for chatFeedInput
-       * @param {object} controller this
-       */
-      attachEventchatFeedInput: function (controller) {
-        let chatFeedInput = controller.getView().byId("chatFeedInput");
-        let chatFeedSubmit = controller.getView().byId("chatFeedSubmit");
-        chatFeedInput.attachBrowserEvent("keypress", function (event) {
-          if (event.keyCode === 13 && chatFeedInput.getValue().trim() !== "") {
-            chatFeedSubmit.firePress();
-            chatFeedInput.setValue(null);
-            event.preventDefault();
-          }
-        });
-      },
+
       /**
        * Event handler for the chat entered by user
        * Calls the ai and return aresponse
@@ -60,7 +46,7 @@ sap.ui.define([
           return;
         }
         // Disable submit + hide previous result
-        chatModel.setProperty("/result", '');
+        chatModel.setProperty("/result", "");
         chatModel.setSubmit(false);
         chatModel.setvisibleResult(false);
 
@@ -99,10 +85,14 @@ sap.ui.define([
        */
       onChatCopy: function (oEvent) {
         const sourceData = oEvent.getSource().data("source");
-        const oChatBox =
-          sourceData === "promptResult"
-            ? this.byId("PromptResultBox")
-            : this.byId("ChatBotResult");
+        let oChatBox;
+        if (sourceData === "treasuryResult") {
+          oChatBox = this.byId("TreasuryResultBox");
+        } else if (sourceData === "promptResult") {
+          oChatBox = this.byId("PromptResultBox");
+        } else {
+          oChatBox = this.byId("ChatBotResult");
+        }
         const domRef = oChatBox?.getDomRef();
 
         if (!domRef) {
@@ -327,17 +317,27 @@ sap.ui.define([
         }
 
         const { jsPDF } = window.jspdf;
-        const userInput =
-          this.getView().getModel("chatModel").getProperty("/userMessage") ||
-          "";
+        let userMessagePath;
+        let domRef;
+        if (sourceData === "treasuryResult") {
+          domRef = this.byId("TreasuryResultBox")?.getDomRef();
+          userMessagePath = "/treasuryUserMessage";
+        } else if (sourceData === "promptResult") {
+          domRef = this.byId("PromptResultBox")?.getDomRef();
+        } else {
+          domRef = this.byId("ChatBotResult")?.getDomRef();
+          userMessagePath = "/userMessage";
+        }
 
-        const domRef = this.byId(
-          sourceData === "promptResult" ? "PromptResultBox" : "ChatBotResult"
-        )?.getDomRef();
         if (!domRef) {
           sap.m.MessageToast.show("No content to export");
           return;
         }
+        const userInput =
+          this.getView().getModel("chatModel").getProperty(userMessagePath) ||
+          "";
+
+        
 
         // --- Create hidden container ---
         const wrapper = document.createElement("div");
@@ -532,8 +532,11 @@ sap.ui.define([
       fetchFileStatus: async function () {
         const chatModel = this.getOwnerComponent().getModel("chatModel");
         const url =
-          this.getBaseURL() +`/api/job/status_by_userid?userId=${chatModel.getProperty("/userId")}`;
-          // this.getBaseURL() + `/api/job/status_by_userid?userId=8226807`;
+          this.getBaseURL() +
+          `/api/job/status_by_userid?userId=${chatModel.getProperty(
+            "/userId"
+          )}`;
+        // this.getBaseURL() + `/api/job/status_by_userid?userId=8226807`;
         try {
           const response = await fetch(url, {
             method: "GET",
@@ -588,25 +591,345 @@ sap.ui.define([
           .getModel("chatModel")
           .setProperty("/enableSubmit", false);
       },
-      // _validatePromptFile: async function (oFile) {
-      //   return new Promise((resolve, reject) => {
-      //     const reader = new FileReader();
-      //     reader.onload = (e) => {
-      //       const data = new Uint8Array(e.target.result);
-      //       const workbook = XLSX.read(data, { type: "array" });
-      //       const sheetName = workbook.SheetNames[0];
-      //       const worksheet = workbook.Sheets[sheetName];
-      //       const range = XLSX.utils.decode_range(worksheet["!ref"]);
-      //       const rowCount = range.e.r - range.s.r;
-      //       if (rowCount > 19) {
-      //         resolve(false);
-      //         return;
-      //       }
-      //       resolve(true);
-      //     };
-      //     reader.readAsArrayBuffer(oFile);
-      //   });
-      // },
+      onTreasuryUserChat: async function () {
+        this.getView().byId("treasuryHtmlContent").setVisible(false);
+        const chatModel = this.getOwnerComponent().getModel("chatModel");
+        const oView = this.getView();
+        const sInput = this.byId("TreasuryChatFeedInput").getValue();
+        chatModel.setProperty("/visibleTreasuryResult", false);
+        // chatModel.setResult('');
+        var aSelectedItems = this.byId("multiCombo").getSelectedItems();
+        const isIntellibase = sInput.toLowerCase().includes("intellibase");
+        const keywords = [
+          "SELECT",
+          "INSERT",
+          "UPDATE",
+          "DELETE",
+          "DROP",
+          "UNION",
+          "CREATE",
+          "TRUNCATE",
+        ];
+        const isValid = isIntellibase || aSelectedItems.length > 0;
+        const isMalicious = keywords.some((keyword) =>
+          sInput.toUpperCase().includes(keyword)
+        );
+        const isRightPrompt =
+          sInput.includes("File:") &&
+          (sInput.includes(".pdf") ||
+            sInput.includes(".xlsx") ||
+            sInput.includes(".docx"));
+        this.byId("TreasuryChatCopyButton").setVisible(true);
+        this.byId("TreasuryChatExportButton").setVisible(true);
+        if (!isRightPrompt && !isIntellibase) {
+          if (aSelectedItems.length) this.byId("multiCombo").setSelectedKeys();
+          this.byId("TreasuryChatFeedInput").setValue("");
+          MessageBox.error("Please select a file or Ask Intellibase");
+          return;
+        }
+
+        if (
+          sInput.endsWith("Question: ") ||
+          sInput.endsWith(".pdf") ||
+          sInput.endsWith(".xlsx") ||
+          sInput.endsWith(".docx")
+        ) {
+          MessageBox.warning("Enter a question before proceeding");
+          return;
+        }
+        if (!sInput || sInput.length < 3) {
+          MessageBox.information("Minimum 3 characters required to proceed");
+          return;
+        }
+        if (isMalicious) {
+          MessageBox.error(
+            "The prompt contains a malicious word, please remove it and proceed"
+          );
+          return;
+        }
+        // Create and show busy dialog
+        const oBusyDialog = new sap.m.BusyDialog({
+          title: "Busy Indicator",
+          text: "Generating response. Please standby..",
+        });
+        oBusyDialog.open();
+
+        // Freeze the screen
+        oView.setBusy(true);
+
+        await Promise.resolve();
+        this.getView().byId("treasuryHtmlContent").setVisible(true);
+        this.getView().byId("pdfContainer").setVisible(false);
+
+        try {
+          const resp = await this.onfetchTreasuryData(
+            sInput,
+            isValid,
+            isIntellibase
+          );
+
+          let sResponse = resp; // full HTML string
+          let sFinalHtml = sResponse;
+
+          // --- Case 1: If there's at least one <table> ---
+          if (/<table[\s\S]*?>[\s\S]*?<\/table>/i.test(sResponse)) {
+            // Replace all tables dynamically
+            sFinalHtml = sResponse.replace(
+              /<table[\s\S]*?>[\s\S]*?<\/table>/gi,
+              (match) => {
+                const tableHtml = match;
+
+                // Extract all <tr>...</tr>
+                const rows = [
+                  ...tableHtml.matchAll(/<tr[\s\S]*?>([\s\S]*?)<\/tr>/gi),
+                ].map((m) => m[1]);
+
+                // Extract cells for each row
+                const data = rows.map((row) => {
+                  const cells = [
+                    ...row.matchAll(/<(td|th)[^>]*>([\s\S]*?)<\/\1>/gi),
+                  ].map((m) => m[2].trim());
+                  return cells;
+                });
+
+                // Build text table
+                let sPre =
+                  "───────────────────────────────────────────────────────────\n";
+                data.forEach((row, idx) => {
+                  if (idx === 0) {
+                    sPre += row.map((c) => c.padEnd(20)).join(" | ") + "\n";
+                    sPre +=
+                      "───────────────────────────────────────────────────────────\n";
+                  } else {
+                    sPre += row.map((c) => c.padEnd(20)).join(" | ") + "\n";
+                  }
+                });
+                sPre +=
+                  "───────────────────────────────────────────────────────────\n";
+
+                // Replace the HTML table with text table
+                return `<pre>${sPre}</pre>`;
+              }
+            );
+          } else {
+            sFinalHtml = sResponse;
+          }
+
+          chatModel.setProperty("/treasuryResult", sFinalHtml);
+          chatModel.setProperty("/visibleTreasuryResult", true);
+          // chatModel.refresh(true);
+          console.log(sFinalHtml);
+          // return resp;
+        } catch (err) {
+          console.error("Chat fetch error:", err);
+          sap.m.MessageToast.show("Failed to get response.");
+        } finally {
+          oBusyDialog.close();
+          oView.setBusy(false);
+        }
+      },
+
+      onSelectDocument: function (oEvent) {
+        var oMultiBox = oEvent.getSource();
+        var aSelectedItems = oMultiBox.getSelectedItems();
+        var aFiles = aSelectedItems.map(function (element) {
+          return "File: " + element.getText(); //or getKey, whatever holds the correct data
+        });
+        aFiles.push("Question: ");
+        var sFormattedPrompt = aFiles.join("\n");
+        this.byId("TreasuryChatFeedInput").setValue(sFormattedPrompt);
+      },
+      onfetchTreasuryData: async function (sInput, isValid, isIntellibase) {
+        const chatUrl = this.getBaseUrl() + "/api/treasuryChat";
+        const thisUser = this.getBaseUrl() + "/user-api/currentUser";
+        var payload;
+        const csrfUrl = this.getBaseURL() + "/v2/odata/v4/earning-upload-srv/";
+        const csrf = await this.onfetchCSRF(csrfUrl);
+        const oContainer = this.byId("pdfContainer");
+        oContainer.removeAllItems();
+        const controller = new AbortController();
+        const timeout = setTimeout(() => {
+          controller.abort(); // Aborts the request after 90s
+        }, 90000);
+
+        //get user details to fetch bankID
+        const user = await fetch(thisUser, {
+          method: "GET",
+          headers: {
+            "X-CSRF-Token": csrf,
+            "Content-Type": "application/json",
+          },
+        });
+        if (!user.ok) {
+          MessageBox.error("Not a valid user");
+          return;
+        }
+        const userDetails = await user.json();
+        const bankId = userDetails.name;
+
+        if (!isValid) {
+          MessageBox.error("Please select a file or Ask Intellibase");
+          return;
+        }
+        if (isIntellibase) {
+          this.byId("multiCombo").setSelectedKeys();
+          payload = { message: "user_id:" + bankId + ":" + sInput };
+        } else {
+          payload = { message: sInput };
+        }
+
+        try {
+          const response = await fetch(chatUrl, {
+            method: "POST",
+            headers: {
+              "X-CSRF-Token": csrf,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(payload),
+            signal: controller.signal,
+          });
+          clearTimeout(timeout);
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          const data = await response.json();
+          const isHTMlString =
+            data.FINAL_RESULT === "string" && /<[^>]+>/.test(data.FINAL_RESULT);
+          var finalres;
+          if (!isHTMlString) {
+            finalres = `<p style="color:red;">${data.FINAL_RESULT}</p>`;
+          } else finalres = data.FINAL_RESULT;
+
+          if (isIntellibase) {
+            var sCombinedHtml =
+              finalres +
+              "<div style='margin-top:1rem; font-family: monospace; white-space: pre-wrap;'>" +
+              "<strong>SQL Query:</strong><br/>" +
+              data.SQL_QUERY +
+              "</div>";
+            return sCombinedHtml;
+          } else return finalres;
+        } catch (err) {
+          console.log("inside catch of askFinsight", err);
+        }
+      },
+
+      onGenerateSummary: async function (oEvent) {
+        var aMultiBoxSelectedItems = this.byId("multiCombo").getSelectedItems();
+        var textArea = this.byId("TreasuryChatFeedInput");
+        this.byId("TreasuryChatCopyButton").setVisible(false);
+        this.byId("TreasuryChatExportButton").setVisible(false);
+        if (
+          aMultiBoxSelectedItems.length > 1 ||
+          aMultiBoxSelectedItems.length == 0
+        ) {
+          MessageBox.error("Please select a single file to Generate Summary.");
+          return;
+        }
+        var oSelectedFile = aMultiBoxSelectedItems[0].getText(); // or .getKey() depending on your binding
+        // MessageBox.success("Proceeding with file: ", oSelectedFile);
+        textArea.setValue(`Research Summary: ${oSelectedFile}`);
+        this.getView().byId("htmlContent").setVisible(false);
+        this.getView().byId("pdfContainer").setVisible(true);
+        this._callSummaryApi(oSelectedFile);
+      },
+      _callSummaryApi: async function (oSelectedFile) {
+        const oBusy = new BusyDialog({ text: "Fetching summary..." });
+        oBusy.open();
+        // var url = "https://standard-chartered-bank-core-foundational-12982zqn-genai839893a.cfapps.ap11.hana.ondemand.com/api/chat"  
+        const chatModel = this.getOwnerComponent().getModel("chatModel");
+        const chatUrl = this.getBaseUrl() + "/api/treasuryChat";
+        const csrfUrl = this.getBaseURL() + "/v2/odata/v4/earning-upload-srv/";
+        const csrf = await this.onfetchCSRF(csrfUrl);
+        const payload = {
+          "message": "Research Summary: " + oSelectedFile
+        };
+        // // Disable submit + hide previous result
+        // chatModel.setSubmit(false);
+        chatModel.setProperty("/visibleTreasuryResult", false);
+        // var url = sap.ui.require.toUrl('treasuryui') + "/user-api/currentUser";
+        try {
+          const response = await fetch(chatUrl, {
+          method: "POST",
+          headers: {
+            "X-CSRF-Token": csrf,
+            "Content-Type": "application/json"
+          },
+          body: JSON.stringify(payload)
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        const json = await response.json();
+        if (json.success && Array.isArray(json.summary_files)) {
+          var res = this._displayPdfFiles(json.summary_files);
+          chatModel.setProperty("/treasuryResult",res);
+          chatModel.setProperty("/visibleTreasuryResult", true);
+          return res;
+        } else {
+          MessageToast.show("No summaries returned.");
+        }
+      } catch (err) {
+        console.log("inside catch of generate summary", err);
+      } finally {
+        oBusy.close();
+      }
+    },
+
+    _displayPdfFiles: function (filesArray) {
+      const oContainer = this.byId("pdfContainer");
+      oContainer.removeAllItems();
+
+      // filesArray.forEach(file => {
+      const oPdfViewer = this._createPdfViewer(filesArray[0].data, filesArray[0].filename);
+      oContainer.addItem(oPdfViewer);
+      // });
+      return oContainer;
+    },
+
+    _createPdfViewer: function (base64, filename) {
+      const byteCharacters = atob(base64);
+      const bytes = new Uint8Array(byteCharacters.length);
+      for (let i = 0; i < byteCharacters.length; i++) {
+        bytes[i] = byteCharacters.charCodeAt(i);
+      }
+      const blob = new Blob([bytes], { type: "application/pdf" });
+      const url = URL.createObjectURL(blob);
+
+      const downloadButton = new sap.m.Button({
+        icon: "sap-icon://download",
+        tooltip: "Download PDF",
+        type: "Transparent",
+        press: function () {
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = filename;
+          a.click();
+        }
+      });
+
+      return new sap.m.Panel({
+        headerText: filename,
+        width: "100%",
+        height: "250vh",
+        content: [
+          downloadButton,
+          new sap.ui.core.HTML({
+            content: `<iframe src="${url}" class="pdf-iframe" style="width: 100%; height: 150vh;"></iframe>`
+          })
+        ],
+        layoutData: new sap.m.FlexItemData({ growFactor: 1 })
+      });
+      // return new sap.m.PDFViewer({
+      //   source: url,
+      //   title: filename,
+      //   width: "100%",
+      //   height: "600px",
+      //   showDownloadButton: true
+      // });
+    },
 
       onViewReport: async function (oEvent) {
         const sJobId = oEvent
@@ -615,7 +938,7 @@ sap.ui.define([
           .getProperty("job_id");
         const chatModel = this.getOwnerComponent().getModel("chatModel");
         this._currentJobId = sJobId;
-        chatModel.setProperty("/promptResult",'');
+        chatModel.setProperty("/promptResult", "");
         const reportUrl =
           this.getBaseURL() + `/api/job/${sJobId}/download?inline=1`;
         const oView = this.getView();
@@ -644,8 +967,10 @@ sap.ui.define([
         this._currentJobId = sJobId;
         this.getView().byId("downloadPromptResultBtn").firePress();
       },
-      onDownloadPromptResult: function(){
-        const docUrl =`${this.getBaseURL()}/api/job/${this._currentJobId}/download?format=docx`;
+      onDownloadPromptResult: function () {
+        const docUrl = `${this.getBaseURL()}/api/job/${
+          this._currentJobId
+        }/download?format=docx`;
         window.open(docUrl);
       },
       onDownloadMetadata: async function () {
@@ -653,16 +978,18 @@ sap.ui.define([
           "For any change in Standard Account line mappings please reach out to Group FP&A"
         );
         const baseUrl = this.getBaseURL();
-        const downloadUrl = baseUrl + "/ci_api/odata/v4/catalog/downloadMetadata";
+        const downloadUrl =
+          baseUrl + "/ci_api/odata/v4/catalog/downloadMetadata";
         const csrf = await this.onfetchCSRF(baseUrl);
         const responseAPI = await fetch(downloadUrl, {
           method: "POST",
           headers: {
             "X-CSRF-Token": csrf,
-            "Accept": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-            "Content-type": "application/json"
+            Accept:
+              "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            "Content-type": "application/json",
           },
-          body:"{}"
+          body: "{}",
         });
         if (!responseAPI.ok) {
           let res;
@@ -674,12 +1001,12 @@ sap.ui.define([
           }
           return;
         }
-        
+
         const blob = await responseAPI.blob();
         const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
+        const a = document.createElement("a");
         a.href = url;
-        a.download = 'metadata.xlsx';
+        a.download = "metadata.xlsx";
         document.body.appendChild(a);
         a.click();
         a.remove();
