@@ -32,7 +32,13 @@
       "target": "/odata/v4/catalog/$1",
       "authenticationType": "none",
       "destination": "GenAIContentIngestionSrv"
-    },   
+    },
+    {
+      "source": "^/treasury_api/(.*)$",
+      "target": "/api/$1",
+      "authenticationType": "none",
+      "destination": "Treasurybackend"
+    },
     {
       "source": "^/user-api/currentUser$",
       "target": "/currentUser",

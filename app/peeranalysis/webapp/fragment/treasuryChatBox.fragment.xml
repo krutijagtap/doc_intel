@@ -7,10 +7,10 @@
 
   <VBox class="dasTextAreaInput">
     <Text text="How can I help you?" class="gradientTitle sapUiTinyMarginBottom"/>
-    <core:HTML content="&lt;span&gt;Get Started by choosing your file or entering a query to Intellibase&lt;/span&gt;"></core:HTML>
+    <core:HTML content="&lt;span&gt;Get Started by choosing your file.&lt;/span&gt;"></core:HTML>
     <HBox justifyContent="End">
-      <MultiComboBox id="multiCombo" items="{path:'/Content', filters: [{ path: 'status', operator: 'EQ', value1: 'COMPLETED' }]}" selectionChange="onSelectDocument" placeholder="Choose files to analyze">
-        <core:Item key="{ID}" text="{fileName}" />
+      <MultiComboBox id="multiCombo" items="{path:'contentIngestionModel>/Content', filters: [{ path: 'status', operator: 'EQ', value1: 'COMPLETED' }]}" selectionChange="onSelectDocument" placeholder="Choose files to analyze">
+        <core:Item key="{contentIngestionModel>ID}" text="{contentIngestionModel>fileName}" />
       </MultiComboBox>
     </HBox>
     <FlexBox id="TreasuryChatBotResult" height="7rem">

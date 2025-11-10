@@ -740,7 +740,7 @@ sap.ui.define([
         this.byId("TreasuryChatFeedInput").setValue(sFormattedPrompt);
       },
       onfetchTreasuryData: async function (sInput, isValid, isIntellibase) {
-        const chatUrl = this.getBaseUrl() + "/api/treasuryChat";
+        const chatUrl = this.getBaseUrl() + "/treasury_api/treasuryChat";
         const thisUser = this.getBaseUrl() + "/user-api/currentUser";
         var payload;
         const csrfUrl = this.getBaseURL() + "/v2/odata/v4/earning-upload-srv/";
@@ -839,7 +839,7 @@ sap.ui.define([
         oBusy.open();
         // var url = "https://standard-chartered-bank-core-foundational-12982zqn-genai839893a.cfapps.ap11.hana.ondemand.com/api/chat"  
         const chatModel = this.getOwnerComponent().getModel("chatModel");
-        const chatUrl = this.getBaseUrl() + "/api/treasuryChat";
+        const chatUrl = this.getBaseUrl() + "/treasury_api/treasuryChat";
         const csrfUrl = this.getBaseURL() + "/v2/odata/v4/earning-upload-srv/";
         const csrf = await this.onfetchCSRF(csrfUrl);
         const payload = {

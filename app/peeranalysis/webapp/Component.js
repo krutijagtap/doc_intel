@@ -53,7 +53,17 @@ sap.ui.define([
                           // Set the model to the component with a name
                           this.setModel(oContentModel, "contentModel");
 
-                        //   jQuery.sap.registerModulePath("com.scb.uploadearnings", "../com.scb.uploadearnings");
+                        const oCIModel = new ODataModel({
+                          serviceUrl: "/ci_api/odata/v4/catalog/",
+                          synchronizationMode: "None", // or "Auto" depending on your use case
+                          operationMode: "Server",
+                          groupId: "$auto",
+                          updateGroupId: "$auto",
+                          autoExpandSelect: true,
+                        });
+                    
+                          // Set the model to the component with a name
+                          this.setModel(oCIModel, "contentIngestionModel");
                           
 
         }
