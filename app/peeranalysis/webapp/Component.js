@@ -54,7 +54,7 @@ sap.ui.define([
                           this.setModel(oContentModel, "contentModel");
 
                         const oCIModel = new ODataModel({
-                          serviceUrl: "/ci_api/odata/v4/catalog/",
+                          serviceUrl: "./ci_api/odata/v4/catalog/",
                           synchronizationMode: "None", // or "Auto" depending on your use case
                           operationMode: "Server",
                           groupId: "$auto",

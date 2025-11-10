@@ -1,10 +1,11 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/m/MessageBox",
+    "sap/m/BusyDialog",
     "../lib/jspdf/jspdf.umd.min",
     "../lib/dompurify/purify.min",
     "../lib/html2canvas/html2canvas.min"
-], (Controller,MessageBox) => {
+], (Controller,MessageBox, BusyDialog) => {
     "use strict";
 
     return Controller.extend("peeranalysisv2.controller.PeerAnaysisView", {
@@ -51,7 +52,7 @@ sap.ui.define([
         chatModel.setvisibleResult(false);
 
         // Create and show busy dialog
-        const oBusyDialog = new sap.m.BusyDialog({
+        const oBusyDialog = new BusyDialog({
           title: "Busy Indicator",
           text: "Generating response. Please standby..",
         });
@@ -648,7 +649,7 @@ sap.ui.define([
           return;
         }
         // Create and show busy dialog
-        const oBusyDialog = new sap.m.BusyDialog({
+        const oBusyDialog = BusyDialog({
           title: "Busy Indicator",
           text: "Generating response. Please standby..",
         });
@@ -740,8 +741,8 @@ sap.ui.define([
         this.byId("TreasuryChatFeedInput").setValue(sFormattedPrompt);
       },
       onfetchTreasuryData: async function (sInput, isValid, isIntellibase) {
-        const chatUrl = this.getBaseUrl() + "/treasury_api/treasuryChat";
-        const thisUser = this.getBaseUrl() + "/user-api/currentUser";
+        const chatUrl = this.getBaseURL() + "/treasury_api/chat";
+        const thisUser = this.getBaseURL() + "/user-api/currentUser";
         var payload;
         const csrfUrl = this.getBaseURL() + "/v2/odata/v4/earning-upload-srv/";
         const csrf = await this.onfetchCSRF(csrfUrl);
@@ -830,7 +831,7 @@ sap.ui.define([
         var oSelectedFile = aMultiBoxSelectedItems[0].getText(); // or .getKey() depending on your binding
         // MessageBox.success("Proceeding with file: ", oSelectedFile);
         textArea.setValue(`Research Summary: ${oSelectedFile}`);
-        this.getView().byId("htmlContent").setVisible(false);
+        this.getView().byId("treasuryHtmlContent").setVisible(false);
         this.getView().byId("pdfContainer").setVisible(true);
         this._callSummaryApi(oSelectedFile);
       },
@@ -839,7 +840,7 @@ sap.ui.define([
         oBusy.open();
         // var url = "https://standard-chartered-bank-core-foundational-12982zqn-genai839893a.cfapps.ap11.hana.ondemand.com/api/chat"  
         const chatModel = this.getOwnerComponent().getModel("chatModel");
-        const chatUrl = this.getBaseUrl() + "/treasury_api/treasuryChat";
+        const chatUrl = this.getBaseURL() + "/treasury_api/chat";
         const csrfUrl = this.getBaseURL() + "/v2/odata/v4/earning-upload-srv/";
         const csrf = await this.onfetchCSRF(csrfUrl);
         const payload = {
@@ -869,7 +870,7 @@ sap.ui.define([
           chatModel.setProperty("/visibleTreasuryResult", true);
           return res;
         } else {
-          MessageToast.show("No summaries returned.");
+          sap.m.MessageToast.show("No summaries returned.");
         }
       } catch (err) {
         console.log("inside catch of generate summary", err);
