@@ -7,7 +7,7 @@
     <Page id="page" backgroundDesign="Transparent" titleAlignment="Center" showHeader="false">
         <Select change="onAIChange" selectedKey="{chatModel>/chatMode}" class="modeSelect sapUiTinyMargin">
             <items>
-                <core:Item key="peerAnalysis" text="Peer Analysis"/>
+                <core:Item key="peerAnalysis" text="Earnings (Peer Analysis)"/>
                 <core:Item key="treasury" text="Treasury"/>
             </items>
         </Select>
