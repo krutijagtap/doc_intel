@@ -32,7 +32,7 @@
                         </Panel>
                     </VBox>
                     <VBox class="resultBoxContainer">
-                        <FlexBox class="ResultFlexBox" visible="{chatModel>/visibleResult}">
+                        <FlexBox class="ResultFlexBox" visible="{chatModel>/visibleTreasuryResult}">
                             <core:Fragment fragmentName="peeranalysisv2.fragment.treasuryResultBox" type="XML"/>
                         </FlexBox>
                     </VBox>
