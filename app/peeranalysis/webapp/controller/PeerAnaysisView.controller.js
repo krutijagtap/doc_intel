@@ -649,7 +649,7 @@ sap.ui.define([
           return;
         }
         // Create and show busy dialog
-        const oBusyDialog = BusyDialog({
+        const oBusyDialog = new BusyDialog({
           title: "Busy Indicator",
           text: "Generating response. Please standby..",
         });
