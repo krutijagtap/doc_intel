@@ -5,12 +5,16 @@
     xmlns:uxap="sap.uxap"
     xmlns:tnt="sap.tnt">
     <Page id="page" backgroundDesign="Transparent" titleAlignment="Center" showHeader="false">
-        <Select change="onAIChange" selectedKey="{chatModel>/chatMode}" class="modeSelect sapUiTinyMargin">
-            <items>
-                <core:Item key="peerAnalysis" text="Earnings (Peer Analysis)"/>
-                <core:Item key="treasury" text="Treasury"/>
-            </items>
-        </Select>
+        <HBox alignContent="Center" alignItems="Center">
+            <Text text="Context:" class="sapUiSmallMarginBegin sapUiTinyMarginEnd"></Text>
+             <Select change="onAIChange" selectedKey="{chatModel>/chatMode}" class="modeSelect sapUiTinyMargin">
+                <items>
+                    <core:Item key="peerAnalysis" text="Earnings (Peer Analysis)"/>
+                    <core:Item key="treasury" text="Treasury"/>
+                </items>
+            </Select>
+        </HBox>
+       
         <IconTabBar id="idIconTabBarNoIcons" class="tabcontainer" expanded="true" expandable="false" headerBackgroundDesign="Transparent" backgroundDesign="Transparent">
             <items>
                 <IconTabFilter visible="{= ${chatModel>/chatMode} === 'peerAnalysis' }" text="Analyze earnings results" key="chatbox">
