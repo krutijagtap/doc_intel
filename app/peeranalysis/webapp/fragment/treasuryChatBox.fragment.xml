@@ -9,7 +9,7 @@
     <Text text="How can I help you?" class="gradientTitle sapUiTinyMarginBottom"/>
     <core:HTML content="&lt;span&gt;Get Started by choosing your file.&lt;/span&gt;"></core:HTML>
     <HBox justifyContent="End">
-      <MultiComboBox id="multiCombo" items="{path:'contentIngestionModel>/Content', filters: [{ path: 'status', operator: 'EQ', value1: 'COMPLETED' }]}" selectionChange="onSelectDocument" placeholder="Choose files to analyze">
+      <MultiComboBox id="multiCombo" items="{path:'contentIngestionModel>/Content', filters: [{ path: 'status', operator: 'EQ', value1: 'COMPLETED' }, {path:'UseCase', operator: 'EQ', value1: 'Treasury'  }]}" selectionChange="onSelectDocument" placeholder="Choose files to analyze">
         <core:Item key="{contentIngestionModel>ID}" text="{contentIngestionModel>fileName}" />
       </MultiComboBox>
     </HBox>
