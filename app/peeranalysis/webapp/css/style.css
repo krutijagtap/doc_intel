@@ -469,6 +469,13 @@ body,
       height: 70vh;
 }
   
+
+  .pdf-iframe {
+      width: 100%;
+      height: 70vh;
+      border: none;
+      display: block;
+}
   .responseTextBox{
       overflow-x: auto;
       padding: 2rem;
