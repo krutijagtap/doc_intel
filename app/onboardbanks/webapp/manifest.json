@@ -7,8 +7,8 @@
     "applicationVersion": {
       "version": "0.0.1"
     },
-    "title": "PeerAnalysis",
-    "description": "{{appDescription}}",
+    "title": "Earnings (Peer Analysis) - New Bank Onboarding",
+    "description": "Earnings (Peer Analysis) - New Bank Onboarding",
     "resources": "resources.json",
     "sourceTemplate": {
       "id": "@sap/generator-fiori:lrop",
@@ -28,7 +28,7 @@
     "crossNavigation": {
       "inbounds": {
         "Earnings-upload": {
-          "semanticObject": "Banks",
+          "semanticObject": "BanksV2",
           "action": "update",
           "title": "New Bank Onboard",
           "signature": {

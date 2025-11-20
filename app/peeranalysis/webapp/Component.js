@@ -42,7 +42,7 @@ sap.ui.define([
                         this.setModel(oImageModel, "imageModel");
 
                         const oContentModel = new ODataModel({
-                            serviceUrl: "./odata/v4/earning-upload-srv/",
+                            serviceUrl: appModulePath+"/odata/v4/earning-upload-srv/",
                             synchronizationMode: "None", // or "Auto" depending on your use case
                             operationMode: "Server", 
                             groupId: "$auto",
@@ -54,7 +54,7 @@ sap.ui.define([
                           this.setModel(oContentModel, "contentModel");
 
                         const oCIModel = new ODataModel({
-                          serviceUrl: "./ci_api/odata/v4/catalog/",
+                          serviceUrl: appModulePath+"/ci_api/odata/v4/catalog/",
                           synchronizationMode: "None", // or "Auto" depending on your use case
                           operationMode: "Server",
                           groupId: "$auto",

@@ -7,8 +7,8 @@
     "applicationVersion": {
       "version": "0.0.1"
     },
-    "title": "PeerAnalysis",
-    "description": "{{appDescription}}",
+    "title": "Earnings (Peer Analysis) - Standard Reports",
+    "description": "Earnings (Peer Analysis) - Standard Reports",
     "resources": "resources.json",
     "sourceTemplate": {
       "id": "@sap/generator-fiori:lrop",
@@ -28,7 +28,7 @@
     "crossNavigation": {
       "inbounds": {
         "Earnings-upload": {
-          "semanticObject": "Earnings",
+          "semanticObject": "EarningsV2",
           "action": "upload",
           "title": "{{Earnings-upload.flpTitle}}",
           "signature": {

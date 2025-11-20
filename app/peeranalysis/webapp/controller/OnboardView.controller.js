@@ -60,7 +60,7 @@ sap.ui.define([
     };    
     const semanticHash = hashMapping[sapAppId] || "home";    
     const formattedUrl = `${url.origin}/site?siteId=${siteId}`;
-    const completeurl = formattedUrl+"#Banks-update?sap-ui-app-id-hint=saas_approuter_" + sapAppId;
+    const completeurl = formattedUrl+"#BanksV2-update?sap-ui-app-id-hint=saas_approuter_" + sapAppId;
     return completeurl;
   }  
 
