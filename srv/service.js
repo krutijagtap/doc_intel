@@ -157,25 +157,14 @@ module.exports = cds.service.impl((srv) => {
   }
 
   srv.on("generateEmbedding", async () => {
-    // let triggerAPI = await cds.connect.to("EARNINGS_CORE",{timeout: 120000});
     const response = await executeHttpRequest(
-      { destinationName: "EARNINGS_CORE" },
+      { destinationName: "PeerAnalysisV2Backend" },
       {
         method: "POST",
         url: "/api/generate-embeddings",
       }
     );
 
-    //  srv.on('generateEmbedding', async()=>{
-    //   // let triggerAPI = await cds.connect.to("EARNINGS_CORE",{timeout: 120000});
-    //   const response = await executeHttpRequest(
-    //     {destinationName: 'DatasphereSrvWithSAMLAuth'},
-    //     {
-    //       method: 'GET',
-    //       url: '/analytical/4TP_ESG_SACX_01/4AM_SF_EIM_FinPerfPreAgg_Workzone/4AM_SF_EIM_FinPerfPreAgg_Workzone?top=3'
-    //     }
-
-    //   );
 
     if (response.status === 200) {
       return "Embeddings generated successfully";
@@ -187,7 +176,7 @@ module.exports = cds.service.impl((srv) => {
   srv.on("chatResponse", async (req) => {
     console.log("request obj" + req);
     const response = await executeHttpRequest(
-      { destinationName: "EARNINGS_CORE" },
+      { destinationName: "PeerAnalysisV2Backend" },
       {
         method: "POST",
         url: "/api/chat",
@@ -206,7 +195,7 @@ module.exports = cds.service.impl((srv) => {
   srv.on("uploadPromptFile", async (req) => {
     console.log("request obj" + req);
     const response = await executeHttpRequest(
-      { destinationName: "EARNINGS_CORE" },
+      { destinationName: "PeerAnalysisV2Backend" },
       {
         method: "POST",
         url: "/api/chat_upload",
