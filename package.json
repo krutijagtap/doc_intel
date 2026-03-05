@@ -6,7 +6,7 @@
   "license": "UNLICENSED",
   "private": true,
   "engines": {
-    "node": "18"
+    "node": "20.x"
   },
   "dependencies": {
     "@sap-cloud-sdk/http-client": "^3.26.4",

@@ -8,6 +8,11 @@
   <VBox class="dasTextAreaInput">
     <Text text="How can I help you?" class="gradientTitle sapUiTinyMarginBottom"/>
     <core:HTML content="&lt;span&gt;Type your question in the box below. Remember to include the &lt;strong&gt;bank name, metric&lt;/strong&gt; and &lt;strong&gt;period&lt;/strong&gt;.&lt;br/&gt; Prompt example: &lt;strong&gt;JPMC income&lt;/strong&gt; analysis with key drivers for &lt;strong&gt;1Q 2025&lt;/strong&gt;&lt;/span&gt;"></core:HTML>
+    <HBox justifyContent="End">
+      <MultiComboBox id="multiComboPeer" items="{path:'contentIngestionModel>/Content', filters: [{ path: 'status', operator: 'EQ', value1: 'COMPLETED' }, {path:'UseCase', operator: 'EQ', value1: 'Earnings(Peer-Analysis)'  }]}" selectionChange="onSelectDocument" placeholder="Choose files to analyze">
+        <core:Item key="{contentIngestionModel>ID}" text="{contentIngestionModel>fileName}" />
+      </MultiComboBox>
+    </HBox>
     <FlexBox height="7rem" class="sapUiSmallMarginTop">
 
       <TextArea id="chatFeedInput" class="chattextarea" liveChange="userlivechange" value="{chatModel>/userMessage}" enabled="{= !${chatModel>/busyIndicator} }" rows="1" growingMaxLines="23" placeholder="{chatModel>/placeHolder}" growing="true">
@@ -27,7 +32,10 @@
         <Text text="You can verify the currently used" class="sapUiTinyMarginEnd"></Text>
         <Link text="standard account line mapping" press=".onDownloadMetadata"></Link>
       </FlexBox>
+      <FlexBox justifyContent="End" alignItems="Center" class="busyBox">
       <Button text="Ask FinSight" class="sapUiTinyMarginTop" type="Emphasized" press="onUserChat" />
+      <Button text="Summary" class="sapUiTinyMarginTop sapUiSmallMarginBegin" type="Emphasized" press="onGenerateSummary" />
+      </FlexBox>
 
 
 

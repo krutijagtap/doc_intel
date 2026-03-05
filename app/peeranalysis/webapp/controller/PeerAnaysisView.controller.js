@@ -738,6 +738,10 @@ sap.ui.define([
         });
         aFiles.push("Question: ");
         var sFormattedPrompt = aFiles.join("\n");
+        const chatMode = this.getView().getModel("chatModel").getProperty("/chatMode");
+        if(chatMode=== "peerAnalysis")
+        this.byId("chatFeedInput").setValue(sFormattedPrompt);
+        else
         this.byId("TreasuryChatFeedInput").setValue(sFormattedPrompt);
       },
       onfetchTreasuryData: async function (sInput, isValid, isIntellibase) {
